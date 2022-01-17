@@ -59,7 +59,7 @@ class AuthController extends Controller
         }
     }
 
-    public function login(Request $request)
+    public function loginEmail(Request $request)
     {
         $rules = array(
             'email' => 'required|string|email|',
@@ -100,8 +100,56 @@ class AuthController extends Controller
                 'token'      => $token,
                 'roles' => $roles
             ], 200);
-        }
+        }   
     }
+
+    public function loginNomor(Request $request)
+    {
+        $rules = array(
+            'nomor_telp' => 'required',
+            'password' => 'required|string|min:6'
+        );
+
+        $cek = Validator::make($request->all(),$rules);
+
+        if($cek->fails()){
+            $errorString = implode(",",$cek->messages()->all());
+            return response()->json([
+                'message' => $errorString
+            ], 401);
+        }else{
+            $user = User::where('nomor_telp',$request->nomor_telp)->first();
+
+            if (!$user || !Hash::check($request->password, $user->password)) {
+                return response()->json([
+                    'message' => 'Unaouthorized'
+                ], 401);
+            }
+
+            if($user->status == 0){
+                return response()->json([
+                    'message' => 'User Tidak Aktif'
+                ], 401);
+            }
+
+            
+            $token = $user->createToken('token-name')->plainTextToken;
+            $roles = $user->getRoleNames();
+          
+            
+          
+            return response()->json([
+                'message'   => 'Success',
+                'user'      => $user,
+                'token'      => $token,
+                'roles' => $roles
+            ], 200);
+        }
+
+        
+    }
+
+    
 
     
 
