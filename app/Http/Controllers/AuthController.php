@@ -18,7 +18,7 @@ class AuthController extends Controller
             'nama_user' => 'required|string|max:255',
             'email' => 'required|string|email|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
-            'nomor_telp' => 'required|string',
+            'nomor_telp' => 'required|string|unique:users',
             'role' => 'required|max:1',
             'status' => 'required|max:1'
         );
@@ -54,7 +54,8 @@ class AuthController extends Controller
 
             return response()->json([
                 'message'   => 'Success',
-                'token'      => $token
+                'token'      => $token,
+                'user'      => $user
             ], 200);
         }
     }
@@ -91,8 +92,6 @@ class AuthController extends Controller
             
             $token = $user->createToken('token-name')->plainTextToken;
             $roles = $user->getRoleNames();
-          
-            
           
             return response()->json([
                 'message'   => 'Success',
@@ -147,6 +146,65 @@ class AuthController extends Controller
         }
 
         
+    }
+
+    public function authMe(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+        $token= $request->user()->createToken('token-name')->plainTextToken;
+        $user = $request->user();
+        $roles = $user->getRoleNames();
+          
+            // if($user->id == 1 | 2 | 5  |6 ){
+            //     $guru = ManagemenGuru::where('user_id' , '=', $user->id)->first();
+        
+            //     if($guru == ""){
+            //         $identias = "belum terisi";
+            //     }else{
+            //         $identias ="terisi";
+                  
+            //     }
+              
+            // }
+            // if($user->id == 3 ){
+            //     $siswa = ManagemenSiswa::where('user_id' , '=', $user->id)->first();
+        
+            //     if($siswa == ""){
+            //         $identias = "belum terisi";
+            //     }else{
+            //         $identias ="terisi";
+                  
+            //     }
+              
+            // }
+            // if($user->id == 3 ){
+            //     $wali = ManagemenSiswa::where('user_id' , '=', $user->id)->first();
+        
+            //     if($wali == ""){
+            //         $identias = "belum terisi";
+            //     }else{
+            //         $identias ="terisi";
+                  
+            //     }
+              
+            // }if($user->id == 4 ){
+            //     $siswa = ManagemenWali::where('user_id' , '=', $user->id)->first();
+        
+            //     if($siswa == ""){
+            //         $identias = "belum terisi";
+            //     }else{
+            //         $identias ="terisi";
+                  
+            //     }
+              
+            // }
+       
+        return response()->json([
+            'message'   => 'Success',
+            'user'      => $user,
+            'token'      => $token,
+            'identias' => $identias
+        ], 200);
     }
 
     
