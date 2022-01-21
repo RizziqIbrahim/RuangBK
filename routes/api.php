@@ -3,7 +3,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     AuthController,
-    SiswaController
+    SiswaController,
+    UserController,
+    GuruController
 };
 /*
 |--------------------------------------------------------------------------
@@ -36,14 +38,15 @@ Route::post('/register',[AuthController::class, 'register']);
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/authme', [AuthController::class ,'authMe']);
     Route::resource('siswa', SiswaController::class);
+    Route::resource('users', UserController::class);
+    Route::resource('guru', GuruController::class);
+    
+    //delete
     
 
-    
     //Fitur admin
-    Route::middleware('role:admin|guru')->group(function () {
-
+    Route::middleware('role:admin')->group(function () {
             
-        
     });
 
 

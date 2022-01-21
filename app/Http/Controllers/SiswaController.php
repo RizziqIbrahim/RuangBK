@@ -21,7 +21,6 @@ class SiswaController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-
         $request->keywords;
         $request->page;
         $siswa = Siswa::leftjoin('users', 'users.id', '=', 'user_id')->where('users.nama_user', 'like', '%'.strtolower($request->keywords)."%")
@@ -85,4 +84,37 @@ class SiswaController extends Controller
     
         }
     }   
+
+
+    public function edit($id)
+    {
+        $siswa = Siswa::where('id', $id)->first(); 
+
+        return response()-> json([
+            'data' => $siswa
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $user = $request->user();
+        $siswa = Siswa::where('id', $id)->first();
+        // $siswa->user_id = $user->id;
+        $siswa->nama_siswa = $request->nama_siswa;
+        $siswa->tempat_lahir = $request->tempat_lahir;
+        $siswa->tanggal_lahir = $request->tanggal_lahir;
+        $siswa->alamat = $request->alamat;
+        $siswa->foto = $request->foto;
+        if($siswa->save()){
+            return response()->json([
+                "status" => "success",
+                "message" => 'Berhasil Menyimpan Data'
+            ]);
+        }else{
+            return response()->json([
+                "status" => "failed",
+                "message" => 'Gagal Menyimpan Data'
+            ]);
+        }
+    }  
 }

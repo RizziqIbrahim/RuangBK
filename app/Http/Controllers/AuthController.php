@@ -4,13 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
-use Validator;
+use App\Http\Controller\{
+    SiswaController,
+};
+use App\Models\{
+    Siswa,
+    User,
+
+};
+
 use Hash;
+use Auth;
+use Validator;
+
 
 class AuthController extends Controller
 {
-    
     
     public function register(Request $request)
     {
