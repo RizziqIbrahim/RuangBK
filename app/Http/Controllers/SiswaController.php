@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controller\{
+use App\Http\Controllers\{
     AuthController,
+    CloudinaryStorage,
 };
 use App\Models\{
     Siswa,
@@ -49,6 +50,7 @@ class SiswaController extends Controller
 
     public function store(Request $request)
     {
+        
         $user = $request->user();
         {
             $rules = array(
@@ -67,13 +69,15 @@ class SiswaController extends Controller
                     'message' => $errorString
                 ], 401);
             }else{
+                $image  = $request->file('foto');
+                $result = CloudinaryStorage::upload($image->getRealPath(), $image->getClientOriginalName());
                     $siswa = Siswa::create([
                         'user_id' => $user->id,
                         'nama_siswa' => $request->nama_siswa,
                         'tempat_lahir' => $request->tempat_lahir,
                         'tanggal_lahir' => $request->tanggal_lahir,
                         'alamat' => $request->alamat,
-                        'foto' => $request->foto,
+                        'foto' => $result,
                     ]);
         
                 return response()->json([
@@ -86,7 +90,7 @@ class SiswaController extends Controller
     }   
 
 
-    public function edit($id)
+    public function show($id)
     {
         $siswa = Siswa::where('id', $id)->first(); 
 
@@ -98,7 +102,7 @@ class SiswaController extends Controller
     public function update(Request $request, $id)
     {
         $user = $request->user();
-        $siswa = Siswa::where('id', $id)->first();
+        $siswa = Siswa::where('user_id', $id)->first();
         // $siswa->user_id = $user->id;
         $siswa->nama_siswa = $request->nama_siswa;
         $siswa->tempat_lahir = $request->tempat_lahir;
@@ -117,4 +121,17 @@ class SiswaController extends Controller
             ]);
         }
     }  
+
+    
+    public function destroy($id)
+    {
+        try {
+            $id = explode(",", $id);
+            Siswa::whereIn('id', $id)->delete();
+            return response()->json(["status" => "Success","message" => "Berhasil Menghapus Data"]);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+  
 }

@@ -164,49 +164,28 @@ class AuthController extends Controller
         $user = $request->user();
         $roles = $user->getRoleNames();
           
-            // if($user->id == 1 | 2 | 5  |6 ){
-            //     $guru = ManagemenGuru::where('user_id' , '=', $user->id)->first();
+            if($roles == 1 | 2){
+                $guru = Guru::where('user_id' , '=', $user->id)->first();
         
-            //     if($guru == ""){
-            //         $identias = "belum terisi";
-            //     }else{
-            //         $identias ="terisi";
+                if($guru == ""){
+                    $identias = "belum terisi";
+                }else{
+                    $identias ="terisi";
                   
-            //     }
+                }
               
-            // }
-            // if($user->id == 3 ){
-            //     $siswa = ManagemenSiswa::where('user_id' , '=', $user->id)->first();
+            }
+            if($roles == 3 ){
+                $siswa = Siswa::where('user_id' , '=', $user->id)->first();
         
-            //     if($siswa == ""){
-            //         $identias = "belum terisi";
-            //     }else{
-            //         $identias ="terisi";
+                if($siswa == ""){
+                    $identias = "belum terisi";
+                }else{
+                    $identias ="terisi";
                   
-            //     }
+                }
               
-            // }
-            // if($user->id == 3 ){
-            //     $wali = ManagemenSiswa::where('user_id' , '=', $user->id)->first();
-        
-            //     if($wali == ""){
-            //         $identias = "belum terisi";
-            //     }else{
-            //         $identias ="terisi";
-                  
-            //     }
-              
-            // }if($user->id == 4 ){
-            //     $siswa = ManagemenWali::where('user_id' , '=', $user->id)->first();
-        
-            //     if($siswa == ""){
-            //         $identias = "belum terisi";
-            //     }else{
-            //         $identias ="terisi";
-                  
-            //     }
-              
-            // }
+            }
        
         return response()->json([
             'message'   => 'Success',

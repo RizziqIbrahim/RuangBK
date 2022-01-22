@@ -5,7 +5,8 @@ use App\Http\Controllers\{
     AuthController,
     SiswaController,
     UserController,
-    GuruController
+    GuruController,
+    ImageController,
 };
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,8 @@ Route::get('/login', function () {
 Route::post('/login-email',[AuthController::class,'loginEmail']);
 Route::post('/login-nomor',[AuthController::class,'loginNomor']);
 
+Route::resource('images', ImageController::class);
+
 
 // Auth by sanctum
 Route::post('/register',[AuthController::class, 'register']);
@@ -40,7 +43,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('siswa', SiswaController::class);
     Route::resource('users', UserController::class);
     Route::resource('guru', GuruController::class);
-    
     //delete
     
 

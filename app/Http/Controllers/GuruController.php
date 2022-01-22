@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controller\{
+use App\Http\Controllers\{
     AuthController,
+    CloudinaryStorage,
 };
 use App\Models\{
     Siswa,
@@ -88,13 +89,15 @@ class GuruController extends Controller
                     'message' => $errorString
                 ], 401);
             }else{
+                $image  = $request->file('foto');
+                $result = CloudinaryStorage::upload($image->getRealPath(), $image->getClientOriginalName());
                     $guru = Guru::create([
                         'user_id' => $user->id,
                         'nama_guru' => $request->nama_guru,
                         'tempat_lahir' => $request->tempat_lahir,
                         'tanggal_lahir' => $request->tanggal_lahir,
                         'alamat' => $request->alamat,
-                        'foto' => $request->foto,
+                        'foto' => $result,
                     ]);
         
                 return response()->json([
@@ -137,7 +140,29 @@ class GuruController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        // $file   = $request->file('image');
+        // $result = CloudinaryStorage::replace($image->image, $file->getRealPath(), $file->getClientOriginalName());
+
+        $user = $request->user();
+        $guru = Guru::where('user_id', $id)->first();
+        // $guru->user_id = $user->id;
+        $guru->nama_guru = $request->nama_guru;
+        $guru->tempat_lahir = $request->tempat_lahir;
+        $guru->tanggal_lahir = $request->tanggal_lahir;
+        $guru->alamat = $request->alamat;
+        $guru->foto = $request->foto;
+        if($guru->save()){
+            return response()->json([
+                "status" => "success",
+                "message" => 'Berhasil Menyimpan Data'
+            ]);
+        }else{
+            return response()->json([
+                "status" => "failed",
+                "message" => 'Gagal Menyimpan Data'
+            ]);
+        }
     }
 
     /**
@@ -148,6 +173,12 @@ class GuruController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $id = explode(",", $id);
+            Guru::whereIn('id', $id)->delete();
+            return response()->json(["status" => "Success","message" => "Berhasil Menghapus Data"]);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 }

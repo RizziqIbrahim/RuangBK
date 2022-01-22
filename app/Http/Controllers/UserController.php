@@ -181,7 +181,6 @@ class UserController extends Controller
     public function hapus(Request $request)
     {
        
-        // return $request->id[1];
         try {
            for($i = 0 ; $i < count($request->id) ; $i++){
             $delete = User::find($request->id[$i]);
@@ -199,18 +198,5 @@ class UserController extends Controller
             ]);
         }
         
-        // $users = ManagemenUser::where('id', $request->id)->first();
-        // $users->status = '1';
-        // if($users->save()){
-        //     return response()->json([
-        //         "status" => "success",
-        //         "message" => 'Berhasil Menyimpan Status'
-        //     ]);
-        // }else{
-        //     return response()->json([
-        //         "status" => "failed",
-        //         "message" => 'Gagal Mengubah status'
-        //     ]);
-        // }   
     }
 }
