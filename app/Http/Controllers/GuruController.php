@@ -37,6 +37,8 @@ class GuruController extends Controller
             'gurus.user_id',
             'users.status',
             'gurus.nama_guru',
+            'users.email',
+            'users.nomor_telp',
             'gurus.tempat_lahir',
             'gurus.tanggal_lahir',
             'gurus.foto',
