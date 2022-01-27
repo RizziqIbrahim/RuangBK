@@ -7,6 +7,7 @@ use App\Http\Controllers\{
     UserController,
     GuruController,
     ImageController,
+    AdminController
 };
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +44,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('siswa', SiswaController::class);
     Route::resource('users', UserController::class);
     Route::resource('guru', GuruController::class);
+    Route::resource('admin', AdminController::class);
     //delete
     
 

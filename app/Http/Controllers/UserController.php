@@ -86,7 +86,7 @@ class UserController extends Controller
     {
         $roles = User::where('id', $id)->value("role"); 
 
-        if ($roles == 1|2) {
+        if ($roles == 2) {
             $data = Guru::where('user_id', $id)->leftjoin('users', 'users.id', '=', 'user_id')->first([
                 'gurus.id',
                 'gurus.user_id',
@@ -121,6 +121,27 @@ class UserController extends Controller
                 'siswas.foto',
                 'siswas.alamat',
                 'siswas.created_at' 
+            ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'sukses menampilkan data',
+                'data' => $data
+                
+            ]);
+        }elseif ($roles == 1) {
+            $data = Admin::where('user_id', $id)->leftjoin('users', 'users.id', '=', 'user_id')->first([
+                'admins.id',
+                'admins.user_id',
+                'users.status',
+                'users.role',
+                'admins.nama_admin',
+                'users.email',
+                'admins.tempat_lahir',
+                'admins.tanggal_lahir',
+                'users.nomor_telp',
+                'admins.foto',
+                'admins.alamat',
+                'admins.created_at' 
             ]);
             return response()->json([
                 'status' => 'success',
