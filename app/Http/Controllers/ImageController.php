@@ -50,6 +50,6 @@ class ImageController extends Controller
     {   
         CloudinaryStorage::delete($image->image);
         $image->delete();
-        return redirect()->route('images.index')->withSuccess('berhasil hapus');;
+        return redirect()->route('images.index')->withSuccess('berhasil hapus');
     }
 }
