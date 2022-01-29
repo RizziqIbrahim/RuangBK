@@ -7,12 +7,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Controller\{
     SiswaController,
     AuthController,
-    GuruController
+    GuruController,
+    AdminController
 };
 use App\Models\{
     Siswa,
     User,
-    Guru
+    Guru,
+    Admin
 };
 
 use Hash;
