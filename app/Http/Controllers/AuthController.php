@@ -102,7 +102,7 @@ class AuthController extends Controller
             $token = $user->createToken('token-name')->plainTextToken;
             $roles = $user->getRoleNames();
             
-            if($roles == "1"){
+            if($roles == "admin"){
                 $admin = Admin::where('user_id' , '=', $user->id)->first();
         
                 if($admin == ""){
@@ -112,7 +112,7 @@ class AuthController extends Controller
                   
                 }
               
-            }elseif($roles == "2"){
+            }elseif($roles == "guru"){
                 $guru = Guru::where('user_id' , '=', $user->id)->first();
         
                 if($guru == ""){
@@ -122,7 +122,7 @@ class AuthController extends Controller
                   
                 }
               
-            }elseif($roles == "3" ){
+            }elseif($roles == "siswa" ){
                 $siswa = Siswa::where('user_id' , '=', $user->id)->first();
         
                 if($siswa == ""){
