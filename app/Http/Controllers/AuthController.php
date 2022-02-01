@@ -71,8 +71,6 @@ class AuthController extends Controller
 
     public function loginEmail(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
-        $token= $request->user()->createToken('token-name')->plainTextToken;
         $user = $request->user();
         $roles = $user->getRoleNames();
 
