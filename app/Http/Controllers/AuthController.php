@@ -71,9 +71,6 @@ class AuthController extends Controller
 
     public function loginEmail(Request $request)
     {
-        $user = $request->user();
-        $roles = $user->getRoleNames();
-
         $rules = array(
             'email' => 'required|string|email|',
             'password' => 'required|string|min:6'
@@ -95,6 +92,7 @@ class AuthController extends Controller
                 ], 401);
             }
 
+
             if($roles == 1){
                 $admin = Admin::where('user_id' , '=', $user->id)->first();
         
@@ -105,9 +103,7 @@ class AuthController extends Controller
                   
                 }
               
-            }
-
-            if($roles == 2){
+            }elseif($roles == 2){
                 $guru = Guru::where('user_id' , '=', $user->id)->first();
         
                 if($guru == ""){
@@ -117,8 +113,7 @@ class AuthController extends Controller
                   
                 }
               
-            }
-            if($roles == 3 ){
+            }elseif($roles == 3 ){
                 $siswa = Siswa::where('user_id' , '=', $user->id)->first();
         
                 if($siswa == ""){
