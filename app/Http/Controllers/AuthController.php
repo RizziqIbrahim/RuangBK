@@ -71,6 +71,11 @@ class AuthController extends Controller
 
     public function loginEmail(Request $request)
     {
+        $request->user()->currentAccessToken()->delete();
+        $token= $request->user()->createToken('token-name')->plainTextToken;
+        $user = $request->user();
+        $roles = $user->getRoleNames();
+
         $rules = array(
             'email' => 'required|string|email|',
             'password' => 'required|string|min:6'
@@ -92,6 +97,41 @@ class AuthController extends Controller
                 ], 401);
             }
 
+            if($roles == 1){
+                $admin = Admin::where('user_id' , '=', $user->id)->first();
+        
+                if($admin == ""){
+                    $identias = "belum terisi";
+                }else{
+                    $identias ="terisi";
+                  
+                }
+              
+            }
+
+            if($roles == 2){
+                $guru = Guru::where('user_id' , '=', $user->id)->first();
+        
+                if($guru == ""){
+                    $identias = "belum terisi";
+                }else{
+                    $identias ="terisi";
+                  
+                }
+              
+            }
+            if($roles == 3 ){
+                $siswa = Siswa::where('user_id' , '=', $user->id)->first();
+        
+                if($siswa == ""){
+                    $identias = "belum terisi";
+                }else{
+                    $identias ="terisi";
+                  
+                }
+              
+            }
+
             if($user->status == 0){
                 return response()->json([
                     'message' => 'User Tidak Aktif'
@@ -106,13 +146,19 @@ class AuthController extends Controller
                 'message'   => 'Success',
                 'user'      => $user,
                 'token'      => $token,
-                'roles' => $roles
+                'roles' => $roles,
+                'identitas' => $identitas
             ], 200);
         }   
     }
 
     public function loginNomor(Request $request)
     {
+        $request->user()->currentAccessToken()->delete();
+        $token= $request->user()->createToken('token-name')->plainTextToken;
+        $user = $request->user();
+        $roles = $user->getRoleNames();
+
         $rules = array(
             'nomor_telp' => 'required',
             'password' => 'required|string|min:6'
@@ -134,6 +180,41 @@ class AuthController extends Controller
                 ], 401);
             }
 
+            if($roles == 1){
+                $admin = Admin::where('user_id' , '=', $user->id)->first();
+        
+                if($admin == ""){
+                    $identias = "belum terisi";
+                }else{
+                    $identias ="terisi";
+                  
+                }
+              
+            }
+
+            if($roles == 2){
+                $guru = Guru::where('user_id' , '=', $user->id)->first();
+        
+                if($guru == ""){
+                    $identias = "belum terisi";
+                }else{
+                    $identias ="terisi";
+                  
+                }
+              
+            }
+            if($roles == 3 ){
+                $siswa = Siswa::where('user_id' , '=', $user->id)->first();
+        
+                if($siswa == ""){
+                    $identias = "belum terisi";
+                }else{
+                    $identias ="terisi";
+                  
+                }
+              
+            }
+
             if($user->status == 0){
                 return response()->json([
                     'message' => 'User Tidak Aktif'
@@ -150,7 +231,8 @@ class AuthController extends Controller
                 'message'   => 'Success',
                 'user'      => $user,
                 'token'      => $token,
-                'roles' => $roles
+                'roles' => $roles,
+                'identitas' => $identitas
             ], 200);
         }
 
