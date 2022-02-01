@@ -91,40 +91,7 @@ class AuthController extends Controller
                     'message' => 'Unaouthorized'
                 ], 401);
             }
-
-
-            if($roles == 1){
-                $admin = Admin::where('user_id' , '=', $user->id)->first();
-        
-                if($admin == ""){
-                    $identias = "belum terisi";
-                }else{
-                    $identias ="terisi";
-                  
-                }
-              
-            }elseif($roles == 2){
-                $guru = Guru::where('user_id' , '=', $user->id)->first();
-        
-                if($guru == ""){
-                    $identias = "belum terisi";
-                }else{
-                    $identias ="terisi";
-                  
-                }
-              
-            }elseif($roles == 3 ){
-                $siswa = Siswa::where('user_id' , '=', $user->id)->first();
-        
-                if($siswa == ""){
-                    $identias = "belum terisi";
-                }else{
-                    $identias ="terisi";
-                  
-                }
-              
-            }
-
+            
             if($user->status == 0){
                 return response()->json([
                     'message' => 'User Tidak Aktif'
@@ -134,13 +101,45 @@ class AuthController extends Controller
             
             $token = $user->createToken('token-name')->plainTextToken;
             $roles = $user->getRoleNames();
+            
+            if($roles == "1"){
+                $admin = Admin::where('user_id' , '=', $user->id)->first();
+        
+                if($admin == ""){
+                    $identitas = "belum terisi";
+                }else{
+                    $identitas ="terisi";
+                  
+                }
+              
+            }elseif($roles == "2"){
+                $guru = Guru::where('user_id' , '=', $user->id)->first();
+        
+                if($guru == ""){
+                    $identitas = "belum terisi";
+                }else{
+                    $identitas ="terisi";
+                  
+                }
+              
+            }elseif($roles == "3" ){
+                $siswa = Siswa::where('user_id' , '=', $user->id)->first();
+        
+                if($siswa == ""){
+                    $identitas = "belum terisi";
+                }else{
+                    $identitas ="terisi";
+                  
+                }
+              
+            }
           
             return response()->json([
                 'message'   => 'Success',
                 'user'      => $user,
                 'token'      => $token,
                 'roles' => $roles,
-                'identitas' => $identitas
+                // 'identitas' => $identitas
             ], 200);
         }   
     }
@@ -173,41 +172,6 @@ class AuthController extends Controller
                 ], 401);
             }
 
-            if($roles == 1){
-                $admin = Admin::where('user_id' , '=', $user->id)->first();
-        
-                if($admin == ""){
-                    $identias = "belum terisi";
-                }else{
-                    $identias ="terisi";
-                  
-                }
-              
-            }
-
-            if($roles == 2){
-                $guru = Guru::where('user_id' , '=', $user->id)->first();
-        
-                if($guru == ""){
-                    $identias = "belum terisi";
-                }else{
-                    $identias ="terisi";
-                  
-                }
-              
-            }
-            if($roles == 3 ){
-                $siswa = Siswa::where('user_id' , '=', $user->id)->first();
-        
-                if($siswa == ""){
-                    $identias = "belum terisi";
-                }else{
-                    $identias ="terisi";
-                  
-                }
-              
-            }
-
             if($user->status == 0){
                 return response()->json([
                     'message' => 'User Tidak Aktif'
@@ -217,6 +181,38 @@ class AuthController extends Controller
             
             $token = $user->createToken('token-name')->plainTextToken;
             $roles = $user->getRoleNames();
+
+            if($roles == "1"){
+                $admin = Admin::where('user_id' , '=', $user->id)->first();
+        
+                if($admin == ""){
+                    $identitas = "belum terisi";
+                }else{
+                    $identitas ="terisi";
+                  
+                }
+              
+            }elseif($roles == "2"){
+                $guru = Guru::where('user_id' , '=', $user->id)->first();
+        
+                if($guru == ""){
+                    $identitas = "belum terisi";
+                }else{
+                    $identitas ="terisi";
+                  
+                }
+              
+            }elseif($roles == "3" ){
+                $siswa = Siswa::where('user_id' , '=', $user->id)->first();
+        
+                if($siswa == ""){
+                    $identitas = "belum terisi";
+                }else{
+                    $identitas ="terisi";
+                  
+                }
+              
+            }
           
             
           
@@ -232,43 +228,43 @@ class AuthController extends Controller
         
     }
 
-    public function authMe(Request $request)
-    {
-        $request->user()->currentAccessToken()->delete();
-        $token= $request->user()->createToken('token-name')->plainTextToken;
-        $user = $request->user();
-        $roles = $user->getRoleNames();
+    // public function authMe(Request $request)
+    // {
+    //     $request->user()->currentAccessToken()->delete();
+    //     $token= $request->user()->createToken('token-name')->plainTextToken;
+    //     $user = $request->user();
+    //     $roles = $user->getRoleNames();
           
-            if($roles == 1 | 2){
-                $guru = Guru::where('user_id' , '=', $user->id)->first();
+    //         if($roles == 1 | 2){
+    //             $guru = Guru::where('user_id' , '=', $user->id)->first();
         
-                if($guru == ""){
-                    $identias = "belum terisi";
-                }else{
-                    $identias ="terisi";
+    //             if($guru == ""){
+    //                 $identitas = "belum terisi";
+    //             }else{
+    //                 $identitas ="terisi";
                   
-                }
+    //             }
               
-            }
-            if($roles == 3 ){
-                $siswa = Siswa::where('user_id' , '=', $user->id)->first();
+    //         }
+    //         if($roles == 3 ){
+    //             $siswa = Siswa::where('user_id' , '=', $user->id)->first();
         
-                if($siswa == ""){
-                    $identias = "belum terisi";
-                }else{
-                    $identias ="terisi";
+    //             if($siswa == ""){
+    //                 $identitas = "belum terisi";
+    //             }else{
+    //                 $identitas ="terisi";
                   
-                }
+    //             }
               
-            }
+    //         }
        
-        return response()->json([
-            'message'   => 'Success',
-            'user'      => $user,
-            'token'      => $token,
-            'identias' => $identias
-        ], 200);
-    }
+    //     return response()->json([
+    //         'message'   => 'Success',
+    //         'user'      => $user,
+    //         'token'      => $token,
+    //         'identitas' => $identitas
+    //     ], 200);
+    // }
 
     
 
