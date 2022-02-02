@@ -36,6 +36,7 @@ class GuruController extends Controller
             'gurus.id',
             'gurus.user_id',
             'users.status',
+            'gurus.npsn',
             'gurus.nama_guru',
             'users.email',
             'users.nomor_telp',
@@ -76,6 +77,7 @@ class GuruController extends Controller
         $user = $request->user();
         {
             $rules = array(
+                'npsn' => 'required|string|max:16',
                 'nama_guru' => 'required|string|max:20',
                 'tempat_lahir' => 'required|string|max:255',
                 'tanggal_lahir' => 'required|date',
@@ -95,6 +97,7 @@ class GuruController extends Controller
                 $result = CloudinaryStorage::upload($image->getRealPath(), $image->getClientOriginalName());
                     $guru = Guru::create([
                         'user_id' => $user->id,
+                        'npsn' => $request->npsn,
                         'nama_guru' => $request->nama_guru,
                         'tempat_lahir' => $request->tempat_lahir,
                         'tanggal_lahir' => $request->tanggal_lahir,
@@ -152,6 +155,7 @@ class GuruController extends Controller
         $user = $request->user();
         $guru = Guru::where('user_id', $id)->first();
         // $guru->user_id = $user->id;
+        $guru->npsn = $request->npsn;
         $guru->nama_siswa = $request->nama_siswa;
         $guru->tempat_lahir = $request->tempat_lahir;
         $guru->tanggal_lahir = $request->tanggal_lahir;

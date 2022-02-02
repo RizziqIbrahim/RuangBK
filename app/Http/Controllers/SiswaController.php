@@ -30,6 +30,7 @@ class SiswaController extends Controller
             'siswas.id',
             'siswas.user_id',
             'users.status',
+            'siswas.nisn',
             'siswas.nama_siswa',
             'users.email',
             'users.nomor_telp',
@@ -56,6 +57,7 @@ class SiswaController extends Controller
         $user = $request->user();
         {
             $rules = array(
+                'nisn' => 'required|string|max:16',
                 'nama_siswa' => 'required|string|max:20',
                 'tempat_lahir' => 'required|string|max:255',
                 'tanggal_lahir' => 'required|date',
@@ -75,6 +77,7 @@ class SiswaController extends Controller
                 $result = CloudinaryStorage::upload($image->getRealPath(), $image->getClientOriginalName());
                     $siswa = Siswa::create([
                         'user_id' => $user->id,
+                        'nisn' => $request->nisn,
                         'nama_siswa' => $request->nama_siswa,
                         'tempat_lahir' => $request->tempat_lahir,
                         'tanggal_lahir' => $request->tanggal_lahir,
@@ -112,6 +115,7 @@ class SiswaController extends Controller
         $user = $request->user();
         $siswa = Siswa::where('user_id', $id)->first();
         // $siswa->user_id = $user->id;
+        $siswa->nisn = $request-> nisn;
         $siswa->nama_siswa = $request->nama_siswa;
         $siswa->tempat_lahir = $request->tempat_lahir;
         $siswa->tanggal_lahir = $request->tanggal_lahir;
