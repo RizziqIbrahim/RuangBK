@@ -6,11 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Controller\{
     SiswaController,
+    AdminContoller,
+    GuruController
 };
 use App\Models\{
     Siswa,
     User,
-
+    Admin,
+    Guru
 };
 
 use Hash;
@@ -102,7 +105,7 @@ class AuthController extends Controller
             $token = $user->createToken('token-name')->plainTextToken;
             $roles = $user->getRoleNames();
             
-            if($roles == "admin"){
+            if($roles[0] == "admin"){
                 $admin = Admin::where('user_id' , '=', $user->id)->first();
         
                 if($admin == ""){
@@ -112,7 +115,7 @@ class AuthController extends Controller
                   
                 }
               
-            }elseif($roles == "guru"){
+            }elseif($roles[0] == "guru"){
                 $guru = Guru::where('user_id' , '=', $user->id)->first();
         
                 if($guru == ""){
@@ -122,13 +125,13 @@ class AuthController extends Controller
                   
                 }
               
-            }elseif($roles == "siswa" ){
+            }else{
                 $siswa = Siswa::where('user_id' , '=', $user->id)->first();
         
                 if($siswa == ""){
                     $identitas = "belum terisi";
                 }else{
-                    $identitas ="terisi";
+                    $identitas ="terisi 3";
                   
                 }
               
@@ -139,8 +142,9 @@ class AuthController extends Controller
                 'user'      => $user,
                 'token'      => $token,
                 'roles' => $roles,
-                // 'identitas' => $identitas
+                'identitas' => $identitas
             ], 200);
+
         }   
     }
 
@@ -182,7 +186,7 @@ class AuthController extends Controller
             $token = $user->createToken('token-name')->plainTextToken;
             $roles = $user->getRoleNames();
 
-            if($roles == "1"){
+            if($roles[0] == "admin"){
                 $admin = Admin::where('user_id' , '=', $user->id)->first();
         
                 if($admin == ""){
@@ -192,7 +196,7 @@ class AuthController extends Controller
                   
                 }
               
-            }elseif($roles == "2"){
+            }elseif($roles[0] == "guru"){
                 $guru = Guru::where('user_id' , '=', $user->id)->first();
         
                 if($guru == ""){
@@ -202,19 +206,17 @@ class AuthController extends Controller
                   
                 }
               
-            }elseif($roles == "3" ){
+            }else{
                 $siswa = Siswa::where('user_id' , '=', $user->id)->first();
         
                 if($siswa == ""){
                     $identitas = "belum terisi";
                 }else{
-                    $identitas ="terisi";
+                    $identitas ="terisi 3";
                   
                 }
               
             }
-          
-            
           
             return response()->json([
                 'message'   => 'Success',

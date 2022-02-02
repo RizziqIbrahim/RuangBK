@@ -103,6 +103,12 @@ class SiswaController extends Controller
 
     public function update(Request $request, $id)
     {
+        $file   = $request->file('foto');
+        // return $request;
+
+        $image = Siswa::where('user_id', $id)->value("foto");
+        $result = CloudinaryStorage::replace($image, $file->getRealPath(), $file->getClientOriginalName());
+
         $user = $request->user();
         $siswa = Siswa::where('user_id', $id)->first();
         // $siswa->user_id = $user->id;
@@ -110,7 +116,9 @@ class SiswaController extends Controller
         $siswa->tempat_lahir = $request->tempat_lahir;
         $siswa->tanggal_lahir = $request->tanggal_lahir;
         $siswa->alamat = $request->alamat;
-        $siswa->foto = $request->foto;
+        $siswa->foto = $result;
+
+        
         if($siswa->save()){
             return response()->json([
                 "status" => "success",

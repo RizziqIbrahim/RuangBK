@@ -143,17 +143,21 @@ class GuruController extends Controller
     public function update(Request $request, $id)
     {
 
-        // $file   = $request->file('image');
-        // $result = CloudinaryStorage::replace($image->image, $file->getRealPath(), $file->getClientOriginalName());
+        $file   = $request->file('foto');
+        // return $request;
+
+        $image = Guru::where('user_id', $id)->value("foto");
+        $result = CloudinaryStorage::replace($image, $file->getRealPath(), $file->getClientOriginalName());
 
         $user = $request->user();
         $guru = Guru::where('user_id', $id)->first();
         // $guru->user_id = $user->id;
-        $guru->nama_guru = $request->nama_guru;
+        $guru->nama_siswa = $request->nama_siswa;
         $guru->tempat_lahir = $request->tempat_lahir;
         $guru->tanggal_lahir = $request->tanggal_lahir;
         $guru->alamat = $request->alamat;
-        $guru->foto = $request->foto;
+        $guru->foto = $result;
+        
         if($guru->save()){
             return response()->json([
                 "status" => "success",
