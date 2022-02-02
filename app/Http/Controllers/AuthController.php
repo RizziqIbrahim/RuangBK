@@ -51,8 +51,6 @@ class AuthController extends Controller
                 'role' => $request->role,
                 'status' => $request->status
             ]);
-
-            
             
             if($request->role == 1){
                 $user->assignRole('admin');
@@ -63,11 +61,55 @@ class AuthController extends Controller
             }
             
             $token = $user->createToken('token-name')->plainTextToken;
+            
+            // $user = $request->user();
+            $gurus = Guru::create([
+                'nama_guru' => $user->nama_user,
+                'user_id' => $user->id,
+            ]);
+
+            $roles = $user->getRoleNames();
+            
+            if($roles[0] == "admin"){
+                $admin = Admin::where('user_id' , '=', $user->id)->first();
+        
+                if($admin->alamat == ""){
+                    $identitas = "belum terisi";
+                }else{
+                    $identitas ="terisi";
+                  
+                }
+              
+            }elseif($roles[0] == "guru"){
+                $guru = Guru::where('user_id' , '=', $user->id)->first();
+        
+                if($guru->alamat == ""){
+                    $identitas = "belum terisi";
+                }else{
+                    $identitas ="terisi";
+                  
+                }
+              
+            }else{
+                $siswa = Siswa::where('user_id' , '=', $user->id)->first();
+        
+                if($siswa->alamat == ""){
+                    $identitas = "belum terisi";
+                }else{
+                    $identitas ="terisi";
+                  
+                }
+              
+            }
+            
 
             return response()->json([
                 'message'   => 'Success',
+                'roles'        => $roles[0],
                 'token'      => $token,
-                'user'      => $user
+                'identitas' => $identitas,
+                'user'      => $user,
+                'guru'      => $gurus,
             ], 200);
         }
     }
@@ -108,7 +150,7 @@ class AuthController extends Controller
             if($roles[0] == "admin"){
                 $admin = Admin::where('user_id' , '=', $user->id)->first();
         
-                if($admin == ""){
+                if($admin->alamat == ""){
                     $identitas = "belum terisi";
                 }else{
                     $identitas ="terisi";
@@ -118,7 +160,7 @@ class AuthController extends Controller
             }elseif($roles[0] == "guru"){
                 $guru = Guru::where('user_id' , '=', $user->id)->first();
         
-                if($guru == ""){
+                if($guru->alamat == ""){
                     $identitas = "belum terisi";
                 }else{
                     $identitas ="terisi";
@@ -128,10 +170,10 @@ class AuthController extends Controller
             }else{
                 $siswa = Siswa::where('user_id' , '=', $user->id)->first();
         
-                if($siswa == ""){
+                if($siswa->alamat == ""){
                     $identitas = "belum terisi";
                 }else{
-                    $identitas ="terisi 3";
+                    $identitas ="terisi";
                   
                 }
               
@@ -150,11 +192,6 @@ class AuthController extends Controller
 
     public function loginNomor(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
-        $token= $request->user()->createToken('token-name')->plainTextToken;
-        $user = $request->user();
-        $roles = $user->getRoleNames();
-
         $rules = array(
             'nomor_telp' => 'required',
             'password' => 'required|string|min:6'
@@ -189,7 +226,7 @@ class AuthController extends Controller
             if($roles[0] == "admin"){
                 $admin = Admin::where('user_id' , '=', $user->id)->first();
         
-                if($admin == ""){
+                if($admin->alamat == ""){
                     $identitas = "belum terisi";
                 }else{
                     $identitas ="terisi";
@@ -199,7 +236,7 @@ class AuthController extends Controller
             }elseif($roles[0] == "guru"){
                 $guru = Guru::where('user_id' , '=', $user->id)->first();
         
-                if($guru == ""){
+                if($guru->alamat == ""){
                     $identitas = "belum terisi";
                 }else{
                     $identitas ="terisi";
@@ -209,10 +246,10 @@ class AuthController extends Controller
             }else{
                 $siswa = Siswa::where('user_id' , '=', $user->id)->first();
         
-                if($siswa == ""){
+                if($siswa->alamat == ""){
                     $identitas = "belum terisi";
                 }else{
-                    $identitas ="terisi 3";
+                    $identitas ="terisi";
                   
                 }
               
