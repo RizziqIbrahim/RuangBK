@@ -74,42 +74,42 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        $user = $request->user();
-        {
-            $rules = array(
-                'nama_admin' => 'required|string|max:20',
-                'tempat_lahir' => 'required|string|max:255',
-                'tanggal_lahir' => 'required|date',
-                'alamat' => 'required|string|max:255',
-                'foto' => 'required',
-            );
+        // $user = $request->user();
+        // {
+        //     $rules = array(
+        //         'nama_admin' => 'required|string|max:20',
+        //         'tempat_lahir' => 'required|string|max:255',
+        //         'tanggal_lahir' => 'required|date',
+        //         'alamat' => 'required|string|max:255',
+        //         'foto' => 'required',
+        //     );
     
-            $cek = Validator::make($request->all(),$rules);
+        //     $cek = Validator::make($request->all(),$rules);
     
-            if($cek->fails()){
-                $errorString = implode(",",$cek->messages()->all());
-                return response()->json([
-                    'message' => $errorString
-                ], 401);
-            }else{
-                $image  = $request->file('foto');
-                $result = CloudinaryStorage::upload($image->getRealPath(), $image->getClientOriginalName());
-                    $admin = Admin::create([
-                        'user_id' => $user->id,
-                        'nama_admin' => $request->nama_admin,
-                        'tempat_lahir' => $request->tempat_lahir,
-                        'tanggal_lahir' => $request->tanggal_lahir,
-                        'alamat' => $request->alamat,
-                        'foto' => $result,
-                    ]);
+        //     if($cek->fails()){
+        //         $errorString = implode(",",$cek->messages()->all());
+        //         return response()->json([
+        //             'message' => $errorString
+        //         ], 401);
+        //     }else{
+        //         $image  = $request->file('foto');
+        //         $result = CloudinaryStorage::upload($image->getRealPath(), $image->getClientOriginalName());
+        //             $admin = Admin::create([
+        //                 'user_id' => $user->id,
+        //                 'nama_admin' => $request->nama_admin,
+        //                 'tempat_lahir' => $request->tempat_lahir,
+        //                 'tanggal_lahir' => $request->tanggal_lahir,
+        //                 'alamat' => $request->alamat,
+        //                 'foto' => $result,
+        //             ]);
         
-                return response()->json([
-                    "status" => "success",
-                    "message" => 'Berhasil Menyimpan Data',
-                ]);
-            }
+        //         return response()->json([
+        //             "status" => "success",
+        //             "message" => 'Berhasil Menyimpan Data',
+        //         ]);
+        //     }
     
-        }
+        // }
     }
 
     /**
