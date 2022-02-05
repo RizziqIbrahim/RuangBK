@@ -47,6 +47,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('admin', AdminController::class);
     Route::put("siswa/{id}", [SiswaController::class, 'update']);
     Route::put("guru/{id}", [SiswaController::class, 'update']);
+    Route::get('/user/export/xlsx', [UserController::class ,'exportXL']);
+    Route::get('upload', [UserController::class ,'upload']);
+    Route::post('user/upload/data' , [UserController::class ,'uploadData']);
     //delete
     
 

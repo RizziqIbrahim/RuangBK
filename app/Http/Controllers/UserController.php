@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\UsersImport;
+use App\Exports\UsersExport;
 use App\Http\Controller\{
     SiswaController,
     AuthController,
@@ -221,5 +224,19 @@ class UserController extends Controller
             ]);
         }
         
+    }
+    public function exportUser()
+    {
+        return Excel::download(new UsersExport, 'users.xlsx');
+    }
+    public function upload()
+    {
+        return view('upload');
+    }
+    public function uploadData(Request $request)
+    {
+        Excel::import(new UsersImport,$request->file('file')->store('temp'));
+
+        return redirect()->route('user');
     }
 }

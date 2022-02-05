@@ -29,14 +29,6 @@ class UsersImport implements ToModel
             $user->assignRole('guru');
         }elseif ($row[3] == 3) {
             $user->assignRole('siswa');
-        }elseif ($row[3] == 4) {
-            $user->assignRole('wali kelas');
-        }elseif ($row[3] == 5) {
-            $user->assignRole('kepala sekolah');
-        }elseif ($row[3] == 6) {
-            $user->assignRole('wali siswa');
-        }else {
-            $user->assignRole('keuangan');
         }
 
         return $user;
