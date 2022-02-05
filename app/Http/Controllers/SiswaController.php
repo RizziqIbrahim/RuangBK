@@ -136,14 +136,10 @@ class SiswaController extends Controller
         }
     }
     
-    public function updateNpsn(Request $request, $id)
+    public function npsn(Request $request, $id)
     {
-
-        $file   = $request->file('foto');
-        // return $request;
         $user = $request->user();
         $siswa = Siswa::where('user_id', $user->id)->first();
-        // $siswa->user_id = $user->id;
         $siswa->npsn = $request->npsn;
         
         if($siswa->save()){

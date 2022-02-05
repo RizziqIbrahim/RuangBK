@@ -205,14 +205,10 @@ class GuruController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function updateNpsn(Request $request, $id)
+    public function npsn(Request $request)
     {
-
-        $file   = $request->file('foto');
-        // return $request;
         $user = $request->user();
         $guru = Guru::where('user_id', $user->id)->first();
-        // $guru->user_id = $user->id;
         $guru->npsn = $request->npsn;
         
         if($guru->save()){

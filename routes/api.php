@@ -41,6 +41,7 @@ Route::post('/register',[AuthController::class, 'register']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/authme', [AuthController::class ,'authMe']);
+
     Route::resource('siswa', SiswaController::class);
     Route::resource('users', UserController::class);
     Route::resource('guru', GuruController::class);
@@ -50,9 +51,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post("guru/update", [GuruController::class, 'update']);
     Route::post("admin/update", [AdminController::class, 'update']);
     
-    Route::post("siswa/nisn", [SiswaController::class, 'update']);
-    Route::post("guru/npsn", [GuruController::class, 'update']);
-    Route::post("admin/npsn", [AdminController::class, 'update']);
+    Route::post("siswa/nisn", [SiswaController::class, 'npsn']);
+    Route::post("guru/npsn", [GuruController::class, 'npsn']);
+    Route::post("admin/npsn", [AdminController::class, 'npsn']);
 
     Route::get('/user/export/xlsx', [UserController::class ,'exportXL']);
     Route::get('upload', [UserController::class ,'upload']);

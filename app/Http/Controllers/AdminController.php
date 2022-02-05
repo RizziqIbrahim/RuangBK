@@ -173,14 +173,11 @@ class AdminController extends Controller
         }
     }
 
-    public function updateNpsn(Request $request, $id)
+    public function npsn(Request $request, $id)
     {
 
-        $file   = $request->file('foto');
-        // return $request;
         $user = $request->user();
         $admin = Admin::where('user_id', $user->id)->first();
-        // $admin->user_id = $user->id;
         $admin->npsn = $request->npsn;
         
         if($admin->save()){
