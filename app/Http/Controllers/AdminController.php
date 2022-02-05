@@ -144,17 +144,22 @@ class AdminController extends Controller
     public function update(Request $request, $id)
     {
 
-        // $file   = $request->file('image');
-        // $result = CloudinaryStorage::replace($image->image, $file->getRealPath(), $file->getClientOriginalName());
+        $file   = $request->file('foto');
+        
+        $user = $request->user();
+        $image = Admin::where('user_id', $user->id)->value("foto");
+        $result = CloudinaryStorage::replace($image, $file->getRealPath(), $file->getClientOriginalName());
 
         $user = $request->user();
-        $admin = Admin::where('user_id', $id)->first();
+        $admin = Admin::where('user_id', $user->id)->first();
         // $admin->user_id = $user->id;
-        $admin->nama_admin = $request->nama_admin;
+        $admin->npsn = $request->npsn;
+        $admin->nama_siswa = $request->nama_siswa;
         $admin->tempat_lahir = $request->tempat_lahir;
         $admin->tanggal_lahir = $request->tanggal_lahir;
         $admin->alamat = $request->alamat;
-        $admin->foto = $request->foto;
+        $admin->foto = $result;
+        
         if($admin->save()){
             return response()->json([
                 "status" => "success",

@@ -184,8 +184,38 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = $request->user();
+        $users = User::where('id', $user->id)->first();
+        $users->nama_user = $request->nama_user;
+        $users->password = $request->password;
+        $users->email = $request->email;
+        $users->nomor_telp = $request->nomor_telp;
+        $users->role = $user->role;
+        $users->status = $user->status;
+        
+        if($users->save()){
+            return response()->json([
+                "status" => "success",
+                "message" => 'Berhasil Menyimpan Data'
+            ]);
+        }else{
+            return response()->json([
+                "status" => "failed",
+                "message" => 'Gagal Menyimpan Data'
+            ]);
+        }
     }
+
+    // public function statusActive($id)
+    // {
+    //     try {
+    //         $id = explode(",", $id);
+    //         User::whereIn('id', $id)->delete();
+    //         return response()->json(["status" => "Success","message" => "Berhasil Menghapus Data"]);
+    //     } catch (\Throwable $th) {
+    //         //throw $th;
+    //     }
+    // }
 
     /**
      * Remove the specified resource from storage.

@@ -209,12 +209,12 @@ class GuruController extends Controller
 
         $file   = $request->file('foto');
         // return $request;
-
-        $image = Guru::where('user_id', $id)->value("foto");
+        $user = $request->user();
+        $image = Guru::where('user_id', $user->id)->value("foto");
         $result = CloudinaryStorage::replace($image, $file->getRealPath(), $file->getClientOriginalName());
 
         $user = $request->user();
-        $guru = Guru::where('user_id', $id)->first();
+        $guru = Guru::where('user_id', $user->id)->first();
         // $guru->user_id = $user->id;
         $guru->npsn = $request->npsn;
         $guru->nama_siswa = $request->nama_siswa;

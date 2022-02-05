@@ -108,12 +108,12 @@ class SiswaController extends Controller
     {
         $file   = $request->file('foto');
         // return $request;
-
-        $image = Siswa::where('user_id', $id)->value("foto");
+        $user = $request->user();
+        $image = Siswa::where('user_id', $user->id)->value("foto");
         $result = CloudinaryStorage::replace($image, $file->getRealPath(), $file->getClientOriginalName());
 
         $user = $request->user();
-        $siswa = Siswa::where('user_id', $id)->first();
+        $siswa = Siswa::where('user_id', $user->id)->first();
         // $siswa->user_id = $user->id;
         $siswa->nisn = $request-> nisn;
         $siswa->nama_siswa = $request->nama_siswa;
