@@ -45,10 +45,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('guru', GuruController::class);
     Route::resource('admin', AdminController::class);
-    Route::put("siswa/{id}", [SiswaController::class, 'update']);
-    Route::put("guru/{id}", [SiswaController::class, 'update']);
+
+    Route::post("siswa/update", [SiswaController::class, 'update']);
+    Route::post("guru/update", [GuruController::class, 'update']);
+    Route::post("admin/update", [AdminController::class, 'update']);
+
     Route::get('/user/export/xlsx', [UserController::class ,'exportXL']);
     Route::get('upload', [UserController::class ,'upload']);
+    
     Route::post('user/upload/data' , [UserController::class ,'uploadData']);
     Route::post('register-user', [GuruController::class, 'registerUser']);
     //delete
