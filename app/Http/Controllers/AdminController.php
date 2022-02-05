@@ -173,6 +173,29 @@ class AdminController extends Controller
         }
     }
 
+    public function updateNpsn(Request $request, $id)
+    {
+
+        $file   = $request->file('foto');
+        // return $request;
+        $user = $request->user();
+        $admin = Admin::where('user_id', $user->id)->first();
+        // $admin->user_id = $user->id;
+        $admin->npsn = $request->npsn;
+        
+        if($admin->save()){
+            return response()->json([
+                "status" => "success",
+                "message" => 'Berhasil Menyimpan Data'
+            ]);
+        }else{
+            return response()->json([
+                "status" => "failed",
+                "message" => 'Gagal Menyimpan Data'
+            ]);
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      *

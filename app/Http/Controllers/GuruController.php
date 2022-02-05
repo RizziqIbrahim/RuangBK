@@ -204,6 +204,30 @@ class GuruController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    public function updateNpsn(Request $request, $id)
+    {
+
+        $file   = $request->file('foto');
+        // return $request;
+        $user = $request->user();
+        $guru = Guru::where('user_id', $user->id)->first();
+        // $guru->user_id = $user->id;
+        $guru->npsn = $request->npsn;
+        
+        if($guru->save()){
+            return response()->json([
+                "status" => "success",
+                "message" => 'Berhasil Menyimpan Data'
+            ]);
+        }else{
+            return response()->json([
+                "status" => "failed",
+                "message" => 'Gagal Menyimpan Data'
+            ]);
+        }
+    }
+     
     public function update(Request $request, $id)
     {
 

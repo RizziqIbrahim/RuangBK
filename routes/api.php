@@ -49,10 +49,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post("siswa/update", [SiswaController::class, 'update']);
     Route::post("guru/update", [GuruController::class, 'update']);
     Route::post("admin/update", [AdminController::class, 'update']);
+    
+    Route::post("siswa/nisn", [SiswaController::class, 'update']);
+    Route::post("guru/npsn", [GuruController::class, 'update']);
+    Route::post("admin/npsn", [AdminController::class, 'update']);
 
     Route::get('/user/export/xlsx', [UserController::class ,'exportXL']);
     Route::get('upload', [UserController::class ,'upload']);
-    
+
     Route::post('user/upload/data' , [UserController::class ,'uploadData']);
     Route::post('register-user', [GuruController::class, 'registerUser']);
     //delete

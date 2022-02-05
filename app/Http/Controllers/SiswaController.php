@@ -134,7 +134,30 @@ class SiswaController extends Controller
                 "message" => 'Gagal Menyimpan Data'
             ]);
         }
-    }  
+    }
+    
+    public function updateNpsn(Request $request, $id)
+    {
+
+        $file   = $request->file('foto');
+        // return $request;
+        $user = $request->user();
+        $siswa = Siswa::where('user_id', $user->id)->first();
+        // $siswa->user_id = $user->id;
+        $siswa->npsn = $request->npsn;
+        
+        if($siswa->save()){
+            return response()->json([
+                "status" => "success",
+                "message" => 'Berhasil Menyimpan Data'
+            ]);
+        }else{
+            return response()->json([
+                "status" => "failed",
+                "message" => 'Gagal Menyimpan Data'
+            ]);
+        }
+    }
 
     
     public function destroy($id)
