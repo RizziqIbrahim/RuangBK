@@ -68,7 +68,31 @@ class AuthController extends Controller
                 'user_id' => $user->id,
             ]);
 
+
             $roles = $user->getRoleNames();
+
+            if($roles[0] == "admin"){
+                $admin = Admin::where('user_id' , '=', $user->id)->first();
+        
+                if($admin->npsn == ""){
+                    $npsn = "belum terisi";
+                }else{
+                    $npsn ="terisi";
+                  
+                }
+              
+            }elseif($roles[0] == "guru"){
+                $guru = Guru::where('user_id' , '=', $user->id)->first();
+        
+                if($guru->npsn == ""){
+                    $npsn = "belum terisi";
+                }else{
+                    $npsn ="terisi";
+                  
+                }
+              
+            }
+
             
             if($roles[0] == "admin"){
                 $admin = Admin::where('user_id' , '=', $user->id)->first();
@@ -110,6 +134,7 @@ class AuthController extends Controller
                 'identitas' => $identitas,
                 'user'      => $user,
                 'guru'      => $gurus,
+                'npsn'      => $npsn
             ], 200);
         }
     }
@@ -146,6 +171,28 @@ class AuthController extends Controller
             
             $token = $user->createToken('token-name')->plainTextToken;
             $roles = $user->getRoleNames();
+
+            if($roles[0] == "admin"){
+                $admin = Admin::where('user_id' , '=', $user->id)->first();
+        
+                if($admin->npsn == ""){
+                    $npsn = "belum terisi";
+                }else{
+                    $npsn ="terisi";
+                  
+                }
+              
+            }elseif($roles[0] == "guru"){
+                $guru = Guru::where('user_id' , '=', $user->id)->first();
+        
+                if($guru->npsn == ""){
+                    $npsn = "belum terisi";
+                }else{
+                    $npsn ="terisi";
+                  
+                }
+              
+            }
             
             if($roles[0] == "admin"){
                 $admin = Admin::where('user_id' , '=', $user->id)->first();
@@ -184,7 +231,8 @@ class AuthController extends Controller
                 'user'      => $user,
                 'token'      => $token,
                 'roles' => $roles,
-                'identitas' => $identitas
+                'identitas' => $identitas,
+                'npsn' => $npsn
             ], 200);
 
         }   

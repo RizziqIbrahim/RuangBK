@@ -56,6 +56,67 @@ class GuruController extends Controller
         ]);
     }
 
+    public function register(Request $request)
+    {
+        $rules = array(
+            'nama_user' => 'required|string|max:255',
+            'email' => 'required|string|email|unique:users,email',
+            'password' => 'required|string|min:6|confirmed',
+            'nomor_telp' => 'required|string|unique:users',
+            'role' => 'required|max:1',
+            'status' => 'required|max:1'
+        );
+
+        $cek = Validator::make($request->all(),$rules);
+
+        if($cek->fails()){
+            $errorString = implode(",",$cek->messages()->all());
+            return response()->json([
+                'message' => $errorString
+            ], 401);
+        }else{
+            $user = User::create([
+                'nama_user' => $request->nama_user,
+                'password' => bcrypt($request->password),
+                'email' => $request->email,
+                'nomor_telp' => $request->nomor_telp,
+                'role' => $request->role,
+                'status' => $request->status
+
+            ]);
+            
+            if($request->role == 1){
+                $user->assignRole('admin');
+            }elseif ($request->role == 2) {
+                $user->assignRole('guru');
+            }else{
+                $user->assignRole('siswa');
+            }
+
+            $token = $user->createToken('token-name')->plainTextToken;
+            
+            // $user = $request->user();
+            $gurus = Guru::create([
+                'nama_guru' => $user->nama_user,
+                'user_id' => $user->id,
+            ]);
+
+            $roles = $user->getRoleNames();
+            
+            
+            
+
+            return response()->json([
+                'message'   => 'Success',
+                'roles'        => $roles[0],
+                'token'      => $token,
+                'identitas' => $identitas,
+                'user'      => $user,
+                'guru'      => $gurus,
+            ], 200);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *
