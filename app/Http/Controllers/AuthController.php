@@ -49,7 +49,7 @@ class AuthController extends Controller
                 'email' => $request->email,
                 'nomor_telp' => $request->nomor_telp,
                 'role' => $request->role,
-                'status' => $request->status
+                'status' => "1"
             ]);
             
             if($request->role == 1){

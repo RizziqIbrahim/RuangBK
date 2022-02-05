@@ -81,7 +81,7 @@ class GuruController extends Controller
                 'email' => $request->email,
                 'nomor_telp' => $request->nomor_telp,
                 'role' => "3",
-                'status' => $request->status
+                'status' => "1"
 
             ]);
             
