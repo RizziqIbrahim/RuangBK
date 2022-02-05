@@ -217,7 +217,7 @@ class GuruController extends Controller
         $guru = Guru::where('user_id', $user->id)->first();
         // $guru->user_id = $user->id;
         $guru->npsn = $request->npsn;
-        $guru->nama_siswa = $request->nama_siswa;
+        $guru->nama_guru = $request->nama_guru;
         $guru->tempat_lahir = $request->tempat_lahir;
         $guru->tanggal_lahir = $request->tanggal_lahir;
         $guru->alamat = $request->alamat;

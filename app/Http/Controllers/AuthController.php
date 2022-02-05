@@ -32,7 +32,7 @@ class AuthController extends Controller
             'password' => 'required|string|min:6|confirmed',
             'nomor_telp' => 'required|string|unique:users',
             'role' => 'required|max:1',
-            'status' => 'required|max:1'
+            // 'status' => 'required|max:1'
         );
 
         $cek = Validator::make($request->all(),$rules);

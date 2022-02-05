@@ -154,7 +154,7 @@ class AdminController extends Controller
         $admin = Admin::where('user_id', $user->id)->first();
         // $admin->user_id = $user->id;
         $admin->npsn = $request->npsn;
-        $admin->nama_siswa = $request->nama_siswa;
+        $admin->nama_admin = $request->nama_admin;
         $admin->tempat_lahir = $request->tempat_lahir;
         $admin->tanggal_lahir = $request->tanggal_lahir;
         $admin->alamat = $request->alamat;
