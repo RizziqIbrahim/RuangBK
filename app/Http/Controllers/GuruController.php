@@ -56,7 +56,7 @@ class GuruController extends Controller
         ]);
     }
 
-    public function register(Request $request)
+    public function registerUser(Request $request)
     {
         $rules = array(
             'nama_user' => 'required|string|max:255',
@@ -77,10 +77,10 @@ class GuruController extends Controller
         }else{
             $user = User::create([
                 'nama_user' => $request->nama_user,
-                'password' => bcrypt($request->password),
+                'password' => bcrypt("12345678"),
                 'email' => $request->email,
                 'nomor_telp' => $request->nomor_telp,
-                'role' => $request->role,
+                'role' => "3",
                 'status' => $request->status
 
             ]);
@@ -96,8 +96,8 @@ class GuruController extends Controller
             $token = $user->createToken('token-name')->plainTextToken;
             
             // $user = $request->user();
-            $gurus = Guru::create([
-                'nama_guru' => $user->nama_user,
+            $siswas = Siswa::create([
+                'nama_siswa' => $user->nama_user,
                 'user_id' => $user->id,
             ]);
 
@@ -112,7 +112,7 @@ class GuruController extends Controller
                 'token'      => $token,
                 'identitas' => $identitas,
                 'user'      => $user,
-                'guru'      => $gurus,
+                'siswa'      => $siswas,
             ], 200);
         }
     }

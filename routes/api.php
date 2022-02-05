@@ -50,6 +50,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user/export/xlsx', [UserController::class ,'exportXL']);
     Route::get('upload', [UserController::class ,'upload']);
     Route::post('user/upload/data' , [UserController::class ,'uploadData']);
+    Route::post('register-user', [GuruController::class, 'registerUser']);
     //delete
     
 
