@@ -62,7 +62,7 @@ class AuthController extends Controller
             
             $token = $user->createToken('token-name')->plainTextToken;
             
-            // $user = $request->user();
+            $user = $request->user();
             $gurus = Guru::create([
                 'nama_guru' => $user->nama_user,
                 'user_id' => $user->id,
