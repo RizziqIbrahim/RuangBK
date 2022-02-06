@@ -31,7 +31,7 @@ class AuthController extends Controller
             'email' => 'required|string|email|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
             'nomor_telp' => 'required|string|unique:users',
-            'role' => 'required|max:1',
+            // 'role' => 'required|max:1',
             // 'status' => 'required|max:1'
         );
 
@@ -48,8 +48,8 @@ class AuthController extends Controller
                 'password' => bcrypt($request->password),
                 'email' => $request->email,
                 'nomor_telp' => $request->nomor_telp,
-                'role' => $request->role,
-                'status' => "1"
+                'role' => 2,
+                'status' => 1
             ]);
             
             if($request->role == 1){
