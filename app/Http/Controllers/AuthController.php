@@ -31,8 +31,8 @@ class AuthController extends Controller
             'email' => 'required|string|email|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
             'nomor_telp' => 'required|string|unique:users',
-            'role' => 'required|max:1',
-            'status' => 'required|max:1'
+            // 'role' => 'required|max:1',
+            // 'status' => 'required|max:1'
         );
 
         $cek = Validator::make($request->all(),$rules);
@@ -48,14 +48,14 @@ class AuthController extends Controller
                 'password' => bcrypt($request->password),
                 'email' => $request->email,
                 'nomor_telp' => $request->nomor_telp,
-                'role' => $request->role,
-                'status' => $request->status
+                'role' => 2,
+                'status' => 1
 
             ]);
 
-            if($request->role == 1){
+            if($user->role == 1){
                 $user->assignRole('admin');
-            }elseif ($request->role == 2) {
+            }elseif ($user->role == 2) {
                 $user->assignRole('guru');
             }else{
                 $user->assignRole('siswa');
@@ -71,6 +71,61 @@ class AuthController extends Controller
 
             $roles = $user->getRoleNames();
 
+            if($roles[0] == "admin"){
+                $admin = Admin::where('user_id' , '=', $user->id)->first();
+
+                if($admin->npsn == ""){
+                    $npsn = "belum terisi";
+                }else{
+                    $npsn ="terisi";
+
+                }
+
+            }elseif($roles[0] == "guru"){
+                $guru = Guru::where('user_id' , '=', $user->id)->first();
+
+                if($guru->npsn == ""){
+                    $npsn = "belum terisi";
+                }else{
+                    $npsn ="terisi";
+
+                }
+
+            }
+
+            if($roles[0] == "admin"){
+                $admin = Admin::where('user_id' , '=', $user->id)->first();
+
+                if($admin->alamat == ""){
+                    $identitas = "belum terisi";
+                }else{
+                    $identitas ="terisi";
+
+                }
+
+            }elseif($roles[0] == "guru"){
+                $guru = Guru::where('user_id' , '=', $user->id)->first();
+
+                if($guru->alamat == ""){
+                    $identitas = "belum terisi";
+                }else{
+                    $identitas ="terisi";
+
+                }
+
+            }else{
+                $siswa = Siswa::where('user_id' , '=', $user->id)->first();
+
+                if($siswa->alamat == ""){
+                    $identitas = "belum terisi";
+                }else{
+                    $identitas ="terisi";
+
+                }
+
+            }
+
+
 
 
 
@@ -80,6 +135,8 @@ class AuthController extends Controller
                 'token'      => $token,
                 'user'      => $user,
                 'guru'      => $gurus,
+                'identitas' => $identitas,
+                'npsn'  => $npsn,
             ], 200);
         }
     }
@@ -117,29 +174,31 @@ class AuthController extends Controller
             
             $token = $user->createToken('token-name')->plainTextToken;
             $roles = $user->getRoleNames();
-
-            // if($roles[0] == "admin"){
-            //     $admin = Admin::where('user_id' , '=', $user->id)->first();
-        
-            //     if($admin->npsn == ""){
-            //         $npsn = "belum terisi";
-            //     }else{
-            //         $npsn ="terisi";
-                  
-            //     }
-              
-            // }elseif($roles[0] == "guru"){
-            //     $guru = Guru::where('user_id' , '=', $user->id)->first();
-        
-            //     if($guru->npsn == ""){
-            //         $npsn = "belum terisi";
-            //     }else{
-            //         $npsn ="terisi";
-                  
-            //     }
-              
-            // }
             
+
+            if($roles[0] == "admin"){
+                $admin = Admin::where('user_id' , '=', $user->id)->first();
+
+                if($admin->npsn == ""){
+                    $npsn = "belum terisi";
+                }else{
+                    $npsn ="terisi";
+
+                }
+
+            }elseif($roles[0] == "guru"){
+                $guru = Guru::where('user_id' , '=', $user->id)->first();
+
+                if($guru->npsn == ""){
+                    $npsn = "belum terisi";
+                }else{
+                    $npsn ="terisi";
+
+                }
+
+            }
+
+
             if($roles[0] == "admin"){
                 $admin = Admin::where('user_id' , '=', $user->id)->first();
         
@@ -178,7 +237,7 @@ class AuthController extends Controller
                 'token'      => $token,
                 'roles' => $roles,
                 'identitas' => $identitas,
-                // 'npsn' => $npsn
+                'npsn' => $npsn
             ], 200);
 
         }   
@@ -217,6 +276,29 @@ class AuthController extends Controller
             $token = $user->createToken('token-name')->plainTextToken;
             $roles = $user->getRoleNames();
 
+
+            if($roles[0] == "admin"){
+                $admin = Admin::where('user_id' , '=', $user->id)->first();
+
+                if($admin->npsn == ""){
+                    $npsn = "belum terisi";
+                }else{
+                    $npsn ="terisi";
+
+                }
+
+            }elseif($roles[0] == "guru"){
+                $guru = Guru::where('user_id' , '=', $user->id)->first();
+
+                if($guru->npsn == ""){
+                    $npsn = "belum terisi";
+                }else{
+                    $npsn ="terisi";
+
+                }
+
+            }
+
             if($roles[0] == "admin"){
                 $admin = Admin::where('user_id' , '=', $user->id)->first();
         
@@ -254,7 +336,8 @@ class AuthController extends Controller
                 'user'      => $user,
                 'token'      => $token,
                 'roles' => $roles,
-                'identitas' => $identitas
+                'identitas' => $identitas,
+                'npsn'  => $npsn
             ], 200);
         }
 
