@@ -16,12 +16,13 @@ class CreateGurusTable extends Migration
         Schema::create('gurus', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->integer('npsn')->nullable();
+            $table->string('npsn')->nullable();
             $table->string('nama_guru')->nullable();
             $table->string('tempat_lahir')->nullable();
             $table->date('tanggal_lahir')->nullable();
             $table->string('alamat')->nullable();
             $table->string('foto')->nullable();
+            $table->string('sekolah')->nullable();
             $table->timestamps();
         });
     }

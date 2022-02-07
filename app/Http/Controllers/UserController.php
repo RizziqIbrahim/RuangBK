@@ -97,6 +97,7 @@ class UserController extends Controller
                 'gurus.user_id',
                 'users.role',
                 'users.status',
+                'gurus.npsn',
                 'gurus.nama_guru',
                 'users.email',
                 'gurus.tempat_lahir',
@@ -104,6 +105,7 @@ class UserController extends Controller
                 'users.nomor_telp',
                 'gurus.foto',
                 'gurus.alamat',
+                'gurus.sekolah',
                 'gurus.created_at'  
             ]);
             return response()->json([
@@ -118,6 +120,7 @@ class UserController extends Controller
                 'siswas.user_id',
                 'users.status',
                 'users.role',
+                'siswas.nisn',
                 'siswas.nama_siswa',
                 'users.email',
                 'siswas.tempat_lahir',
@@ -125,6 +128,7 @@ class UserController extends Controller
                 'users.nomor_telp',
                 'siswas.foto',
                 'siswas.alamat',
+                'siswas.sekolah',
                 'siswas.created_at' 
             ]);
             return response()->json([
@@ -139,6 +143,7 @@ class UserController extends Controller
                 'admins.user_id',
                 'users.status',
                 'users.role',
+                'admins.npsn',
                 'admins.nama_admin',
                 'users.email',
                 'admins.tempat_lahir',
@@ -146,6 +151,7 @@ class UserController extends Controller
                 'users.nomor_telp',
                 'admins.foto',
                 'admins.alamat',
+                'admins.sekolah',
                 'admins.created_at' 
             ]);
             return response()->json([

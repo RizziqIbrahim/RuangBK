@@ -43,6 +43,7 @@ class GuruController extends Controller
             'gurus.tempat_lahir',
             'gurus.tanggal_lahir',
             'gurus.foto',
+            'gurus.sekolah',
             'gurus.alamat',
             'gurus.created_at' 
         ]);
@@ -241,6 +242,7 @@ class GuruController extends Controller
         $guru->tempat_lahir = $request->tempat_lahir;
         $guru->tanggal_lahir = $request->tanggal_lahir;
         $guru->alamat = $request->alamat;
+        $guru->sekolah = $request->sekolah;
         $guru->foto = $result;
         
         if($guru->save()){

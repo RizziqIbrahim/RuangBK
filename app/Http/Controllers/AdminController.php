@@ -44,6 +44,7 @@ class AdminController extends Controller
             'admins.tanggal_lahir',
             'admins.foto',
             'admins.alamat',
+            'admins.sekolah',
             'admins.created_at' 
         ]);
 
@@ -158,6 +159,7 @@ class AdminController extends Controller
         $admin->tempat_lahir = $request->tempat_lahir;
         $admin->tanggal_lahir = $request->tanggal_lahir;
         $admin->alamat = $request->alamat;
+        $admin->sekolah = $request->sekolah;
         $admin->foto = $result;
         
         if($admin->save()){

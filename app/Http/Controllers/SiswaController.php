@@ -37,6 +37,7 @@ class SiswaController extends Controller
             'siswas.tempat_lahir',      
             'siswas.tanggal_lahir',
             'siswas.foto',
+            'siswas.sekolah',
             'siswas.alamat',
             'siswas.created_at' 
         ]);
@@ -120,6 +121,7 @@ class SiswaController extends Controller
         $siswa->tempat_lahir = $request->tempat_lahir;
         $siswa->tanggal_lahir = $request->tanggal_lahir;
         $siswa->alamat = $request->alamat;
+        $siswa->sekolah = $request->sekolah;
         $siswa->foto = $result;
 
         
@@ -140,7 +142,7 @@ class SiswaController extends Controller
     {
         $user = $request->user();
         $siswa = Siswa::where('user_id', $user->id)->first();
-        $siswa->npsn = $request->npsn;
+        $siswa->nisn = $request->nisn;
         
         if($siswa->save()){
             return response()->json([
