@@ -211,11 +211,13 @@ class GuruController extends Controller
         $user = $request->user();
         $guru = Guru::where('user_id', $user->id)->first();
         $guru->npsn = $request->npsn;
+        $guru->sekolah = $request->sekolah;
         
         if($guru->save()){
             return response()->json([
                 "status" => "success",
-                "message" => 'Berhasil Menyimpan Data'
+                "message" => 'Berhasil Menyimpan Data',
+                'data'  => $guru,
             ]);
         }else{
             return response()->json([

@@ -181,11 +181,13 @@ class AdminController extends Controller
         $user = $request->user();
         $admin = Admin::where('user_id', $user->id)->first();
         $admin->npsn = $request->npsn;
+        $guru->sekolah = $request->sekolah;
         
         if($admin->save()){
             return response()->json([
                 "status" => "success",
-                "message" => 'Berhasil Menyimpan Data'
+                "message" => 'Berhasil Menyimpan Data',
+                "data"  => $admin,
             ]);
         }else{
             return response()->json([
