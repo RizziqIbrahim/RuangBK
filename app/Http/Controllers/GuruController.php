@@ -57,6 +57,39 @@ class GuruController extends Controller
         ]);
     }
 
+    public function getSiswa(Request $request)
+    {
+        $user = $request->user();
+        $request->sekolah;
+        $request->page;
+        $siswa = Siswa::leftjoin('users', 'users.id', '=', 'user_id')->where('siswas.sekolah', 'like', '%'.strtolower($request->sekolah)."%")
+        ->orderBy("siswas.created_at", 'desc')
+        ->paginate($request->perpage, [
+            'siswas.id',
+            'siswas.user_id',
+            'users.status',
+            'siswas.nisn',
+            'siswas.nama_siswa',
+            'users.email',
+            'users.nomor_telp',
+            'siswas.tempat_lahir',      
+            'siswas.tanggal_lahir',
+            'siswas.foto',
+            'siswas.sekolah',
+            'siswas.alamat',
+            'siswas.created_at' 
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'perpage' => $request->perpage,
+            'message' => 'sukses menampilkan data',
+            'data' => $siswa,
+            'user' => $user->id
+        ]);
+    }
+
+
     public function registerUser(Request $request)
     {
         $rules = array(
