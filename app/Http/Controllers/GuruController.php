@@ -119,9 +119,9 @@ class GuruController extends Controller
 
             ]);
             
-            if($request->role == 1){
+            if($user->role == 1){
                 $user->assignRole('admin');
-            }elseif ($request->role == 2) {
+            }elseif ($user->role == 2) {
                 $user->assignRole('guru');
             }else{
                 $user->assignRole('siswa');
