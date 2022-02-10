@@ -111,7 +111,7 @@ class GuruController extends Controller
         }else{
             $user = User::create([
                 'nama_user' => $request->nama_user,
-                'password' => bcrypt("12345678"),
+                'password' => bcrypt($request->password),
                 'email' => $request->email,
                 'nomor_telp' => $request->nomor_telp,
                 'role' => "3",
