@@ -145,7 +145,7 @@ class GuruController extends Controller
                 'message'   => 'Success',
                 'roles'        => $roles[0],
                 'token'      => $token,
-                'identitas' => $identitas,
+                // 'identitas' => $identitas,
                 'user'      => $user,
                 'siswa'      => $siswas,
             ], 200);
