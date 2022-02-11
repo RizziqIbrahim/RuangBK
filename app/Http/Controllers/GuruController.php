@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\{
     AuthController,
     CloudinaryStorage,
+    SiswaController
 };
 use App\Models\{
     Siswa,
