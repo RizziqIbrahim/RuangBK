@@ -138,9 +138,6 @@ class GuruController extends Controller
 
             $roles = $user->getRoleNames();
             
-            
-            
-
             return response()->json([
                 'message'   => 'Success',
                 'roles'        => $roles[0],
