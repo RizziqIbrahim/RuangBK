@@ -170,6 +170,90 @@ class UserController extends Controller
             ]);
     }
 
+    public function showLogin(Request $request)
+    {
+        $user = $request->user();
+        $roles = User::where('id', $user->id)->value("role"); 
+
+        if ($roles == 2) {
+            $data = Guru::where('user_id', $user->id)->leftjoin('users', 'users.id', '=', 'user_id')->first([
+                'gurus.id',
+                'gurus.user_id',
+                'users.role',
+                'users.status',
+                'gurus.npsn',
+                'gurus.nama_guru',
+                'users.email',
+                'gurus.tempat_lahir',
+                'gurus.tanggal_lahir',
+                'users.nomor_telp',
+                'gurus.foto',
+                'gurus.alamat',
+                'gurus.sekolah',
+                'gurus.created_at'  
+            ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'sukses menampilkan data',
+                'data' => $data
+                
+            ]);
+        }elseif ($roles == 3) {
+            $data = Siswa::where('user_id', $user->id)->leftjoin('users', 'users.id', '=', 'user_id')->first([
+                'siswas.id',
+                'siswas.user_id',
+                'users.status',
+                'users.role',
+                'siswas.nisn',
+                'siswas.nama_siswa',
+                'users.email',
+                'siswas.tempat_lahir',
+                'siswas.tanggal_lahir',
+                'users.nomor_telp',
+                'siswas.foto',
+                'siswas.alamat',
+                'siswas.sekolah',
+                'siswas.created_at' 
+            ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'sukses menampilkan data',
+                'data' => $data
+                
+            ]);
+        }elseif ($roles == 1) {
+            $data = Admin::where('user_id', $user->id)->leftjoin('users', 'users.id', '=', 'user_id')->first([
+                'admins.id',
+                'admins.user_id',
+                'users.status',
+                'users.role',
+                'admins.npsn',
+                'admins.nama_admin',
+                'users.email',
+                'admins.tempat_lahir',
+                'admins.tanggal_lahir',
+                'users.nomor_telp',
+                'admins.foto',
+                'admins.alamat',
+                'admins.sekolah',
+                'admins.created_at' 
+            ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'sukses menampilkan data',
+                'data' => $data
+                
+            ]);
+        }
+            
+           return response()->json([
+                'status' => 'success',
+                'message' => 'sukses menampilkan data',
+                'data' => $data
+                
+            ]);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
