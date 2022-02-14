@@ -55,8 +55,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post("guru/npsn", [GuruController::class, 'npsn']);
     Route::post("admin/npsn", [AdminController::class, 'npsn']);
 
-    Route::get('/user/export/xlsx', [UserController::class ,'exportXL']);
-    Route::get('upload', [UserController::class ,'upload']);
+    Route::get('/user/export/xlsx', [UserController::class ,'export']);
+    Route::get('/import-users', [UserController::class ,'import']);
 
     Route::post('user/upload/data' , [UserController::class ,'uploadData']);
     Route::post('register-user', [GuruController::class, 'registerUser']);

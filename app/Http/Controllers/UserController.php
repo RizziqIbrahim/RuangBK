@@ -129,6 +129,7 @@ class UserController extends Controller
                 'siswas.foto',
                 'siswas.alamat',
                 'siswas.sekolah',
+                'siswas.npsn',
                 'siswas.created_at' 
             ]);
             return response()->json([
@@ -213,6 +214,7 @@ class UserController extends Controller
                 'siswas.foto',
                 'siswas.alamat',
                 'siswas.sekolah',
+                'siswas.npsn',
                 'siswas.created_at' 
             ]);
             return response()->json([

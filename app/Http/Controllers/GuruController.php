@@ -93,6 +93,7 @@ class GuruController extends Controller
 
     public function registerUser(Request $request)
     {
+        $guru = $request->user();
         $rules = array(
             'nama_user' => 'required|string|max:255',
             'email' => 'required|string|email|unique:users,email',
@@ -133,6 +134,8 @@ class GuruController extends Controller
             // $user = $request->user();
             $siswas = Siswa::create([
                 'nama_siswa' => $user->nama_user,
+                'sekolah'   => $guru->sekolah,
+                'npsn'  => $guru->npsn,
                 'user_id' => $user->id,
             ]);
 
