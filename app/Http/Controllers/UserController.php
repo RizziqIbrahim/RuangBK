@@ -261,18 +261,23 @@ class UserController extends Controller
         }
         
     }
-    public function exportUser()
+    public function export()
     {
-        return Excel::download(new UsersExport, 'users.xlsx');
+        return Excel::download(new UsersExport, 'user-export-' . date("Y-m-d") . '.xlsx');
     }
-    public function upload()
-    {
-        return view('upload');
-    }
-    public function uploadData(Request $request)
-    {
-        Excel::import(new UsersImport,$request->file('file')->store('temp'));
 
-        return redirect()->route('user');
+    public function import(Request $request)
+    {
+        $data = Excel::import(new UsersImport, $request->file('file')->store('temp'));
+
+        if($data){
+            return response()->json([
+                'message'   => 'Success',
+            ], 200);
+        }else{
+            return response()->json([
+                'message'   => 'Gagal',
+            ], 200);
+        }
     }
 }
