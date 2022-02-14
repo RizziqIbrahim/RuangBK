@@ -61,7 +61,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('user/upload/data' , [UserController::class ,'uploadData']);
     Route::post('register-user', [GuruController::class, 'registerUser']);
 
-    Route::get('profile', [UserController::class, 'showLogin']);
+    Route::get('/profile', [UserController::class, 'showLogin']);
 
     Route::get('getSiswa', [GuruController::class ,'getSiswa']);
     //delete
