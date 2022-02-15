@@ -146,6 +146,7 @@ class GuruController extends Controller
                 'token'      => $token,
                 // 'identitas' => $identitas,
                 'user'      => $user,
+                'guru'      => $guru,
                 'siswa'      => $siswas,
             ], 200);
         }
