@@ -61,9 +61,8 @@ class GuruController extends Controller
     public function getSiswa(Request $request)
     {
         $user = $request->user();
-        $request->sekolah;
         $request->page;
-        $siswa = Siswa::leftjoin('users', 'users.id', '=', 'user_id')->where('siswas.sekolah', 'like', '%'.strtolower($request->sekolah)."%")
+        $siswa = Siswa::leftjoin('users', 'users.id', '=', 'user_id')->where('siswas.npsn', 'like', '%'.strtolower($user->npsn)."%")
         ->orderBy("siswas.created_at", 'desc')
         ->paginate($request->perpage, [
             'siswas.id',
