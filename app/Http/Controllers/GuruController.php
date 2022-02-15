@@ -93,6 +93,23 @@ class GuruController extends Controller
     public function registerUser(Request $request)
     {
         $guru = $request->user();
+        $guruProfile = Guru::where('user_id', $guru->id)->leftjoin('users', 'users.id', '=', 'user_id')->first([
+            'gurus.id',
+            'gurus.user_id',
+            'users.role',
+            'users.status',
+            'gurus.npsn',
+            'gurus.nama_guru',
+            'users.email',
+            'gurus.tempat_lahir',
+            'gurus.tanggal_lahir',
+            'users.nomor_telp',
+            'gurus.foto',
+            'gurus.alamat',
+            'gurus.sekolah',
+            'gurus.created_at'  
+        ]);
+
         $rules = array(
             'nama_user' => 'required|string|max:255',
             'email' => 'required|string|email|unique:users,email',
@@ -133,8 +150,8 @@ class GuruController extends Controller
             // $user = $request->user();
             $siswas = Siswa::create([
                 'nama_siswa' => $user->nama_user,
-                'sekolah'   => $guru->sekolah,
-                'npsn'  => $guru->npsn,
+                'sekolah'   => $guruProfile->sekolah,
+                'npsn'  => $guruProfile->npsn,
                 'user_id' => $user->id,
             ]);
 
@@ -146,7 +163,7 @@ class GuruController extends Controller
                 'token'      => $token,
                 // 'identitas' => $identitas,
                 'user'      => $user,
-                'guru'      => $guru,
+                'guru'      => $guruProfile,
                 'siswa'      => $siswas,
             ], 200);
         }
