@@ -93,7 +93,7 @@ class GuruController extends Controller
     public function registerUser(Request $request)
     {
         $guru = $request->user();
-        $guruProfile = Guru::where('user_id', $guru->id)->leftjoin('users', 'users.id', '=', 'user_id')->get();
+        $guruProfile = Guru::where('user_id', $guru->id)->get();
 
         $rules = array(
             'nama_user' => 'required|string|max:255',
