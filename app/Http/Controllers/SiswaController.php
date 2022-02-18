@@ -109,6 +109,7 @@ class SiswaController extends Controller
 
     public function update(Request $request, $id)
     {
+
         $file   = $request->file('foto');
         // return $request;
         $user = $request->user();
@@ -118,7 +119,8 @@ class SiswaController extends Controller
         $user = $request->user();
         $siswa = Siswa::where('user_id', $user->id)->first();
         // $siswa->user_id = $user->id;
-        $siswa->nisn = $request-> nisn;
+        $siswa->npsn = $request->npsn;
+        $siswa->nisn = $request->nisn;
         $siswa->nama_siswa = $request->nama_siswa;
         $siswa->tempat_lahir = $request->tempat_lahir;
         $siswa->tanggal_lahir = $request->tanggal_lahir;
@@ -126,8 +128,6 @@ class SiswaController extends Controller
         $siswa->sekolah = $request->sekolah;
         $siswa->kelas = $request->kelas;
         $siswa->foto = $result;
-        $siswa->npsn = $request->npsn;
-
         
         if($siswa->save()){
             return response()->json([
