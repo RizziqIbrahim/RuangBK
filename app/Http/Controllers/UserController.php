@@ -320,7 +320,21 @@ class UserController extends Controller
     {
         try {
             $id = explode(",", $id);
-            User::whereIn('id', $id)->delete();
+            $siswa = Siswa::where('user_id', $id);
+            $guru = Guru::where('user_id', $id);
+            $admin = Admin::where('user_id', $id);
+            $user = User::whereIn('id', $id);
+            if ($user->value('role') == 1) {
+               $admin->delete(); 
+               $user->delete(); 
+            }elseif ($user->value('role') == 2) {
+                $guru->delete();
+                $user->delete();  
+            }else{
+                $siswa->delete(); 
+                $user->delete(); 
+            }
+
             return response()->json(["status" => "Success","message" => "Berhasil Menghapus Data"]);
         } catch (\Throwable $th) {
             //throw $th;
