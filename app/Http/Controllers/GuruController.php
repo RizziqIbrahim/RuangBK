@@ -31,6 +31,7 @@ class GuruController extends Controller
         $user = $request->user();
         $request->keywords;
         $request->page;
+        $request->perpage;
         $guru = Guru::leftjoin('users', 'users.id', '=', 'user_id')->where('users.nama_user', 'like', '%'.strtolower($request->keywords)."%")
         ->orderBy("gurus.created_at", 'desc')
         ->paginate($request->perpage, [
@@ -62,6 +63,7 @@ class GuruController extends Controller
     {
         $user = $request->user();
         $request->page;
+        $request->perpage;
         $siswa = Siswa::leftjoin('users', 'users.id', '=', 'user_id')->where('siswas.npsn', 'like', '%'.strtolower($user->npsn)."%")
         ->orderBy("siswas.created_at", 'desc')
         ->paginate($request->perpage, [

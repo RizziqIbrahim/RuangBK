@@ -37,6 +37,7 @@ class UserController extends Controller
         $request->keywords;
         $request->page;
         $request->role;
+        $request->perpage;
         $users = User::where('nama_user', 'like', '%'.strtolower($request->keywords)."%")
         ->orWhere('role', 'like', '%'.strtolower($request->role)."%")
         ->orderBy("created_at", 'desc')

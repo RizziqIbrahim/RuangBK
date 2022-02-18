@@ -31,6 +31,7 @@ class AdminController extends Controller
         $user = $request->user();
         $request->keywords;
         $request->page;
+        $request->perpage;
         $admin = Admin::leftjoin('users', 'users.id', '=', 'user_id')->where('users.nama_user', 'like', '%'.strtolower($request->keywords)."%")
         ->orderBy("admins.created_at", 'desc')
         ->paginate($request->perpage, [

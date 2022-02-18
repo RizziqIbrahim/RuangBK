@@ -24,6 +24,7 @@ class SiswaController extends Controller
         $user = $request->user();
         $request->keywords;
         $request->page;
+        $request->perpage;
         $siswa = Siswa::leftjoin('users', 'users.id', '=', 'user_id')->where('users.nama_user', 'like', '%'.strtolower($request->keywords)."%")
         ->orderBy("siswas.created_at", 'desc')
         ->paginate($request->perpage, [
