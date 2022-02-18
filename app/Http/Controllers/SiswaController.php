@@ -37,6 +37,7 @@ class SiswaController extends Controller
             'siswas.tempat_lahir',      
             'siswas.tanggal_lahir',
             'siswas.foto',
+            'siswas.kelas',
             'siswas.sekolah',
             'siswas.npsn',
             'siswas.alamat',
@@ -123,6 +124,7 @@ class SiswaController extends Controller
         $siswa->tanggal_lahir = $request->tanggal_lahir;
         $siswa->alamat = $request->alamat;
         $siswa->sekolah = $request->sekolah;
+        $siswa->kelas = $request->kelas;
         $siswa->foto = $result;
         $siswa->npsn = $request->npsn;
 

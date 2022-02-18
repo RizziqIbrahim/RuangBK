@@ -76,6 +76,8 @@ class GuruController extends Controller
             'siswas.tanggal_lahir',
             'siswas.foto',
             'siswas.sekolah',
+            'siswas.kelas',
+            'siswas.npsn',
             'siswas.alamat',
             'siswas.created_at' 
         ]);

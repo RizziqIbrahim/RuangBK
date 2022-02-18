@@ -214,6 +214,7 @@ class UserController extends Controller
                 'siswas.foto',
                 'siswas.alamat',
                 'siswas.sekolah',
+                'siswas.kelas',
                 'siswas.npsn',
                 'siswas.created_at' 
             ]);

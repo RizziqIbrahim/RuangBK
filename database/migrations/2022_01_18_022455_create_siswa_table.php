@@ -23,6 +23,7 @@ class CreateSiswaTable extends Migration
             $table->string('alamat')->nullable();
             $table->string('foto')->nullable();
             $table->string('sekolah')->nullable();
+            $table->string('kelas')->nullable();
             $table->string('npsn')->nullable();
             $table->timestamps();
         });
