@@ -308,7 +308,8 @@ class GuruController extends Controller
             if($guru->save()){
                 return response()->json([
                     "status" => "success",
-                    "message" => 'Berhasil Menyimpan Data'
+                    "message" => 'Berhasil Menyimpan Data',
+                    "foto"  => "iya"
                 ]);
             }else{
                 return response()->json([
@@ -329,7 +330,8 @@ class GuruController extends Controller
             if($guru->save()){
                 return response()->json([
                     "status" => "success",
-                    "message" => 'Berhasil Menyimpan Data'
+                    "message" => 'Berhasil Menyimpan Data',
+                    "foto"  => "tidak"
                 ]);
             }else{
                 return response()->json([
