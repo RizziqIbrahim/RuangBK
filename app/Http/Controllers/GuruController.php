@@ -287,9 +287,32 @@ class GuruController extends Controller
         
         $file   = $request->file('foto');
         // return $request;
-        if($file->count() > 0){   
+        if($file == ""){   
+            $user = $request->user();
+            $guru = Guru::where('user_id', $user->id)->first();
+            // $guru->user_id = $user->id;
+            $guru->npsn = $request->npsn;
+            $guru->nama_guru = $request->nama_guru;
+            $guru->tempat_lahir = $request->tempat_lahir;
+            $guru->tanggal_lahir = $request->tanggal_lahir;
+            $guru->alamat = $request->alamat;
+            $guru->sekolah = $request->sekolah;
+            
+            if($guru->save()){
+                return response()->json([
+                    "status" => "success",
+                    "message" => 'Berhasil Menyimpan Data',
+                    "foto"  => "tidak"
+                ]);
+            }else{
+                return response()->json([
+                    "status" => "failed",
+                    "message" => 'Gagal Menyimpan Data'
+                ]);
+            }
+        }else{
+            
             $file   = $request->file('foto');
-
             $user = $request->user();
             $image = Guru::where('user_id', $user->id)->value("foto");
             $result = CloudinaryStorage::replace($image, $file->getRealPath(), $file->getClientOriginalName());
@@ -310,28 +333,6 @@ class GuruController extends Controller
                     "status" => "success",
                     "message" => 'Berhasil Menyimpan Data',
                     "foto"  => "iya"
-                ]);
-            }else{
-                return response()->json([
-                    "status" => "failed",
-                    "message" => 'Gagal Menyimpan Data'
-                ]);
-            }
-        }else{
-            $guru = Guru::where('user_id', $user->id)->first();
-            // $guru->user_id = $user->id;
-            $guru->npsn = $request->npsn;
-            $guru->nama_guru = $request->nama_guru;
-            $guru->tempat_lahir = $request->tempat_lahir;
-            $guru->tanggal_lahir = $request->tanggal_lahir;
-            $guru->alamat = $request->alamat;
-            $guru->sekolah = $request->sekolah;
-            
-            if($guru->save()){
-                return response()->json([
-                    "status" => "success",
-                    "message" => 'Berhasil Menyimpan Data',
-                    "foto"  => "tidak"
                 ]);
             }else{
                 return response()->json([
