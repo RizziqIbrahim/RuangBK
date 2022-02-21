@@ -5,6 +5,7 @@ namespace App\Imports;
 use Illuminate\Support\Collection;
 use App\Models\User;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class UsersImport implements ToModel
 {
@@ -19,8 +20,9 @@ class UsersImport implements ToModel
             'nama_user' => $row[0],
             'email' => $row[1],
             'password' => bcrypt($row[2]),
-            'role' => $row[3],
-            'status' => $row[4]
+            'nomor_telp' => $row[3],
+            'role' => $row[4],
+            'status' => $row[5]
         ]);
 
         if($row[3] == 1){

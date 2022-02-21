@@ -370,7 +370,7 @@ class UserController extends Controller
 
     public function import(Request $request)
     {
-        $data = Excel::import(new UsersImport, $request->file('file')->store('temp'));
+        $data = Excel::import(new UsersImport, $request->file('user')->store('temp'));
 
         if($data){
             return response()->json([
