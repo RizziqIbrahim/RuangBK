@@ -284,35 +284,62 @@ class GuruController extends Controller
      
     public function update(Request $request, $id)
     {
-
+        
         $file   = $request->file('foto');
         // return $request;
-        $user = $request->user();
-        $image = Guru::where('user_id', $user->id)->value("foto");
-        $result = CloudinaryStorage::replace($image, $file->getRealPath(), $file->getClientOriginalName());
+        if($file->count() > 0){   
+            $file   = $request->file('foto');
 
-        $user = $request->user();
-        $guru = Guru::where('user_id', $user->id)->first();
-        // $guru->user_id = $user->id;
-        $guru->npsn = $request->npsn;
-        $guru->nama_guru = $request->nama_guru;
-        $guru->tempat_lahir = $request->tempat_lahir;
-        $guru->tanggal_lahir = $request->tanggal_lahir;
-        $guru->alamat = $request->alamat;
-        $guru->sekolah = $request->sekolah;
-        $guru->foto = $result;
-        
-        if($guru->save()){
-            return response()->json([
-                "status" => "success",
-                "message" => 'Berhasil Menyimpan Data'
-            ]);
+            $user = $request->user();
+            $image = Guru::where('user_id', $user->id)->value("foto");
+            $result = CloudinaryStorage::replace($image, $file->getRealPath(), $file->getClientOriginalName());
+            $user = $request->user();
+
+            $guru = Guru::where('user_id', $user->id)->first();
+            // $guru->user_id = $user->id;
+            $guru->npsn = $request->npsn;
+            $guru->nama_guru = $request->nama_guru;
+            $guru->tempat_lahir = $request->tempat_lahir;
+            $guru->tanggal_lahir = $request->tanggal_lahir;
+            $guru->alamat = $request->alamat;
+            $guru->sekolah = $request->sekolah;
+            $guru->foto = $result;
+            
+            if($guru->save()){
+                return response()->json([
+                    "status" => "success",
+                    "message" => 'Berhasil Menyimpan Data'
+                ]);
+            }else{
+                return response()->json([
+                    "status" => "failed",
+                    "message" => 'Gagal Menyimpan Data'
+                ]);
+            }
         }else{
-            return response()->json([
-                "status" => "failed",
-                "message" => 'Gagal Menyimpan Data'
-            ]);
+            $guru = Guru::where('user_id', $user->id)->first();
+            // $guru->user_id = $user->id;
+            $guru->npsn = $request->npsn;
+            $guru->nama_guru = $request->nama_guru;
+            $guru->tempat_lahir = $request->tempat_lahir;
+            $guru->tanggal_lahir = $request->tanggal_lahir;
+            $guru->alamat = $request->alamat;
+            $guru->sekolah = $request->sekolah;
+            
+            if($guru->save()){
+                return response()->json([
+                    "status" => "success",
+                    "message" => 'Berhasil Menyimpan Data'
+                ]);
+            }else{
+                return response()->json([
+                    "status" => "failed",
+                    "message" => 'Gagal Menyimpan Data'
+                ]);
+            }
         }
+
+        
     }
 
     /**
