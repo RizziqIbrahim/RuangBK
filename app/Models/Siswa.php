@@ -16,6 +16,7 @@ class Siswa extends Model
         'alamat',
         'foto', 
         'sekolah',
-        'npsn'
+        'npsn',
+        'nisn'
     ];
 }

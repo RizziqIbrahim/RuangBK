@@ -137,7 +137,7 @@ class GuruController extends Controller
                 'email' => $request->email,
                 'nomor_telp' => $request->nomor_telp,
                 'role' => "3",
-                'status' => "1"
+                'status' => "1",
 
             ]);
             
@@ -150,6 +150,7 @@ class GuruController extends Controller
             }
 
             $token = $user->createToken('token-name')->plainTextToken;
+
             $nisn = $request->nisn;
             // $user = $request->user();
             $siswas = Siswa::create([
@@ -170,6 +171,7 @@ class GuruController extends Controller
                 'user'      => $user,
                 'guru'      => $guruProfile,
                 'siswa'      => $siswas,
+                'nisn'      => $nisn
             ], 200);
         }
     }
