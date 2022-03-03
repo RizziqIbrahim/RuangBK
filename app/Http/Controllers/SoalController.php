@@ -32,19 +32,15 @@ class SoalController extends Controller
     {
         $request->keywords;
         $request->page;
-        $request->role;
-        $soals = Soal::where('jenis_soal', 'like', '%'.strtolower($request->keywords)."%")
-        ->where('role', 'like', '%'.strtolower($request->role)."%")
+        $request->jenis;
+        $soals = Soal::leftjoin('categories', 'categories.id', '=', 'category_id')->where('jenis_soal', 'like', '%'.strtolower($request->keywords)."%")
+        ->where('jenis_soal', 'like', '%'.strtolower($request->jenis)."%")
         ->orderBy("created_at", 'desc')
         ->paginate($request->perpage, [
             'soals.id',
             'soals.jenis_soal',
             'soals.content',
-            'soals.jawaban1',
-            'soals.jawaban2',
-            'soals.jawaban3',
-            'soals.jawaban4',
-            'soals.cjawaban5'
+            'soals.category_id',
         ]);
 
         return response()->json([
@@ -76,12 +72,8 @@ class SoalController extends Controller
     {
         $rules = array(
             'jenis_soal' => 'required|string|max:255',
-            'content' => 'required|string',
-            'jawaban1' => 'required|intiger',
-            'jawaban2' => 'required|intiger',
-            'jawaban3' => 'required|intiger',
-            'jawaban4' => 'required|intiger',
-            'jawaban5' => 'required|intiger',
+            'category_id' => 'required|integer|max:2',
+            'content' => 'required|string|max:255',
         );
 
         $cek = Validator::make($request->all(),$rules);
@@ -95,11 +87,7 @@ class SoalController extends Controller
             $soals = Soal::create([
                 'jenis_soal' => $request->jenis_soal,
                 'content' => $request->content,
-                'jawaban1' => $request->jawaban1,
-                'jawaban1' => $request->jawaban2,
-                'jawaban1' => $request->jawaban3,
-                'jawaban1' => $request->jawaban4,
-                'jawaban1' => $request->jawaban5,
+                'category_id' => $request->category_id,
             ]);
 
             
@@ -141,7 +129,23 @@ class SoalController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $soal = Soal::where('id', $id)->first();
+        $soal->jenis_soal = $request->jenis_soal;
+        $soal->content = $request->content;
+        $soal->category_id = $request->category_id;
+        
+        if($soal->save()){
+            return response()->json([
+                "status" => "success",
+                "message" => 'Berhasil Menyimpan Data',
+                'data'  => $soal,
+            ]);
+        }else{
+            return response()->json([
+                "status" => "failed",
+                "message" => 'Gagal Menyimpan Data'
+            ]);
+        }
     }
 
     /**
