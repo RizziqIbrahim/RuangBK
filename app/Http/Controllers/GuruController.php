@@ -117,7 +117,7 @@ class GuruController extends Controller
         $rules = array(
             'nama_user' => 'required|string|max:255',
             'email' => 'required|string|email|unique:users,email',
-            'password' => 'required|string|min:6|confirmed',
+            // 'password' => 'required|string|min:6|confirmed',
             'nomor_telp' => 'required|string|unique:users',
             // 'role' => 'required|max:1',
             // 'status' => 'required|max:1'
