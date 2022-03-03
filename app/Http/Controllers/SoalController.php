@@ -8,13 +8,14 @@ use App\Http\Controller\{
     SiswaController,
     AuthController,
     GuruController,
-    
+    JawabanController
 };
 use App\Models\{
     Siswa,
     User,
     Guru,
-    Soal
+    Soal,
+    Jawaban
 };
 
 use Hash;
