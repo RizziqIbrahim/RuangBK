@@ -201,12 +201,13 @@ class UserController extends Controller
                 
             ]);
         }elseif ($roles == 3) {
-            $data = Siswa::where('user_id', $user->id)->leftjoin('users', 'users.id', '=', 'user_id')->first([
+            $data = Siswa::where('user_id', $user->id)->leftjoin('users', 'users.id', '=', 'user_id')->leftjoin('gurus', 'gurus.sekolah', '=', 'siswas.sekolah')->first([
                 'siswas.id',
                 'siswas.user_id',
                 'users.status',
                 'users.role',
                 'siswas.nisn',
+                'gurus.nama_guru',
                 'siswas.nama_siswa',
                 'users.email',
                 'siswas.tempat_lahir',
