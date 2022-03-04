@@ -371,10 +371,11 @@ class UserController extends Controller
     public function import(Request $request)
     {
         $data = Excel::import(new UsersImport, $request->file('user')->store('temp'));
-
         if($data){
             return response()->json([
                 'message'   => 'Success',
+                'user' => $user,
+                // 'roles' => $roles[0],
             ], 200);
         }else{
             return response()->json([
