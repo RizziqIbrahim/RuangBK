@@ -51,6 +51,7 @@ class UserController extends Controller
             'users.status',
             'users.created_at'
         ]);
+        
 
         return response()->json([
             'status' => 'success',
@@ -201,13 +202,14 @@ class UserController extends Controller
                 
             ]);
         }elseif ($roles == 3) {
-            $data = Siswa::where('user_id', $user->id)->leftjoin('users', 'users.id', '=', 'user_id')->leftjoin('gurus', 'gurus.sekolah', '=', 'siswas.sekolah')->first([
+            $data = Siswa::where('user_id', $user->id)->leftjoin('users', 'users.id', '=', 'siswas.user_id')->first([
                 'siswas.id',
                 'siswas.user_id',
+                'users.id',
                 'users.status',
                 'users.role',
                 'siswas.nisn',
-                'gurus.nama_guru',
+                // 'gurus.nama_guru',
                 'siswas.nama_siswa',
                 'users.email',
                 'siswas.tempat_lahir',
