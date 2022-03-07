@@ -48,6 +48,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('guru', GuruController::class);
     Route::resource('admin', AdminController::class);
+    Route::resource('soal', SoalController::class);
+    Route::resource('jawaban', JawabanController::class);
 
     Route::post("siswa/update", [SiswaController::class, 'update']);
     Route::post("guru/update", [GuruController::class, 'update']);
@@ -66,6 +68,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('profile', [UserController::class, 'showLogin']);
 
     Route::get('getSiswa', [GuruController::class ,'getSiswa']);
+
     //delete
     
 

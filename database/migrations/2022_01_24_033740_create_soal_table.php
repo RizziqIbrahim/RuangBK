@@ -15,7 +15,7 @@ class CreateSoalTable extends Migration
     {
         Schema::create('soals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('jenis_soal');
+            $table->string('jenis_soal');
             $table->foreignId('category_id');
             $table->string('content');
             $table->timestamps();

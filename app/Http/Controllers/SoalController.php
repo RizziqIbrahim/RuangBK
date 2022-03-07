@@ -34,9 +34,8 @@ class SoalController extends Controller
         $request->keywords;
         $request->page;
         $request->jenis;
-        $soals = Soal::leftjoin('categories', 'categories.id', '=', 'category_id')->where('jenis_soal', 'like', '%'.strtolower($request->keywords)."%")
-        ->where('jenis_soal', 'like', '%'.strtolower($request->jenis)."%")
-        ->orderBy("created_at", 'desc')
+        $soals = Soal::leftjoin('categories', 'categories.id', '=', 'category_id')->where('categories.nama_category', 'like', '%'.strtolower($request->jenis)."%")
+        ->orderBy("soals.id", 'desc')
         ->paginate($request->perpage, [
             'soals.id',
             'soals.jenis_soal',

@@ -11,10 +11,6 @@ class Soal extends Model
     protected $fillable = [
         'jenis_soal',
         'content',
-        'jawaban1',
-        'jawaban2',
-        'jawaban3',
-        'jawaban4',
-        'jawaban5'
+        'category_id',
     ];
 }
