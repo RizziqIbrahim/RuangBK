@@ -119,14 +119,12 @@ class SiswaController extends Controller
             $siswa = Siswa::where('user_id', $user->id)->first();
             // $siswa->user_id = $user->id;
             $siswa->nisn = $request->nisn;
-            $siswa->nama_guru = $request->nama_guru;
             $siswa->nama_siswa = $request->nama_siswa;
             $siswa->tempat_lahir = $request->tempat_lahir;
             $siswa->tanggal_lahir = $request->tanggal_lahir;
             $siswa->alamat = $request->alamat;
             $siswa->sekolah = $request->sekolah;
             $siswa->kelas = $request->kelas;
-            $siswa->foto = $foto;
             
             if($siswa->save()){
                 return response()->json([
@@ -151,14 +149,13 @@ class SiswaController extends Controller
             $siswa = Siswa::where('user_id', $user->id)->first();
             // $siswa->user_id = $user->id;
             $siswa->nisn = $request->nisn;
-            $siswa->nama_guru = $request->nama_guru;
             $siswa->nama_siswa = $request->nama_siswa;
             $siswa->tempat_lahir = $request->tempat_lahir;
             $siswa->tanggal_lahir = $request->tanggal_lahir;
             $siswa->alamat = $request->alamat;
             $siswa->sekolah = $request->sekolah;
             $siswa->kelas = $request->kelas;
-            $siswa->foto = $foto;
+            $siswa->foto = $result;
             
             if($siswa->save()){
                 return response()->json([
