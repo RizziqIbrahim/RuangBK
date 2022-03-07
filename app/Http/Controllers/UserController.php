@@ -209,7 +209,7 @@ class UserController extends Controller
                 'users.status',
                 'users.role',
                 'siswas.nisn',
-                // 'gurus.nama_guru',
+                'siswas.nama_guru',
                 'siswas.nama_siswa',
                 'users.email',
                 'siswas.tempat_lahir',

@@ -17,6 +17,7 @@ class CreateSiswaTable extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->string('nisn')->nullable();
+            $table->string('nama_guru');
             $table->string('nama_siswa')->nullable();
             $table->string('tempat_lahir')->nullable();
             $table->date('tanggal_lahir')->nullable();

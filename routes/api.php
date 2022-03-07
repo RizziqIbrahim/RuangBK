@@ -7,7 +7,9 @@ use App\Http\Controllers\{
     UserController,
     GuruController,
     ImageController,
-    AdminController
+    AdminController,
+    SoalController,
+    JawabanController,
 };
 /*
 |--------------------------------------------------------------------------

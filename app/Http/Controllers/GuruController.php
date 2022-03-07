@@ -71,7 +71,7 @@ class GuruController extends Controller
             'siswas.user_id',
             'users.status',
             'siswas.nisn',
-            'gurus.nama_guru',
+            'siswas.nama_guru',
             'siswas.nama_siswa',
             'users.email',
             'users.nomor_telp',
@@ -156,6 +156,7 @@ class GuruController extends Controller
             // $user = $request->user();
             $siswas = Siswa::create([
                 'nama_siswa' => $user->nama_user,
+                'nama_guru' => $guruProfile->nama_guru,
                 'nisn'  => $nisn,
                 'sekolah'   => $guruProfile->sekolah,
                 'npsn'  => $guruProfile->npsn,

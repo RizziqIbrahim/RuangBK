@@ -32,6 +32,7 @@ class SiswaController extends Controller
             'siswas.user_id',
             'users.status',
             'siswas.nisn',
+            'siswas.nama_guru',
             'siswas.nama_siswa',
             'users.email',
             'users.nomor_telp',
@@ -122,6 +123,7 @@ class SiswaController extends Controller
         // $siswa->user_id = $user->id;
         $siswa->npsn = $request->npsn;
         $siswa->nisn = $request->nisn;
+        $siswa->nama_guru = $request->nama_guru;
         $siswa->nama_siswa = $request->nama_siswa;
         $siswa->tempat_lahir = $request->tempat_lahir;
         $siswa->tanggal_lahir = $request->tanggal_lahir;
