@@ -114,34 +114,64 @@ class SiswaController extends Controller
 
         $file   = $request->file('foto');
         // return $request;
-        $user = $request->user();
-        $image = Siswa::where('user_id', $user->id)->value("foto");
-        $result = CloudinaryStorage::replace($image, $file->getRealPath(), $file->getClientOriginalName());
-
-        $user = $request->user();
-        $siswa = Siswa::where('user_id', $user->id)->first();
-        // $siswa->user_id = $user->id;
-        $siswa->npsn = $request->npsn;
-        $siswa->nisn = $request->nisn;
-        $siswa->nama_guru = $request->nama_guru;
-        $siswa->nama_siswa = $request->nama_siswa;
-        $siswa->tempat_lahir = $request->tempat_lahir;
-        $siswa->tanggal_lahir = $request->tanggal_lahir;
-        $siswa->alamat = $request->alamat;
-        $siswa->sekolah = $request->sekolah;
-        $siswa->kelas = $request->kelas;
-        $siswa->foto = $result;
-        
-        if($siswa->save()){
-            return response()->json([
-                "status" => "success",
-                "message" => 'Berhasil Menyimpan Data'
-            ]);
+        if($file == ""){   
+            $user = $request->user();
+            $siswa = Siswa::where('user_id', $user->id)->first();
+            // $siswa->user_id = $user->id;
+            $siswa->nisn = $request->nisn;
+            $siswa->nama_guru = $request->nama_guru;
+            $siswa->nama_siswa = $request->nama_siswa;
+            $siswa->tempat_lahir = $request->tempat_lahir;
+            $siswa->tanggal_lahir = $request->tanggal_lahir;
+            $siswa->alamat = $request->alamat;
+            $siswa->sekolah = $request->sekolah;
+            $siswa->kelas = $request->kelas;
+            $siswa->foto = $foto;
+            
+            if($siswa->save()){
+                return response()->json([
+                    "status" => "success",
+                    "message" => 'Berhasil Menyimpan Data',
+                    "foto"  => "tidak"
+                ]);
+            }else{
+                return response()->json([
+                    "status" => "failed",
+                    "message" => 'Gagal Menyimpan Data'
+                ]);
+            }
         }else{
-            return response()->json([
-                "status" => "failed",
-                "message" => 'Gagal Menyimpan Data'
-            ]);
+            
+            $file   = $request->file('foto');
+            $user = $request->user();
+            $image = Guru::where('user_id', $user->id)->value("foto");
+            $result = CloudinaryStorage::replace($image, $file->getRealPath(), $file->getClientOriginalName());
+            $user = $request->user();
+
+            $siswa = Siswa::where('user_id', $user->id)->first();
+            // $siswa->user_id = $user->id;
+            $siswa->nisn = $request->nisn;
+            $siswa->nama_guru = $request->nama_guru;
+            $siswa->nama_siswa = $request->nama_siswa;
+            $siswa->tempat_lahir = $request->tempat_lahir;
+            $siswa->tanggal_lahir = $request->tanggal_lahir;
+            $siswa->alamat = $request->alamat;
+            $siswa->sekolah = $request->sekolah;
+            $siswa->kelas = $request->kelas;
+            $siswa->foto = $foto;
+            
+            if($siswa->save()){
+                return response()->json([
+                    "status" => "success",
+                    "message" => 'Berhasil Menyimpan Data',
+                    "foto"  => "iya"
+                ]);
+            }else{
+                return response()->json([
+                    "status" => "failed",
+                    "message" => 'Gagal Menyimpan Data'
+                ]);
+            }
         }
     }
     
