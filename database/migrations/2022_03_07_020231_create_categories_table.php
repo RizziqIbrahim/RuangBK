@@ -18,7 +18,7 @@ class CreateCategoriesTable extends Migration
             $table->string('nama_angket');
             $table->string('keterangan');
             $table->foreignId('guru_id');
-            $table->string('batas_waktu');
+            $table->date('batas_waktu');
             $table->timestamps();
         });
     }
