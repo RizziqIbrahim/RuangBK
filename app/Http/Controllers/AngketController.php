@@ -15,14 +15,15 @@ use App\Models\{
     User,
     Guru,
     Soal,
-    Jawaban
+    Jawaban,
+    Angket
 };
 
 use Hash;
 use Auth;
 use Validator;
 
-class SoalController extends Controller
+class AngketController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -33,24 +34,22 @@ class SoalController extends Controller
     {
         $request->keywords;
         $request->page;
-        $request->angket;
-        $soals = Soal::leftjoin('angket', 'angket.id', '=', 'angket_id')->where('angket.nama_angket', 'like', '%'.strtolower($request->angket)."%")
-        ->orderBy("soals.id", 'desc')
+        $request->jenis;
+        $angket = Angket::leftjoin('users', 'users.id', '=', 'angket.guru_id')->orderBy("angket.id", 'desc')
         ->paginate($request->perpage, [
             'angket.id',
-            'soals.angket_id',
+            'users.nama_user',
             'angket.nama_angket',
-            'soals.id',
-            'nama_soal',
-
+            'angket.keterangan',
+            'angket.guru_id',
+            'angket.batas_waktu',
         ]);
 
         return response()->json([
             'status' => 'success',
             'perpage' => $request->perpage,
-            'role' => $request->role,
             'message' => 'sukses menampilkan data',
-            'data' => $soals
+            'data' => $angket
         ]);
     }
 
@@ -72,9 +71,11 @@ class SoalController extends Controller
      */
     public function store(Request $request)
     {
+        $user = $request->user();
         $rules = array(
-            'nama_soal' => 'required|string|max:255',
-            'angket_id' => 'required|integer|max:3',
+            'nama_angket'=> 'required|string',
+            'keterangan'=> 'required|string',
+            'batas_waktu'=> 'required|string',
         );
 
         $cek = Validator::make($request->all(),$rules);
@@ -85,17 +86,18 @@ class SoalController extends Controller
                 'message' => $errorString
             ], 401);
         }else{
-            $soals = Soal::create([
-                'nama_soal' => $request->nama_soal,
-                'angket_id' => $request->angket_id,
+            $angket = Angket::create([
+                'guru_id' => $user->id,
+                'nama_angket' => $request->nama_angket,
+                'keterangan' => $request->keterangan,
+                'batas_waktu' => $request->batas_waktu,
             ]);
+
             return response()->json([
-                'status' => 'success',
-                'perpage' => $request->perpage,
-                'message' => 'sukses menampilkan data',
-                'data' => $soals
+                "status" => "success",
+                "message" => 'Berhasil Menyimpan Data',
+                'data'  => $angket,
             ]);
-           
         }
     }
 
@@ -130,15 +132,18 @@ class SoalController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $soal = Soal::where('id', $id)->first();
-        $soal->angket_id = $request->angket_id;
-        $soal->nama_soal = $request->nama_soal;
+        $user = $request->user();
+        $angket = Angket::where('id', $id)->first();
+        $angket->guru_id =  $user->id;
+        $angket->nama_angket =  $request->nama_angket;
+        $angket->keterangan =  $request->keterangan;
+        $angket->batas_waktu =  $request->batas_waktu;
         
-        if($soal->save()){
+        if($angket->save()){
             return response()->json([
                 "status" => "success",
                 "message" => 'Berhasil Menyimpan Data',
-                'data'  => $soal,
+                'data'  => $angket,
             ]);
         }else{
             return response()->json([
@@ -156,7 +161,7 @@ class SoalController extends Controller
      */
     public function destroy($id)
     {
-        $hapus = Soal::where("id", $id)->delete();   
+        $hapus = Angket::where("id", $id)->delete();   
         if($hapus){
             return response()->json([
                 "status" => "success",

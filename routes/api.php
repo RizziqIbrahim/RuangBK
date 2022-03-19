@@ -10,6 +10,7 @@ use App\Http\Controllers\{
     AdminController,
     SoalController,
     JawabanController,
+    AngketController,
 };
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +51,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('admin', AdminController::class);
     Route::resource('soal', SoalController::class);
     Route::resource('jawaban', JawabanController::class);
+    Route::resource('angket', AngketController::class);
 
     Route::post("siswa/update", [SiswaController::class, 'update']);
     Route::post("guru/update", [GuruController::class, 'update']);

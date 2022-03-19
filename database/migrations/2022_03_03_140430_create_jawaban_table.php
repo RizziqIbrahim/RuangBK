@@ -16,8 +16,7 @@ class CreateJawabanTable extends Migration
         Schema::create('jawabans', function (Blueprint $table) {
             $table->id();
             $table->foreignId('soal_id');
-            $table->integer('ya');
-            $table->integer('tidak');
+            $table->string('jawaban');
             $table->timestamps();
         });
     }

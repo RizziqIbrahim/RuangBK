@@ -9,8 +9,7 @@ class Soal extends Model
 {
     protected $table = "soals";
     protected $fillable = [
-        'jenis_soal',
-        'content',
-        'category_id',
+        'nama_soal',
+        'angket_id',
     ];
 }
