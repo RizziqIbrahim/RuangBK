@@ -44,7 +44,7 @@ class SoalController extends Controller
             'angket.nama_angket',
             'soals.id',
             'nama_soal',
-            'jawabans.jawaban',
+            unserialize('jawabans.jawaban'),
         ]);
         return response()->json([
             'status' => 'success',
@@ -75,7 +75,7 @@ class SoalController extends Controller
     {
         $rules = array(
             'nama_soal' => 'required|string|max:255',
-            'angket_id' => 'required|integer|max:3',
+            'angket_id' => 'required|integer',
         );
 
         $cek = Validator::make($request->all(),$rules);
@@ -100,7 +100,7 @@ class SoalController extends Controller
 
             $jawaban = Jawaban::create([
                 'soal_id'   => $soals->id,
-                'jawaban'   => $resultJawaban,
+                'jawaban'   => serialize($resultJawaban),
             ]);
             return response()->json([
                 'status' => 'success',
