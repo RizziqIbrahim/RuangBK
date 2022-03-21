@@ -34,7 +34,9 @@ class SoalController extends Controller
         $request->keywords;
         $request->page;
         $request->angket;
-        $soals = Soal::leftjoin('angket', 'angket.id', '=', 'angket_id')->where('angket.nama_angket', 'like', '%'.strtolower($request->angket)."%")
+        $soals = Soal::leftjoin('angket', 'angket.id', '=', 'angket_id')
+        ->leftjoin('jawabans', 'jawabans.soal_id', '=', 'soals.id')
+        ->where('angket.nama_angket', 'like', '%'.strtolower($request->angket)."%")
         ->orderBy("soals.id", 'desc')
         ->paginate($request->perpage, [
             'angket.id',
@@ -42,15 +44,14 @@ class SoalController extends Controller
             'angket.nama_angket',
             'soals.id',
             'nama_soal',
-
+            'jawabans.jawaban',
         ]);
-
         return response()->json([
             'status' => 'success',
             'perpage' => $request->perpage,
             'role' => $request->role,
             'message' => 'sukses menampilkan data',
-            'data' => $soals
+            'data' => $soals,
         ]);
     }
 
@@ -89,14 +90,27 @@ class SoalController extends Controller
                 'nama_soal' => $request->nama_soal,
                 'angket_id' => $request->angket_id,
             ]);
+
+            $resultJawaban = [
+                'a' => $request->a,
+                'b' => $request->b,
+                'c' => $request->c,
+                'd' => $request->d,
+            ];
+
+            $jawaban = Jawaban::create([
+                'soal_id'   => $soals->id,
+                'jawaban'   => $resultJawaban,
+            ]);
             return response()->json([
                 'status' => 'success',
                 'perpage' => $request->perpage,
                 'message' => 'sukses menampilkan data',
-                'data' => $soals
+                'data' => $soals,
             ]);
            
         }
+        
     }
 
     /**

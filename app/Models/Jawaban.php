@@ -11,4 +11,8 @@ class Jawaban extends Model
     protected $fillable = [
         'soal_id',
         'jawaban',
-    ];}
+    ];
+    protected $casts = [
+        'jawaban' => 'array',
+    ];
+}
