@@ -44,7 +44,7 @@ class SoalController extends Controller
             'angket.nama_angket',
             'soals.id',
             'nama_soal',
-            unserialize('jawabans.jawaban'),
+            'jawabans.jawaban',
         ]);
         return response()->json([
             'status' => 'success',
@@ -100,7 +100,7 @@ class SoalController extends Controller
 
             $jawaban = Jawaban::create([
                 'soal_id'   => $soals->id,
-                'jawaban'   => serialize($resultJawaban),
+                'jawaban'   => $resultJawaban,
             ]);
             return response()->json([
                 'status' => 'success',
