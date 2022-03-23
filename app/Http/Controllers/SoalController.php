@@ -92,10 +92,11 @@ class SoalController extends Controller
             ]);
 
             $resultJawaban = [
-                'a' => $request->a,
-                'b' => $request->b,
-                'c' => $request->c,
-                'd' => $request->d,
+                $request->a,
+                $request->b,
+                $request->c,
+                $request->d,
+                $request->e,
             ];
 
             $jawaban = Jawaban::create([
@@ -144,9 +145,22 @@ class SoalController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $resultJawaban = [
+            $request->a,
+            $request->b,
+            $request->c,
+            $request->d,
+            $request->e,
+        ];
+
         $soal = Soal::where('id', $id)->first();
         $soal->angket_id = $request->angket_id;
         $soal->nama_soal = $request->nama_soal;
+
+        $jawaban = Jawaban::where('soal_id', $id)->first();
+        $jawaban->soal_id = $id;
+        $jawaban->jawaban = $resultJawaban;
+        $jawaban->save();
         
         if($soal->save()){
             return response()->json([
