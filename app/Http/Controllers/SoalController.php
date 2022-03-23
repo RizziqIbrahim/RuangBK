@@ -44,7 +44,7 @@ class SoalController extends Controller
             'angket.nama_angket',
             'soals.id',
             'nama_soal',
-            'jawabans.jawaban',
+            dump('jawabans.jawaban'),
         ]);
         return response()->json([
             'status' => 'success',
