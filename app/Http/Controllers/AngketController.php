@@ -122,7 +122,7 @@ class AngketController extends Controller
             'angket.nama_angket',
             'soals.id',
             'nama_soal',
-            dump('jawabans.jawaban'),
+            'jawabans.jawaban',
         ]);
         return response()->json([
             'status' => 'success',
