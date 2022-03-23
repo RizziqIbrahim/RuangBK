@@ -16,7 +16,7 @@ class CreateJawabanTable extends Migration
         Schema::create('jawabans', function (Blueprint $table) {
             $table->id();
             $table->foreignId('soal_id');
-            $table->string('jawaban');
+            $table->json('jawaban');
             $table->timestamps();
         });
     }
