@@ -125,10 +125,6 @@ class AuthController extends Controller
 
             }
 
-
-
-
-
             return response()->json([
                 'message'   => 'Success',
                 'roles'        => $roles[0],

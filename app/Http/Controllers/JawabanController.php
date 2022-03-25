@@ -45,4 +45,22 @@ class JawabanController extends Controller
             'data' => $jawaban
         ]);
     }
+
+    public function store(Request $request, $id)
+    {
+        $user = $request->user();
+        $jawaban = Jawaban::create([
+            'soal' => $request->soal,
+            'angket_id' => $request->angket_id,
+            'kode' =>   $request->kode
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'perpage' => $request->perpage,
+            'message' => 'sukses menampilkan data',
+            'data' => $jawaban,
+        ]);
+           
+    }
 }

@@ -12,8 +12,7 @@ class Angket extends Model
     protected $fillable = [
         'nama_angket',
         'keterangan',
-        'guru_id',
-        'batas_waktu',
-
+        'created_by',
+        'updated_by',
     ];
 }

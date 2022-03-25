@@ -11,6 +11,7 @@ use App\Http\Controllers\{
     SoalController,
     JawabanController,
     AngketController,
+    AksesController,
 };
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +53,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('soal', SoalController::class);
     Route::resource('jawaban', JawabanController::class);
     Route::resource('angket', AngketController::class);
+    Route::resource('akses', AksesController::class);
 
     Route::post("siswa/update", [SiswaController::class, 'update']);
     Route::post("guru/update", [GuruController::class, 'update']);

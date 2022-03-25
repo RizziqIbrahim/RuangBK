@@ -9,7 +9,9 @@ class Jawaban extends Model
 {
     protected $table = "jawabans";
     protected $fillable = [
-        'soal_id',
+        'angket_id',
+        'user_id',
+        'kode',
         'jawaban',
     ];
     protected $casts = [

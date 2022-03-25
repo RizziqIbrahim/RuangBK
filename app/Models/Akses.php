@@ -5,15 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Soal extends Model
+class Akses extends Model
 {
-    protected $table = "soals";
+    protected $table = "akses";
     protected $fillable = [
-        'soal',
         'angket_id',
-        'created_by',
-        'updated_by',
-        'created_at',
-        'updated_by'
+        'user',
+        'time',
+        'start_at',
+        'finish_at',
+        'open_by',
+        'kode',
     ];
 }

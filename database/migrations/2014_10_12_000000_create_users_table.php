@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('nomor_telp');
             $table->integer('role');
             $table->integer('status');
+            $table->integer('password_status')->default(0);
             $table->timestamps();
         });
     }

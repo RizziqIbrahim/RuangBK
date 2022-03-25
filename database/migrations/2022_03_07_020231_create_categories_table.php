@@ -13,11 +13,12 @@ class CreateCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('angket', function (Blueprint $table) {      
+        Schema::create('categories', function (Blueprint $table) {      
             $table->id();
             $table->string('nama_angket');
             $table->string('keterangan');
-            $table->foreignId('guru_id');
+            $table->foreignId('created_by');
+            $table->foreignId('updated_by');
             $table->date('batas_waktu');
             $table->timestamps();
         });
@@ -30,6 +31,6 @@ class CreateCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('angket');
+        Schema::dropIfExists('categories');
     }
 }

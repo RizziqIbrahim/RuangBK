@@ -35,14 +35,15 @@ class AngketController extends Controller
         $request->keywords;
         $request->page;
         $request->jenis;
-        $angket = Angket::leftjoin('users', 'users.id', '=', 'angket.guru_id')->orderBy("angket.id", 'desc')
+        $angket = Angket::leftjoin('users', 'users.id', '=', 'angket.created_by')
+        ->orderBy("angket.id", 'desc')
         ->paginate($request->perpage, [
             'angket.id',
+            'angket.created_by',
+            'angket.updated_by',
             'users.nama_user',
             'angket.nama_angket',
             'angket.keterangan',
-            'angket.guru_id',
-            'angket.batas_waktu',
         ]);
 
         return response()->json([
@@ -75,7 +76,6 @@ class AngketController extends Controller
         $rules = array(
             'nama_angket'=> 'required|string',
             'keterangan'=> 'required|string',
-            'batas_waktu'=> 'required|string',
         );
 
         $cek = Validator::make($request->all(),$rules);
@@ -87,10 +87,10 @@ class AngketController extends Controller
             ], 401);
         }else{
             $angket = Angket::create([
-                'guru_id' => $user->id,
+                'created_by' => $user->id,
+                'updated_by' => $user->id,
                 'nama_angket' => $request->nama_angket,
                 'keterangan' => $request->keterangan,
-                'batas_waktu' => $request->batas_waktu,
             ]);
 
             return response()->json([
@@ -113,16 +113,13 @@ class AngketController extends Controller
         $request->page;
         $request->angket;
         $soals = Soal::leftjoin('angket', 'angket.id', '=', 'angket_id')
-        ->leftjoin('jawabans', 'jawabans.soal_id', '=', 'soals.id')
         ->where('soals.angket_id', $id)
         ->orderBy("soals.id", 'desc')
         ->paginate($request->perpage, [
-            'angket.id',
             'soals.angket_id',
             'angket.nama_angket',
             'soals.id',
-            'nama_soal',
-            'jawabans.jawaban',
+            'soal',
         ]);
         return response()->json([
             'status' => 'success',
@@ -156,10 +153,9 @@ class AngketController extends Controller
     {
         $user = $request->user();
         $angket = Angket::where('id', $id)->first();
-        $angket->guru_id =  $user->id;
+        $angket->updated_by =  $user->id;
         $angket->nama_angket =  $request->nama_angket;
         $angket->keterangan =  $request->keterangan;
-        $angket->batas_waktu =  $request->batas_waktu;
         
         if($angket->save()){
             return response()->json([

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSoalTable extends Migration
+class CreateAksesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,15 @@ class CreateSoalTable extends Migration
      */
     public function up()
     {
-        Schema::create('soals', function (Blueprint $table) {
+        Schema::create('akses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('angket_id');
-            $table->string('soal');
-            $table->foreignId('created_by');
-            $table->foreignId('updated_by');
+            $table->longText('user');
+            $table->integer('time')->nullable();
+            $table->integer('start_at');
+            $table->integer('finish_at');
+            $table->foreignId('open_by');
+            $table->string('kode');
             $table->timestamps();
         });
     }
@@ -30,6 +33,6 @@ class CreateSoalTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('soals');
+        Schema::dropIfExists('akses');
     }
 }

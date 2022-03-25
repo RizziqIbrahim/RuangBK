@@ -35,16 +35,15 @@ class SoalController extends Controller
         $request->page;
         $request->angket;
         $soals = Soal::leftjoin('angket', 'angket.id', '=', 'angket_id')
-        ->leftjoin('jawabans', 'jawabans.soal_id', '=', 'soals.id')
         ->where('angket.nama_angket', 'like', '%'.strtolower($request->angket)."%")
         ->orderBy("soals.id", 'desc')
         ->paginate($request->perpage, [
-            'angket.id',
             'soals.angket_id',
             'angket.nama_angket',
             'soals.id',
-            'nama_soal',
-            'jawabans.jawaban',
+            'soals.soal',
+            'soals.created_by',
+            'soals.updated_by',
         ]);
         return response()->json([
             'status' => 'success',
@@ -73,8 +72,9 @@ class SoalController extends Controller
      */
     public function store(Request $request)
     {
+        $user = $request->user();
         $rules = array(
-            'nama_soal' => 'required|string|max:255',
+            'soal' => 'required|string|max:255',
             'angket_id' => 'required|integer',
         );
 
@@ -87,22 +87,12 @@ class SoalController extends Controller
             ], 401);
         }else{
             $soals = Soal::create([
-                'nama_soal' => $request->nama_soal,
+                'soal' => $request->soal,
                 'angket_id' => $request->angket_id,
+                'created_by' => $user->id,
+                'updated_by' => $user->id,
             ]);
 
-            $resultJawaban = [
-                $request->a,
-                $request->b,
-                $request->c,
-                $request->d,
-                $request->e,
-            ];
-
-            $jawaban = Jawaban::create([
-                'soal_id'   => $soals->id,
-                'jawaban'   => $resultJawaban,
-            ]);
             return response()->json([
                 'status' => 'success',
                 'perpage' => $request->perpage,
@@ -145,23 +135,13 @@ class SoalController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $resultJawaban = [
-            $request->a,
-            $request->b,
-            $request->c,
-            $request->d,
-            $request->e,
-        ];
-
+        $user = $request->user();
         $soal = Soal::where('id', $id)->first();
         $soal->angket_id = $request->angket_id;
-        $soal->nama_soal = $request->nama_soal;
-
-        $jawaban = Jawaban::where('soal_id', $id)->first();
-        $jawaban->soal_id = $id;
-        $jawaban->jawaban = $resultJawaban;
-        $jawaban->save();
+        $soal->soal = $request->soal;
+        $soal->updated_by = $user->id;
         
+
         if($soal->save()){
             return response()->json([
                 "status" => "success",
