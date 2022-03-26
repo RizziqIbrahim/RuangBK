@@ -18,7 +18,7 @@ class CreateJawabanTable extends Migration
             $table->foreignId('angket_id');
             $table->foreignId('user_id');
             $table->longText('jawaban');
-            $table->integer('kode');
+            $table->string('kode');
             $table->timestamps();
         });
     }

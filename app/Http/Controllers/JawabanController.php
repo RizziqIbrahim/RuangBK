@@ -28,14 +28,14 @@ class JawabanController extends Controller
     {
         $request->keywords;
         $request->page;
-        $jawaban = Jawaban::leftjoin('soals', 'soals.id', '=', 'soal_id')
+        $jawaban = Jawaban::leftjoin('angket', 'angket.id', '=', 'angket_id')
+        ->leftjoin('users', 'users.id', '=', 'user_id')
         ->orderBy("created_at", 'desc')
         ->paginate($request->perpage, [
             'jawaban.id',
-            'jawaban.soal_id',
-            'soals.content',
-            'jawaban.ya',
-            'jawaban.tidak',
+            'jawaban.angket_id',
+            'jawaban.user_id',
+            'jawaban.jawaban'
         ]);
 
         return response()->json([
@@ -46,12 +46,19 @@ class JawabanController extends Controller
         ]);
     }
 
-    public function store(Request $request, $id)
+    public function store(Request $request)
     {
+        $user = $request->user();
+        $data = array(
+            "soal_id" => $request->user_id,
+            "jawaban" => $request->jawaban,
+        );
         $user = $request->user();
         $jawaban = Jawaban::create([
             'soal' => $request->soal,
             'angket_id' => $request->angket_id,
+            'jawaban' => json_encode($data),
+            'user_id' => $user->id,
             'kode' =>   $request->kode
         ]);
 
