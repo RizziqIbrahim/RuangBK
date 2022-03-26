@@ -30,12 +30,12 @@ class JawabanController extends Controller
         $request->page;
         $jawaban = Jawaban::leftjoin('angket', 'angket.id', '=', 'angket_id')
         ->leftjoin('users', 'users.id', '=', 'user_id')
-        ->orderBy("created_at", 'desc')
+        ->orderBy("jawabans.created_at", 'desc')
         ->paginate($request->perpage, [
-            'jawaban.id',
-            'jawaban.angket_id',
-            'jawaban.user_id',
-            'jawaban.jawaban'
+            'jawabans.id',
+            'jawabans.angket_id',
+            'jawabans.user_id',
+            'jawabans.jawaban'
         ]);
 
         return response()->json([
@@ -54,13 +54,20 @@ class JawabanController extends Controller
             "jawaban" => $request->jawaban,
         );
         $user = $request->user();
-        $jawaban = Jawaban::create([
-            'soal' => $request->soal,
-            'angket_id' => $request->angket_id,
-            'jawaban' => json_encode($data),
-            'user_id' => $user->id,
-            'kode' =>   $request->kode
-        ]);
+        $getJawaban = Jawaban::where("user_id", $user->id)->get();
+
+        if($getJawaban == ""){
+            $jawaban = Jawaban::create([
+                'soal' => $request->soal,
+                'angket_id' => $request->angket_id,
+                'jawaban' => json_encode($data),
+                'user_id' => $user->id,
+                'kode' =>   $request->kode
+            ]);
+        }else{
+           
+        }
+        
 
         return response()->json([
             'status' => 'success',

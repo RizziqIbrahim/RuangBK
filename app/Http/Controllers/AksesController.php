@@ -54,8 +54,8 @@ class AksesController extends Controller
     public function store(Request $request)
     {
         $data = array(
-            "user_id" => $request->user_id,
-            "status" => '0',
+           "user_id" => $request->user_id,
+           "status" => '0',
         );
         $user = $request->user();
         $rules = array(
@@ -80,7 +80,6 @@ class AksesController extends Controller
                 'finish_at' => $request->finish_at,
                 'open_by' => $user->id,
                 'kode' => uniqid(),
-
             ]);
 
             return response()->json([
@@ -90,6 +89,7 @@ class AksesController extends Controller
             ]);
         }
     }
+
     public function show(Request $request, $id)
     {
         
@@ -113,17 +113,14 @@ class AksesController extends Controller
         $array = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
         ->orderBy("akses.id", 'desc')
         ->where("akses.id", $id)
-        ->get([
-            'akses.user',
-        ]);
-
+        ->value("user");
 
         return response()->json([
             'status' => 'success',
             'perpage' => $request->perpage,
             'message' => 'sukses menampilkan data',
             'data' => $akses,
-            'user' => json_encode($array)
+            'user' => json_decode($array)
         ]);
 
     }
