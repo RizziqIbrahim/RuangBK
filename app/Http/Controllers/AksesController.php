@@ -37,9 +37,8 @@ class AksesController extends Controller
             'akses.id',
             'akses.angket_id',
             'angket.nama_angket',
-            'akses.user',
             'akses.time',
-            'users.start_at',
+            'akses.start_at',
             'akses.finish_at',
             'akses.kode',
         ]);
@@ -48,16 +47,19 @@ class AksesController extends Controller
             'status' => 'success',
             'perpage' => $request->perpage,
             'message' => 'sukses menampilkan data',
-            'data' => $akses
+            'data' => $akses,
         ]);
     }
 
     public function store(Request $request)
     {
+        $data = array(
+            "user_id" => $request->user_id,
+            "status" => '0',
+        );
         $user = $request->user();
         $rules = array(
             'time'=> 'required|string',
-            'user'=> 'required|string',
             'start_at'=> 'required|string',
             'finish_at'=> 'required|string',
         );
@@ -72,7 +74,7 @@ class AksesController extends Controller
         }else{
             $akses = Akses::create([
                 'angket_id' => $request->angket_id,
-                'user' => $request->user,
+                'user' => json_encode($data),
                 'time' => $request->time,
                 'start_at' => $request->start_at,
                 'finish_at' => $request->finish_at,
@@ -103,16 +105,25 @@ class AksesController extends Controller
             'angket.nama_angket',
             'akses.user',
             'akses.time',
-            'users.start_at',
+            'akses.start_at',
             'akses.finish_at',
             'akses.kode',
         ]);
+
+        $array = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
+        ->orderBy("akses.id", 'desc')
+        ->where("akses.id", $id)
+        ->get([
+            'akses.user',
+        ]);
+
 
         return response()->json([
             'status' => 'success',
             'perpage' => $request->perpage,
             'message' => 'sukses menampilkan data',
-            'data' => $akses
+            'data' => $akses,
+            'user' => json_encode($array)
         ]);
 
     }
