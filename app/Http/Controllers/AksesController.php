@@ -53,10 +53,18 @@ class AksesController extends Controller
 
     public function store(Request $request)
     {
-        $data = array(
-           "user_id" => $request->user_id,
-           "status" => '0',
-        );
+        // $data = array(
+        //    "user_id" => $request->user_id,
+        //    "status" => '0',
+        // );
+
+        for ($i=0; $i < count($request->user_id); $i++) { 
+            $data[$i] = [
+                "user_id" => $request->user_id[$i],
+                "status" => '0',
+            ];    
+        }
+        
         $user = $request->user();
         $rules = array(
             'time'=> 'required|string',
@@ -72,22 +80,21 @@ class AksesController extends Controller
                 'message' => $errorString
             ], 401);
         }else{
-            $akses = Akses::create([
-                'angket_id' => $request->angket_id,
-                'user' => json_encode($data),
-                'time' => $request->time,
-                'start_at' => $request->start_at,
-                'finish_at' => $request->finish_at,
-                'open_by' => $user->id,
-                'kode' => uniqid(),
-            ]);
-
+                $akses = Akses::create([
+                    'angket_id' => $request->angket_id,
+                    'user' => json_encode($data),
+                    'time' => $request->time,
+                    'start_at' => $request->start_at,
+                    'finish_at' => $request->finish_at,
+                    'open_by' => $user->id,
+                    'kode' => uniqid(),
+                ]);
+            }
             return response()->json([
                 "status" => "success",
                 "message" => 'Berhasil Menyimpan Data',
                 'data'  => $akses,
             ]);
-        }
     }
 
     public function show(Request $request, $id)
