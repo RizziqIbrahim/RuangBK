@@ -53,18 +53,13 @@ class AksesController extends Controller
 
     public function store(Request $request)
     {
-        // $data = array(
-        //    "user_id" => $request->user_id,
-        //    "status" => '0',
-        // );
-
         for ($i=0; $i < count($request->user_id); $i++) { 
             $data[$i] = [
                 "user_id" => $request->user_id[$i],
                 "status" => '0',
             ];    
         }
-        
+
         $user = $request->user();
         $rules = array(
             'time'=> 'required|string',
