@@ -28,6 +28,7 @@ class JawabanController extends Controller
     {
         $request->keywords;
         $request->page;
+        $request->perpage;
         $jawaban = Jawaban::leftjoin('angket', 'angket.id', '=', 'angket_id')
         ->leftjoin('users', 'users.id', '=', 'user_id')
         ->orderBy("jawabans.created_at", 'desc')

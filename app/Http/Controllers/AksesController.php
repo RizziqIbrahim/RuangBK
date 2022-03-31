@@ -30,6 +30,7 @@ class AksesController extends Controller
     {
         $request->keywords;
         $request->page;
+        $request->perpage;
         $request->jenis;
         $akses = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
         ->orderBy("akses.id", 'desc')
@@ -97,6 +98,7 @@ class AksesController extends Controller
         
         $request->keywords;
         $request->page;
+        $request->perpage;
         $request->jenis;
         $akses = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
         ->where('akses.id', $id)

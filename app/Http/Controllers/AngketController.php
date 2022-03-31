@@ -34,6 +34,7 @@ class AngketController extends Controller
     {
         $request->keywords;
         $request->page;
+        $request->perpage;
         $request->jenis;
         $angket = Angket::leftjoin('users', 'users.id', '=', 'angket.created_by')
         ->orderBy("angket.id", 'desc')
@@ -110,6 +111,7 @@ class AngketController extends Controller
     public function show(Request $request, $id)
     {
         $request->keywords;
+        $request->perpage;
         $request->page;
         $request->angket;
         $soals = Soal::leftjoin('angket', 'angket.id', '=', 'angket_id')
