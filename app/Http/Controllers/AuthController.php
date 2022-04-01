@@ -94,14 +94,14 @@ class AuthController extends Controller
             }
 
             if($roles[0] == "admin"){
-                $admin = Admin::where('user_id' , '=', $user->id)->first();
+                // $admin = Admin::where('user_id' , '=', $user->id)->first();
 
-                if($admin->alamat == ""){
-                    $identitas = "belum terisi";
-                }else{
-                    $identitas ="terisi";
+                // if($admin->alamat == ""){
+                //     $identitas = "belum terisi";
+                // }else{
+                //     $identitas ="terisi";
 
-                }
+                // }
 
             }elseif($roles[0] == "guru"){
                 $guru = Guru::where('user_id' , '=', $user->id)->first();
