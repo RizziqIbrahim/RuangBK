@@ -72,7 +72,7 @@ class AuthController extends Controller
             $roles = $user->getRoleNames();
 
             if($roles[0] == "admin"){
-                $npsn = "admin";
+                $npsn = "terisi";
 
             }elseif($roles[0] == "guru"){
                 $guru = Guru::where('user_id' , '=', $user->id)->first();
@@ -87,7 +87,7 @@ class AuthController extends Controller
             }
 
             if($roles[0] == "admin"){
-                $identitas = "admin";
+                $identitas = "terisi";
 
             }elseif($roles[0] == "guru"){
                 $guru = Guru::where('user_id' , '=', $user->id)->first();
@@ -159,14 +159,7 @@ class AuthController extends Controller
             
 
             if($roles[0] == "admin"){
-                $admin = Admin::where('user_id' , '=', $user->id)->first();
-
-                if($admin->npsn == ""){
-                    $npsn = "belum terisi";
-                }else{
-                    $npsn ="terisi";
-
-                }
+                $npsn = "terisi";
 
             }elseif($roles[0] == "guru"){
                 $guru = Guru::where('user_id' , '=', $user->id)->first();
@@ -192,14 +185,7 @@ class AuthController extends Controller
 
 
             if($roles[0] == "admin"){
-                $admin = Admin::where('user_id' , '=', $user->id)->first();
-        
-                if($admin->alamat == ""){
-                    $identitas = "belum terisi";
-                }else{
-                    $identitas ="terisi";
-                  
-                }
+                $identitas = "terisi";
               
             }elseif($roles[0] == "guru"){
                 $guru = Guru::where('user_id' , '=', $user->id)->first();
@@ -270,14 +256,7 @@ class AuthController extends Controller
 
 
             if($roles[0] == "admin"){
-                $admin = Admin::where('user_id' , '=', $user->id)->first();
-
-                if($admin->npsn == ""){
-                    $npsn = "belum terisi";
-                }else{
-                    $npsn ="terisi";
-
-                }
+                $npsn = "terisi";
 
             }elseif($roles[0] == "guru"){
                 $guru = Guru::where('user_id' , '=', $user->id)->first();
@@ -292,14 +271,7 @@ class AuthController extends Controller
             }
 
             if($roles[0] == "admin"){
-                $admin = Admin::where('user_id' , '=', $user->id)->first();
-        
-                if($admin->alamat == ""){
-                    $identitas = "belum terisi";
-                }else{
-                    $identitas ="terisi";
-                  
-                }
+                $identitas = "terisi";
               
             }elseif($roles[0] == "guru"){
                 $guru = Guru::where('user_id' , '=', $user->id)->first();
