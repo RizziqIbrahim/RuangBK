@@ -57,7 +57,7 @@ class AuthController extends Controller
                 $user->assignRole('admin');
             }elseif ($user->role == 2) {
                 $user->assignRole('guru');
-                $gurus = Guru::create([
+                Guru::create([
                     'nama_guru' => $user->nama_user,
                     'user_id' => $user->id,
                 ]);
@@ -116,7 +116,6 @@ class AuthController extends Controller
                 'roles'        => $roles[0],
                 'token'      => $token,
                 'user'      => $user,
-                'guru'      => $gurus,
                 'identitas' => $identitas,
                 'npsn'  => $npsn,
             ], 200);
