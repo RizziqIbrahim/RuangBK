@@ -15,7 +15,7 @@ class CreateJawabanTable extends Migration
     {
         Schema::create('jawabans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('angket_id');
+            $table->integer('angket_id');
             $table->foreignId('user_id');
             $table->longText('jawaban');
             $table->string('kode');

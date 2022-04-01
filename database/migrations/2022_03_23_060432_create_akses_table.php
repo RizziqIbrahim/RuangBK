@@ -15,7 +15,7 @@ class CreateAksesTable extends Migration
     {
         Schema::create('akses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('angket_id');
+            $table->integer('angket_id');
             $table->longText('user');
             $table->integer('time')->nullable();
             $table->integer('start_at');

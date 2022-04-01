@@ -15,7 +15,7 @@ class CreateSoalTable extends Migration
     {
         Schema::create('soals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('angket_id');
+            $table->integer('angket_id');
             $table->string('soal');
             $table->foreignId('created_by');
             $table->foreignId('updated_by');
