@@ -16,7 +16,7 @@ class AdminSeeder extends Seeder
     {
         $user = User::create([
             'nama_user' => "admin",
-            'password' => "12345678",
+            'password' => 12345678,
             'email' => "admin@gmail.com",
             'nomor_telp' => 1234567890,
             'role' => 1,
