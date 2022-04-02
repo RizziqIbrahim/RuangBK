@@ -112,7 +112,27 @@ class SoalController extends Controller
      */
     public function show($id)
     {
-        //
+        $request->keywords;
+        $request->page;
+        $request->angket;
+        $soals = Soal::leftjoin('angket', 'angket.id', '=', 'angket_id')
+        ->where('soals.id', $id)
+        ->orderBy("soals.id", 'desc')
+        ->paginate($request->perpage, [
+            'soals.angket_id',
+            'angket.nama_angket',
+            'soals.id',
+            'soals.soal',
+            'soals.created_by',
+            'soals.updated_by',
+        ]);
+        return response()->json([
+            'status' => 'success',
+            'perpage' => $request->perpage,
+            'role' => $request->role,
+            'message' => 'sukses menampilkan data',
+            'data' => $soals,
+        ]);
     }
 
     /**
