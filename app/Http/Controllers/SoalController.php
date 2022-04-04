@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\SoalImport;
 use App\Http\Controller\{
     SiswaController,
     AuthController,
@@ -195,6 +197,21 @@ class SoalController extends Controller
                 "status" => "failed",
                 "message" => 'gagal menghapus data'
             ]);
+        }
+    }
+
+    public function import(Request $request)
+    {
+        $soal = Excel::import(new SoalImport, $request->file('soal')->store('temp'));
+        if($soal){
+            return response()->json([
+                'message'   => 'Success',
+                // 'roles' => $roles[0],
+            ], 200);
+        }else{
+            return response()->json([
+                'message'   => 'Gagal',
+            ], 200);
         }
     }
 }
