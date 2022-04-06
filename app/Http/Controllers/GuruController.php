@@ -162,6 +162,7 @@ class GuruController extends Controller
                 'nisn'  => '',
                 'sekolah'   => $guruProfile->sekolah,
                 'npsn'  => $guruProfile->npsn,
+                'user_id' => $user->id,
             ]);
 
             $roles = $user->getRoleNames();
