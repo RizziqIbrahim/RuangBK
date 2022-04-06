@@ -58,6 +58,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post("siswa/update", [SiswaController::class, 'update']);
     Route::post("guru/update", [GuruController::class, 'update']);
     Route::post("admin/update", [AdminController::class, 'update']);
+
+    Route::post("/change-password", [UserController::class, 'changePassword']);
     
     Route::post("siswa/nisn", [SiswaController::class, 'npsn']);
     Route::post("guru/npsn", [GuruController::class, 'npsn']);

@@ -386,4 +386,23 @@ class UserController extends Controller
             ], 200);
         }
     }
+
+    public function changePassword(Request $request, $id)
+    {
+        $user = $request->user();
+        $users = User::where('user_id', $user->id)->first();
+        $users->password = $request->password;
+        
+        if($users->save()){
+            return response()->json([
+                "status" => "success",
+                "message" => 'Berhasil Menyimpan Data'
+            ]);
+        }else{
+            return response()->json([
+                "status" => "failed",
+                "message" => 'Gagal Menyimpan Data'
+            ]);
+        }
+    }
 }
