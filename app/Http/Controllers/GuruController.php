@@ -155,15 +155,13 @@ class GuruController extends Controller
 
             $token = $user->createToken('token-name')->plainTextToken;
 
-            $nisn = $request->nisn;
             // $user = $request->user();
             $siswas = Siswa::create([
                 'nama_siswa' => $user->nama_user,
-                'nama_guru' => $guruProfile->nama_guru,
-                'nisn'  => $nisn,
+                'guru_id' => $guruProfile->id,
+                'nisn'  => '',
                 'sekolah'   => $guruProfile->sekolah,
                 'npsn'  => $guruProfile->npsn,
-                'user_id' => $user->id,
             ]);
 
             $roles = $user->getRoleNames();
@@ -176,7 +174,6 @@ class GuruController extends Controller
                 'user'      => $user,
                 'guru'      => $guruProfile,
                 'siswa'      => $siswas,
-                'nisn'      => $nisn
             ], 200);
         }
     }
