@@ -392,6 +392,7 @@ class UserController extends Controller
         $user = $request->user();
         $users = User::where('user_id', $user->id)->first();
         $users->password = $request->password;
+        $users->password_status = 1;
         
         if($users->save()){
             return response()->json([
