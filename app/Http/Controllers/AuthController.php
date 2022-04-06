@@ -55,7 +55,7 @@ class AuthController extends Controller
 
             if($user->role == 1){
                 $user->assignRole('admin');
-            }elseif ($user->role == 2) {
+            }elseif($user->role == 2) {
                 $user->assignRole('guru');
                 Guru::create([
                     'nama_guru' => $user->nama_user,
@@ -63,6 +63,10 @@ class AuthController extends Controller
                 ]);
             }else{
                 $user->assignRole('siswa');
+                Siswa::create([
+                    'nama_siswa' => $user->nama_user,
+                    'user_id' => $user->id,
+                ]);
             }
 
             $token = $user->createToken('token-name')->plainTextToken;
@@ -90,7 +94,7 @@ class AuthController extends Controller
                 $identitas = "terisi";
 
             }elseif($roles[0] == "guru"){
-                $guru = Guru::where('user_id' , '=', $user->id)->first();
+                $guru = Guru::where('user_id' , $user->id)->first();
 
                 if($guru->alamat == ""){
                     $identitas = "belum terisi";
@@ -100,7 +104,7 @@ class AuthController extends Controller
                 }
 
             }else{
-                $siswa = Siswa::where('user_id' , '=', $user->id)->first();
+                $siswa = Siswa::where('user_id' , $user->id)->first();
 
                 if($siswa->alamat == ""){
                     $identitas = "belum terisi";
