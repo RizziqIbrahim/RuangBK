@@ -390,7 +390,7 @@ class UserController extends Controller
     public function changePassword(Request $request, $id)
     {
         $user = $request->user();
-        $users = User::where('user_id', $user->id)->first();
+        $users = User::where('id', $user->id)->first();
         $users->password = $request->password;
         $users->password_status = 1;
         
