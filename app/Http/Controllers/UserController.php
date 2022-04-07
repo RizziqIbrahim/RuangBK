@@ -202,13 +202,13 @@ class UserController extends Controller
                 
             ]);
         }elseif ($roles == 3) {
-            $data = Siswa::where('user_id', $user->id)->leftjoin('users', 'users.id', '=', 'user_id')->leftjoin('gurus', 'gurus.id', '=', 'siswas.guru_id')
+            $data = Siswa::where('siswas.user_id', $user->id)->leftjoin('users', 'users.id', '=', 'siswas.user_id')->leftjoin('gurus', 'gurus.user_id', '=', 'siswas.guru_id')
             ->first([
                 'siswas.id',
                 'siswas.user_id',
                 'siswas.guru_id',
-                'gurus.nama_guru',
                 'siswas.nisn',
+                'gurus.nama_guru',
                 'siswas.nama_siswa',
                 'users.email',
                 'users.nomor_telp',
@@ -226,7 +226,7 @@ class UserController extends Controller
                 'status' => 'success',
                 'perpage' => $request->perpage,
                 'message' => 'sukses menampilkan data',
-                'data' => $siswa,
+                'data' => $data,
             ]);
         }elseif ($roles == 1) {
             $data = Admin::where('user_id', $user->id)->leftjoin('users', 'users.id', '=', 'user_id')->first([
@@ -377,7 +377,6 @@ class UserController extends Controller
         if($data){
             return response()->json([
                 'message'   => 'Success',
-                'user' => $user,
                 // 'roles' => $roles[0],
             ], 200);
         }else{
