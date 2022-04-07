@@ -387,7 +387,7 @@ class UserController extends Controller
         }
     }
 
-    public function changePassword(Request $request, $id)
+    public function changePassword(Request $request)
     {
         $user = $request->user();
         $users = User::where('id', $user->id)->first();
