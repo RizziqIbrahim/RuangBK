@@ -391,7 +391,7 @@ class UserController extends Controller
     {
         $user = $request->user();
         $users = User::where('id', $user->id)->first();
-        $users->password = $request->password;
+        $users->password = Hash::make($request->password);
         $users->password_status = 1;
         
         if($users->save()){
