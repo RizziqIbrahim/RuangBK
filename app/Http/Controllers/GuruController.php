@@ -29,32 +29,36 @@ class GuruController extends Controller
         public function index(Request $request)
     {
         $user = $request->user();
-        $request->keywords;
+        $request->siswa;
         $request->page;
         $request->perpage;
-        $guru = Guru::leftjoin('users', 'users.id', '=', 'user_id')->where('users.nama_user', 'like', '%'.strtolower($request->keywords)."%")
-        ->orderBy("gurus.created_at", 'desc')
+        $siswa = Siswa::leftjoin('users', 'users.id', '=', 'user_id')->leftjoin('gurus', 'gurus.id', '=', 'siswas.guru_id')
+        ->where('siswas.nama_siswa', 'like', '%'.strtolower($request->siswa)."%")
+        ->orderBy("siswas.created_at", 'desc')
         ->paginate($request->perpage, [
-            'gurus.id',
-            'gurus.user_id',
-            'users.status',
-            'gurus.npsn',
+            'siswas.id',
+            'siswas.user_id',
+            'siswas.guru_id',
             'gurus.nama_guru',
+            'siswas.nisn',
+            'siswas.nama_siswa',
             'users.email',
             'users.nomor_telp',
-            'gurus.tempat_lahir',
-            'gurus.tanggal_lahir',
-            'gurus.foto',
-            'gurus.sekolah',
-            'gurus.alamat',
-            'gurus.created_at' 
+            'siswas.tempat_lahir',      
+            'siswas.tanggal_lahir',
+            'siswas.foto',
+            'siswas.sekolah',
+            'siswas.kelas',
+            'siswas.npsn',
+            'siswas.alamat',
+            'siswas.created_at' 
         ]);
 
         return response()->json([
             'status' => 'success',
             'perpage' => $request->perpage,
             'message' => 'sukses menampilkan data',
-            'data' => $guru,
+            'data' => $siswa,
             'user' => $user->id
         ]);
     }
