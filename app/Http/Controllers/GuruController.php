@@ -10,7 +10,8 @@ use App\Http\Controllers\{
 use App\Models\{
     Siswa,
     User,
-    Guru
+    Guru,
+    Angket
 
 };
 
@@ -101,6 +102,31 @@ class GuruController extends Controller
         ]);
     }
 
+    public function jumlah(Request $request)
+    {
+        $user = $request->user();
+        $request->siswa;
+        $request->page;
+        $request->perpage;
+        $siswa = Siswa::leftjoin('users', 'users.id', '=', 'user_id')->leftjoin('gurus', 'gurus.id', '=', 'siswas.guru_id')
+        ->where('siswas.guru_id', $user->id)
+        ->where('siswas.nama_siswa', 'like', '%'.strtolower($request->siswa)."%")
+        ->orderBy("siswas.created_at", 'desc')
+        ->count();
+
+        $angket = Angket::leftjoin('users', 'users.id', '=', 'angket.created_by')
+        ->orderBy("angket.id", 'desc')
+        ->count();
+
+        return response()->json([
+            'status' => 'success',
+            'perpage' => $request->perpage,
+            'message' => 'sukses menampilkan data',
+            'siswa' => $siswa,
+            'angket' => $angket,
+            'user' => $user->id
+        ]);
+    }
 
     public function registerUser(Request $request)
     {

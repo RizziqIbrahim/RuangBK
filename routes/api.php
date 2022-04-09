@@ -75,6 +75,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('profile', [UserController::class, 'showLogin']);
 
     Route::get('getSiswa', [GuruController::class ,'getSiswa']);
+    Route::get('jumlah', [GuruController::class ,'jumlah']);
 
     Route::get('/getAkses', [AksesController::class ,'getAkses']);
 
