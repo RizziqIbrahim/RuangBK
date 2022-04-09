@@ -129,6 +129,8 @@ class AksesController extends Controller
                 'message' => 'sukses menampilkan data',
                 'data' => $akses,
             ]);
+        }else{
+            return ok;
         }
     }
 
