@@ -114,6 +114,11 @@ class AngketController extends Controller
         $request->perpage;
         $request->page;
         $request->angket;
+        $angket = Angket::leftjoin('users', 'users.id', '=', 'angket.created_by')
+        ->where('angket.id', $id)
+        ->orderBy("angket.id", 'desc')
+        ->value("nama_angket");
+        
         $soals = Soal::leftjoin('angket', 'angket.id', '=', 'angket_id')
         ->where('soals.angket_id', $id)
         ->orderBy("soals.id", 'desc')
@@ -129,6 +134,7 @@ class AngketController extends Controller
             'page' => $request->page,
             'role' => $request->role,
             'message' => 'sukses menampilkan data',
+            'angket' => $angket,
             'data' => $soals,
         ]);
 
