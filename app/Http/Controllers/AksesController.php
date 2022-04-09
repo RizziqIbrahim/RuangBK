@@ -99,9 +99,19 @@ class AksesController extends Controller
         $request->perpage;
         $request->jenis;
         $user = $request->user();
+        $akses = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
+        ->orderBy("akses.id", 'desc')
+        ->paginate($request->perpage, [
+            'akses.id',
+            'akses.angket_id',
+            'angket.nama_angket',
+            'akses.time',
+            'akses.start_at',
+            'akses.finish_at',
+            'akses.kode',
+        ]);
 
-        if (Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
-        ->orderBy("akses.id", 'desc')->get() == null) {
+        if ( $akses == null) {
             $array = null;
         }else{
             $array = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
