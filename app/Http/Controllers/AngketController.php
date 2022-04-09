@@ -126,6 +126,7 @@ class AngketController extends Controller
         return response()->json([
             'status' => 'success',
             'perpage' => $request->perpage,
+            'page' => $request->page,
             'role' => $request->role,
             'message' => 'sukses menampilkan data',
             'data' => $soals,
