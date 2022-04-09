@@ -117,10 +117,8 @@ class AksesController extends Controller
             $array = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
             ->orderBy("akses.id", 'desc')
             ->value("user");
-        }
-        
 
-        $user_id = json_decode($array)[0];
+            $user_id = json_decode($array)[0];
 
         // for ($i=0; $i < $user_id ; $i++) { 
         //     $user_satuan = $user_id[$i];
@@ -146,6 +144,8 @@ class AksesController extends Controller
                 'data' => $akses,
             ]);
         }
+    }
+        
     }
 
     public function show(Request $request, $id)
