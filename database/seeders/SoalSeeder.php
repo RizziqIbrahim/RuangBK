@@ -13,6 +13,13 @@ class SoalSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Soals::create([
+            'soal' => 'mtk',
+            'angket_id' => 'awok',
+            'created_by' => 'bidu',
+            'updated_by' => 'setiw',
+            'created_at' => 'depok',
+            'updated_at'  => 'jogja',
+        ]);
     }
 }
