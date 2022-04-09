@@ -99,26 +99,12 @@ class AksesController extends Controller
         $request->perpage;
         $request->jenis;
         $user = $request->user();
-        $akses = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
-        ->orderBy("akses.id", 'desc')
-        ->paginate($request->perpage, [
-            'akses.id',
-            'akses.angket_id',
-            'angket.nama_angket',
-            'akses.time',
-            'akses.start_at',
-            'akses.finish_at',
-            'akses.kode',
-        ]);
+        
+        $array = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
+        ->orderBy("akses.id", 'desc')->first()
+        ->value("user");
 
-        if ( $akses == null) {
-            $array = null;
-        }else{
-            $array = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
-            ->orderBy("akses.id", 'desc')
-            ->value("user");
-
-            $user_id = json_decode($array)[0];
+        $user_id = json_decode($array)[0];
 
         // for ($i=0; $i < $user_id ; $i++) { 
         //     $user_satuan = $user_id[$i];
@@ -144,8 +130,6 @@ class AksesController extends Controller
                 'data' => $akses,
             ]);
         }
-    }
-        
     }
 
     public function show(Request $request, $id)
