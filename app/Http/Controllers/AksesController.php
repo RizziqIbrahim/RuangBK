@@ -101,7 +101,7 @@ class AksesController extends Controller
         $user = $request->user();
         
         $array = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
-        ->orderBy("akses.id", 'desc')->first()
+        ->orderBy("akses.id", 'desc')
         ->value("user");
 
         $user_id = json_decode($array)[0];
@@ -130,7 +130,7 @@ class AksesController extends Controller
                 'data' => $akses,
             ]);
         }else{
-            return ok;
+            return "anda tidak memiliki akses ";
         }
     }
 
