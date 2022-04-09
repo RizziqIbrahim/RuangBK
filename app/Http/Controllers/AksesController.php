@@ -100,9 +100,15 @@ class AksesController extends Controller
         $request->jenis;
         $user = $request->user();
 
-        $array = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
-        ->orderBy("akses.id", 'desc')->first()
-        ->value("user");
+        if (Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
+        ->orderBy("akses.id", 'desc')->get() == null) {
+            $array = null;
+        }else{
+            $array = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
+            ->orderBy("akses.id", 'desc')->first()
+            ->value("user");
+        }
+        
 
         $user_id = json_decode($array)[0];
 
