@@ -115,7 +115,7 @@ class AksesController extends Controller
             $array = null;
         }else{
             $array = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
-            ->orderBy("akses.id", 'desc')->first()
+            ->orderBy("akses.id", 'desc')
             ->value("user");
         }
         
