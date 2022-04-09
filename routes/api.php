@@ -76,6 +76,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('getSiswa', [GuruController::class ,'getSiswa']);
 
+    Route::get('/getAkses', [AksesController::class ,'getAkses']);
+
     //delete
     
 

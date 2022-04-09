@@ -55,10 +55,9 @@ class AksesController extends Controller
     public function store(Request $request)
     {
         for ($i=0; $i < count($request->user_id); $i++) { 
-            $data[$i] = [
-                "user_id" => $request->user_id[$i],
-                "status" => '0',
-            ];    
+            $data = array($request->user_id,);
+                
+                
         }
 
         $user = $request->user();
@@ -93,39 +92,97 @@ class AksesController extends Controller
             ]);
     }
 
-    public function show(Request $request, $id)
+    public function getAkses(Request $request)
     {
-        
         $request->keywords;
         $request->page;
         $request->perpage;
         $request->jenis;
-        $akses = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
-        ->where('akses.id', $id)
-        ->orderBy("akses.id", 'desc')
-        ->paginate($request->perpage, [
-            'akses.id',
-            'akses.angket_id',
-            'angket.nama_angket',
-            'akses.user',
-            'akses.time',
-            'akses.start_at',
-            'akses.finish_at',
-            'akses.kode',
-        ]);
+        $user = $request->user();
+
+        $array = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
+        ->orderBy("akses.id", 'desc')->first()
+        ->value("user");
+
+        $user_id = json_decode($array)[0];
+
+        // for ($i=0; $i < $user_id ; $i++) { 
+        //     $user_satuan = $user_id[$i];
+        // }
+        if(in_array($user->id, $user_id)){
+            $akses = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
+            ->orderBy("akses.id", 'desc')
+            ->paginate($request->perpage, [
+                'akses.id',
+                'akses.angket_id',
+                'angket.nama_angket',
+                'angket.keterangan',
+                'akses.user',
+                'akses.time',
+                'akses.start_at',
+                'akses.finish_at',
+                'akses.kode',
+            ]);
+            return response()->json([
+                'status' => 'success',
+                'perpage' => $request->perpage,
+                'message' => 'sukses menampilkan data',
+                'data' => $akses,
+            ]);
+        }
+    }
+
+    public function show(Request $request, $id)
+    {
+        $request->keywords;
+        $request->page;
+        $request->perpage;
+        $request->jenis;
+        $user = $request->user();
 
         $array = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
         ->orderBy("akses.id", 'desc')
         ->where("akses.id", $id)
         ->value("user");
 
-        return response()->json([
-            'status' => 'success',
-            'perpage' => $request->perpage,
-            'message' => 'sukses menampilkan data',
-            'data' => $akses,
-            'user' => json_decode($array)
-        ]);
+        $user_id = json_decode($array)[0];
+
+        // for ($i=0; $i < $user_id ; $i++) { 
+        //     $user_satuan = $user_id[$i];
+        // }
+        if(in_array($user->id, $user_id)){
+            $akses = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
+            ->where('akses.id', $id)
+            ->orderBy("akses.id", 'desc')
+            ->paginate($request->perpage, [
+                'akses.id',
+                'akses.angket_id',
+                'angket.nama_angket',
+                'angket.keterangan',
+                'akses.user',
+                'akses.time',
+                'akses.start_at',
+                'akses.finish_at',
+                'akses.kode',
+            ]);
+            return response()->json([
+                'status' => 'success',
+                'perpage' => $request->perpage,
+                'message' => 'sukses menampilkan data',
+                'data' => $akses,
+                'user' => json_decode($array)
+            ]);
+            
+        }else{
+            $akses = null;   
+            return response()->json([
+                'status' => 'success',
+                'perpage' => $request->perpage,
+                'message' => 'sukses menampilkan data',
+                'data' => $akses,
+                'user' => json_decode($array)
+            ]);
+        }
 
     }
 
