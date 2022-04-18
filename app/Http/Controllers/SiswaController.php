@@ -142,7 +142,7 @@ class SiswaController extends Controller
             
             $file   = $request->file('foto');
             $user = $request->user();
-            $image = Guru::where('user_id', $user->id)->value("foto");
+            $image = Siswa::where('user_id', $user->id)->value("foto");
             $result = CloudinaryStorage::replace($image, $file->getRealPath(), $file->getClientOriginalName());
             $user = $request->user();
 
