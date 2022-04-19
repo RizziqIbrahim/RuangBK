@@ -111,7 +111,7 @@ class SiswaController extends Controller
 
     public function update(Request $request, $id)
     {
-
+//s
         $file   = $request->file('foto');
         // return $request;
         if($file == ""){   
