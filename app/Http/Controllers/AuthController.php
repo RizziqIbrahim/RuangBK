@@ -296,7 +296,7 @@ class AuthController extends Controller
                     $identitas ="terisi";
                   
                 }
-              
+              //dsa
             }else{
                 $siswa = Siswa::where('user_id' , '=', $user->id)->first();
         
