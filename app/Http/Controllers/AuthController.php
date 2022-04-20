@@ -298,7 +298,7 @@ class AuthController extends Controller
                 }
               
             }else{
-                $siswwa = Siswa::where('user_id' , '=', $user->id)->first();
+                $siswa = Siswa::where('user_id' , '=', $user->id)->first();
         
                 if($siswa->alamat == ""){
                     $identitas = "belum terisi";
