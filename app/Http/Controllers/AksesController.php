@@ -107,10 +107,8 @@ class AksesController extends Controller
         ->value("user");
 
         if ($array == "") {
-            $userId = json_decode($array)[0];
             $siswa = Siswa::leftjoin('users', 'users.id', '=', 'user_id')->leftjoin('gurus', 'gurus.id', '=', 'siswas.guru_id')
             ->where('siswas.guru_id', $user->id)
-            ->whereNotIn('users.id', $userId)
             ->orderBy("siswas.created_at", 'desc')
             ->paginate($request->perpage, [
                 'siswas.id',
@@ -136,12 +134,12 @@ class AksesController extends Controller
                 'message' => 'sukses menampilkan data',
                 'data' => $siswa,
                 'user' => $user->id,
-                'siswa' => $userId
             ]);
         }else{
             $userId = json_decode($array)[0];
             $siswa = Siswa::leftjoin('users', 'users.id', '=', 'user_id')->leftjoin('gurus', 'gurus.id', '=', 'siswas.guru_id')
             ->where('siswas.guru_id', $user->id)
+            ->whereNotIn('users.id', $userId)
             ->orderBy("siswas.created_at", 'desc')
             ->paginate($request->perpage, [
                 'siswas.id',
