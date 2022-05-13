@@ -52,12 +52,126 @@ class AksesController extends Controller
         ]);
     }
 
+    public function getSiswaAkses(Request $request, $id)
+    {
+        $user = $request->user();
+        $request->page;
+        $request->perpage;
+        $array = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
+        ->orderBy("akses.id", 'desc')
+        ->where("akses.id", $id)
+        ->value("user");
+        $userId = json_decode($array)[0];
+
+        $siswa = Siswa::leftjoin('users', 'users.id', '=', 'user_id')->leftjoin('gurus', 'gurus.id', '=', 'siswas.guru_id')
+        ->where('siswas.guru_id', $user->id)
+        ->whereIn('users.id', $userId)
+        ->orderBy("siswas.created_at", 'desc')
+        ->paginate($request->perpage, [
+            'siswas.id',
+            'siswas.user_id',
+            'siswas.guru_id',
+            'gurus.nama_guru',
+            'siswas.nisn',
+            'siswas.nama_siswa',
+            'users.email',
+            'users.nomor_telp',
+            'siswas.tempat_lahir',      
+            'siswas.tanggal_lahir',
+            'siswas.foto',
+            'siswas.sekolah',
+            'siswas.kelas',
+            'siswas.npsn',
+            'siswas.alamat',
+            'siswas.created_at',
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'perpage' => $request->perpage,
+            'message' => 'sukses menampilkan data',
+            'data' => $siswa,
+            'user' => $user->id,
+            'siswa' => $userId
+        ]);
+    }
+
+    public function getSiswa(Request $request, $id)
+    {
+        $user = $request->user();
+        $request->page;
+        $request->perpage;
+        $array = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
+        ->orderBy("akses.id", 'desc')
+        ->where("akses.id", $id)
+        ->value("user");
+        $userId = json_decode($array)[0];
+
+        $siswa = Siswa::leftjoin('users', 'users.id', '=', 'user_id')->leftjoin('gurus', 'gurus.id', '=', 'siswas.guru_id')
+        ->where('siswas.guru_id', $user->id)
+        ->whereNotIn('users.id', $userId)
+        ->orderBy("siswas.created_at", 'desc')
+        ->paginate($request->perpage, [
+            'siswas.id',
+            'siswas.user_id',
+            'siswas.guru_id',
+            'gurus.nama_guru',
+            'siswas.nisn',
+            'siswas.nama_siswa',
+            'users.email',
+            'users.nomor_telp',
+            'siswas.tempat_lahir',      
+            'siswas.tanggal_lahir',
+            'siswas.foto',
+            'siswas.sekolah',
+            'siswas.kelas',
+            'siswas.npsn',
+            'siswas.alamat',
+            'siswas.created_at',
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'perpage' => $request->perpage,
+            'message' => 'sukses menampilkan data',
+            'data' => $siswa,
+            'user' => $user->id,
+            'siswa' => $userId
+        ]);
+    }
+
     public function store(Request $request)
     {
+
+        $user = $request->user();
+        $request->siswa;
+        $request->page;
+        $request->perpage;
+        $siswa = Siswa::leftjoin('users', 'users.id', '=', 'user_id')->leftjoin('gurus', 'gurus.id', '=', 'siswas.guru_id')
+        ->where('siswas.guru_id', $user->id)
+        ->where('siswas.nama_siswa', 'like', '%'.strtolower($request->siswa)."%")
+        ->orderBy("siswas.created_at", 'desc')
+        ->paginate($request->perpage, [
+            'siswas.id',
+            'siswas.user_id',
+            'siswas.guru_id',
+            'gurus.nama_guru',
+            'siswas.nisn',
+            'siswas.nama_siswa',
+            'users.email',
+            'users.nomor_telp',
+            'siswas.tempat_lahir',  
+            'siswas.tanggal_lahir',
+            'siswas.foto',
+            'siswas.sekolah',
+            'siswas.kelas',
+            'siswas.npsn',
+            'siswas.alamat',
+            'siswas.created_at' 
+        ]);
+
         for ($i=0; $i < count($request->user_id); $i++) { 
-            $data = array($request->user_id,);
-                
-                
+            $data = array($request->user_id,);   
         }
 
         $user = $request->user();
@@ -89,6 +203,7 @@ class AksesController extends Controller
                 "status" => "success",
                 "message" => 'Berhasil Menyimpan Data',
                 'data'  => $akses,
+                'user' => $siswa,
             ]);
     }
 
@@ -123,7 +238,7 @@ class AksesController extends Controller
                 'akses.finish_at',
                 'akses.kode',
             ]);
-            return response()->json([
+            return response()->json([ 
                 'status' => 'success',
                 'perpage' => $request->perpage,
                 'message' => 'sukses menampilkan data',
@@ -152,6 +267,7 @@ class AksesController extends Controller
         // for ($i=0; $i < $user_id ; $i++) { 
         //     $user_satuan = $user_id[$i];
         // }
+
         if(in_array($user->id, $user_id)){
             $akses = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
             ->where('akses.id', $id)
@@ -230,3 +346,4 @@ class AksesController extends Controller
         }
     }
 }
+    
