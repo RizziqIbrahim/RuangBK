@@ -78,6 +78,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('jumlah', [GuruController::class ,'jumlah']);
 
     Route::get('/getAkses', [AksesController::class ,'getAkses']);
+    Route::get('/user-akses/{id}', [AksesController::class ,'getSiswaAkses']);
+    Route::get('/beri-akses/{id}', [AksesController::class ,'getSiswa']);
 
     //delete
     
