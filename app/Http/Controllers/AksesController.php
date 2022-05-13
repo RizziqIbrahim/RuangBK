@@ -147,32 +147,32 @@ class AksesController extends Controller
         $request->siswa;
         $request->page;
         $request->perpage;
-        $siswa = Siswa::leftjoin('users', 'users.id', '=', 'user_id')->leftjoin('gurus', 'gurus.id', '=', 'siswas.guru_id')
-        ->where('siswas.guru_id', $user->id)
-        ->where('siswas.nama_siswa', 'like', '%'.strtolower($request->siswa)."%")
-        ->orderBy("siswas.created_at", 'desc')
-        ->paginate($request->perpage, [
-            'siswas.id',
-            'siswas.user_id',
-            'siswas.guru_id',
-            'gurus.nama_guru',
-            'siswas.nisn',
-            'siswas.nama_siswa',
-            'users.email',
-            'users.nomor_telp',
-            'siswas.tempat_lahir',  
-            'siswas.tanggal_lahir',
-            'siswas.foto',
-            'siswas.sekolah',
-            'siswas.kelas',
-            'siswas.npsn',
-            'siswas.alamat',
-            'siswas.created_at' 
-        ]);
+        // $siswa = Siswa::leftjoin('users', 'users.id', '=', 'user_id')->leftjoin('gurus', 'gurus.id', '=', 'siswas.guru_id')
+        // ->where('siswas.guru_id', $user->id)
+        // ->where('siswas.nama_siswa', 'like', '%'.strtolower($request->siswa)."%")
+        // ->orderBy("siswas.created_at", 'desc')
+        // ->paginate($request->perpage, [
+        //     'siswas.id',
+        //     'siswas.user_id',
+        //     'siswas.guru_id',
+        //     'gurus.nama_guru',
+        //     'siswas.nisn',
+        //     'siswas.nama_siswa',
+        //     'users.email',
+        //     'users.nomor_telp',
+        //     'siswas.tempat_lahir',  
+        //     'siswas.tanggal_lahir',
+        //     'siswas.foto',
+        //     'siswas.sekolah',
+        //     'siswas.kelas',
+        //     'siswas.npsn',
+        //     'siswas.alamat',
+        //     'siswas.created_at' 
+        // ]);
 
-        for ($i=0; $i < count($request->user_id); $i++) { 
-            $data = array($request->user_id,);   
-        }
+        // for ($i=0; $i < count($request->user_id); $i++) { 
+        //     $data = array($request->user_id,);   
+        // }
 
         $user = $request->user();
         $rules = array(
@@ -191,7 +191,8 @@ class AksesController extends Controller
         }else{
                 $akses = Akses::create([
                     'angket_id' => $request->angket_id,
-                    'user' => json_encode($data),
+                    // 'user' => json_encode($data),
+                    'user' => "",
                     'time' => $request->time,
                     'start_at' => $request->start_at,
                     'finish_at' => $request->finish_at,
@@ -203,7 +204,6 @@ class AksesController extends Controller
                 "status" => "success",
                 "message" => 'Berhasil Menyimpan Data',
                 'data'  => $akses,
-                'user' => $siswa,
             ]);
     }
 
