@@ -79,7 +79,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/user-akses/{id}', [AksesController::class ,'getSiswaAkses']);
     Route::get('/beri-akses/{id}', [AksesController::class ,'getSiswa']);
-    Route::post('/beri-akses-siswa/{id}', [AksesController::class ,'store']);
+    Route::post('/beri-akses-siswa/{id}', [AksesController::class ,'storeSiswaAkses']);
 
     //delete
     

@@ -179,7 +179,46 @@ class AksesController extends Controller
         ]);
     }
 
-    public function store(Request $request, $id)
+    public function store(Request $request)
+    {
+        $user = $request->user();
+        $request->siswa;
+        $request->page;
+        $request->perpage;
+        $user = $request->user();
+        $rules = array(
+            'time'=> 'required|string',
+            'start_at'=> 'required|string',
+            'finish_at'=> 'required|string',
+        );
+
+        $cek = Validator::make($request->all(),$rules);
+
+        if($cek->fails()){
+            $errorString = implode(",",$cek->messages()->all());
+            return response()->json([
+                'message' => $errorString
+            ], 401);
+        }else{
+                $akses = Akses::create([
+                    'angket_id' => $request->angket_id,
+                    // 'user' => json_encode($data),
+                    'user' => "",
+                    'time' => $request->time,
+                    'start_at' => $request->start_at,
+                    'finish_at' => $request->finish_at,
+                    'open_by' => $user->id,
+                    'kode' => uniqid(),
+                ]);
+            }
+            return response()->json([
+                "status" => "success",
+                "message" => 'Berhasil Menyimpan Data',
+                'data'  => $akses,
+            ]);
+    }
+
+    public function storeSiswaAkses(Request $request, $id)
     {
 
         $user = $request->user();
@@ -210,7 +249,7 @@ class AksesController extends Controller
         ]);
 
         $array = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
-        ->orderBy("akses.id", 'desc')
+        ->orderBy("akses.id", 'desc')   
         ->where("akses.id", $request->akses_id)
         ->value("user");
 
@@ -225,7 +264,7 @@ class AksesController extends Controller
         $akses = Akses::where('id', $request->akses_id)->first();
         $akses->user = json_encode([$userId]);
         $akses->update();
-        
+
         return response()->json([
             "status" => "success",
             "message" => 'Berhasil Menyimpan Data',
