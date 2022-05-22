@@ -202,7 +202,7 @@ class AksesController extends Controller
         }else{
                 $akses = Akses::create([
                     'angket_id' => $request->angket_id,
-                    // 'user' => json_encode($data),
+                    // 'user' => ($data),
                     'user' => "",
                     'time' => $request->time,
                     'start_at' => $request->start_at,
