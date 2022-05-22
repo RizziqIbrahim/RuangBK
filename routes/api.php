@@ -81,6 +81,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/beri-akses/{id}', [AksesController::class ,'getSiswa']);
     Route::post('/beri-akses-siswa/{id}', [AksesController::class ,'storeSiswaAkses']);
 
+    Route::post("/{angket_id}/jawaban", [JawabanController::class, 'store']);
+
     //delete
     
 
