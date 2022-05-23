@@ -280,18 +280,21 @@ class AksesController extends Controller
         $request->jenis;
         $user = $request->user();
         
-        $array = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
-        ->orderBy("akses.id", 'desc')
-        ->value("user");
+        // $array = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
+        // ->orderBy("akses.id", 'desc')
+        // ->value("user");
 
-        $user_id = json_decode($array)[0];
+        // $user_id = json_decode($array)[0];
 
-        // for ($i=0; $i < $user_id ; $i++) { 
-        //     $user_satuan = $user_id[$i];
-        // }
-        if(in_array($user->id, $user_id)){
+        // // for ($i=0; $i < $user_id ; $i++) { 
+        // //     $user_satuan = $user_id[$i];
+        // // }
+        // if(in_array($user->id, $user_id)){
+            $id = strtolower($user->id. '\"');
+            // return $id;
             $akses = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
             ->orderBy("akses.id", 'desc')
+            ->where("user",  'like', '%'. $id ."%")
             ->paginate($request->perpage, [
                 'akses.id',
                 'akses.angket_id',
@@ -309,9 +312,9 @@ class AksesController extends Controller
                 'message' => 'sukses menampilkan data',
                 'data' => $akses,
             ]);
-        }else{
-            return "anda tidak memiliki akses ";
-        }
+        // }else{
+        //     return "anda tidak memiliki akses ";
+        // }
     }
 
     public function show(Request $request, $id)
