@@ -10,6 +10,7 @@ class Soal extends Model
     protected $table = "soals";
     protected $fillable = [
         'soal',
+        'nomor_soal',
         'angket_id',
         'created_by',
         'updated_by',

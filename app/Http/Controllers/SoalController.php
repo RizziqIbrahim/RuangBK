@@ -43,6 +43,7 @@ class SoalController extends Controller
             'soals.angket_id',
             'angket.nama_angket',
             'soals.id',
+            'soals.nomor_soal',
             'soals.soal',
             'soals.created_by',
             'soals.updated_by',
@@ -89,6 +90,7 @@ class SoalController extends Controller
             ], 401);
         }else{
             $soals = Soal::create([
+                'nomor_soal' => $request->nomor_soal,
                 'soal' => $request->soal,
                 'angket_id' => $request->angket_id,
                 'created_by' => $user->id,
@@ -124,6 +126,7 @@ class SoalController extends Controller
             'soals.angket_id',
             'angket.nama_angket',
             'soals.id',
+            'soals.nomor_soal',
             'soals.soal',
             'soals.created_by',
             'soals.updated_by',
@@ -160,6 +163,7 @@ class SoalController extends Controller
         $user = $request->user();
         $soal = Soal::where('id', $id)->first();
         $soal->angket_id = $request->angket_id;
+        $soal->nomor_soal = $request->nomor_soal;
         $soal->soal = $request->soal;
         $soal->updated_by = $user->id;
         

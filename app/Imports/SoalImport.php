@@ -20,8 +20,9 @@ class SoalImport implements ToModel
     public function model(array $row)
     {
         $soal = Soal::create([
-            'soal' => $row[0],
-            'angket_id' => $row[1],
+            'nomor_soal' => $row[0],
+            'soal' => $row[1],
+            'angket_id' => $row[2],
             'created_by' => 1,
             'updated_by' => 1,
         ]);
