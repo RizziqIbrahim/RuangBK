@@ -17,4 +17,6 @@ class Jawaban extends Model
     protected $casts = [
         'jawaban' => 'array',
     ];
+    protected $guarded = [];
+    public $timestamps = false;
 }

@@ -68,6 +68,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user/export/xlsx', [UserController::class ,'export']);
     Route::post('/import-users', [UserController::class ,'import']);
     Route::post('/import-soal', [SoalController::class ,'import']);
+    Route::get('/jawaban/export/xlsx/{id}', [JawabanController::class ,'export']);
 
     Route::post('user/upload/data' , [UserController::class ,'uploadData']);
     Route::post('register-user', [GuruController::class, 'registerUser']);

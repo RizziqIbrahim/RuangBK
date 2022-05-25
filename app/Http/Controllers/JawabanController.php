@@ -16,12 +16,15 @@ use App\Models\{
     Guru,
     Soal,
     Jawaban,
-    Akses
+    Akses,
+    Angket
 };
 
 use Hash;
 use Auth;
 use Validator;
+use App\Exports\JawabanExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class JawabanController extends Controller
 {
@@ -73,7 +76,7 @@ class JawabanController extends Controller
                 'kode' =>   $kode
             ]);
         }else{
-           return "halo";
+           return "Anda sudah mengerjakan";
         }
         
 
@@ -116,4 +119,36 @@ class JawabanController extends Controller
             "jawaban" => json_decode($detailJawaban)
         ]);
     }
+    
+    public function export($id)
+	{
+        $siswa_id = Jawaban::leftjoin('angket', 'angket.id', '=', 'angket_id')
+        ->leftjoin('users', 'users.id', '=', 'user_id')
+        ->where("jawabans.id", $id)
+        ->orderBy("jawabans.created_at", 'asc')
+        ->value("user_id");
+
+        $nama_user = User::where('id', $siswa_id)
+        ->orderBy("created_at", 'desc')
+        ->value("nama_user");
+
+        $angket_id = Jawaban::leftjoin('angket', 'angket.id', '=', 'angket_id')
+        ->leftjoin('users', 'users.id', '=', 'user_id')
+        ->where("jawabans.id", $id)
+        ->orderBy("jawabans.created_at", 'asc')
+        ->value("angket_id");
+
+        $angket = Angket::where("id", $angket_id)
+        ->orderBy("angket.id", 'desc')
+        ->value("nama_angket");
+
+        $detailJawaban = Jawaban::leftjoin('angket', 'angket.id', '=', 'angket_id')
+        ->leftjoin('users', 'users.id', '=', 'user_id')
+        ->where("jawabans.id", $id)
+        ->orderBy("jawabans.created_at", 'asc')
+        ->value("jawaban");
+        $data = json_decode($detailJawaban, true);
+        // return $data;
+		return Excel::download(new JawabanExport($id, $data), 'jawaban-export-' . $nama_user .  "-" .$angket  .'.xlsx');
+	}
 }

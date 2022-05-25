@@ -17,4 +17,6 @@ class Soal extends Model
         'created_at',
         'updated_by'
     ];
+    protected $guarded = [];
+    public $timestamps= false;
 }
