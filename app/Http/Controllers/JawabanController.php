@@ -67,8 +67,10 @@ class JawabanController extends Controller
             ];    
         }
         $user = $request->user();
-        $getJawaban = Jawaban::where("user_id", $user->id)->where("kode", $kode)->first();
-        if($getJawaban == ""){
+        $getJawaban = Jawaban::where("user_id", $user->id)->where("kode", $kode)->value("jawaban");
+        $arrayJawaban = json_decode($getJawaban, true);
+        $jumlahJawaban = count(collect($arrayJawaban));
+        if($getJawaban < $jumlahsoal){
             $jawaban = Jawaban::create([
                 'angket_id' => $angket_id,
                 'jawaban' => json_encode($data),
@@ -76,7 +78,13 @@ class JawabanController extends Controller
                 'kode' =>   $kode
             ]);
         }else{
-           return "Anda sudah mengerjakan";
+            return response()->json([
+                'status' => 'failed',
+                'perpage' => $request->perpage,
+                'message' => 'anda sudah mengerjakan',
+                'data' => $jawaban,
+                "status" => "sudah mengerjakan"
+            ]);
         }
         
 
@@ -85,8 +93,45 @@ class JawabanController extends Controller
             'perpage' => $request->perpage,
             'message' => 'sukses menampilkan data',
             'data' => $jawaban,
+            'jumlah_soal' => $jumlahsoal,
+            'jumlah_jawaban' => $jumlahJawaban,
+            'jawaban' => $arrayJawaban,
         ]);
            
+    }
+
+    public function showjawabanperuser(Request $request, $id)
+    {
+        $request->keywords;
+        $request->page;
+        $request->perpage;
+        $user = $request->user();
+        $jawaban = Jawaban::leftjoin('angket', 'angket.id', '=', 'angket_id')
+        ->leftjoin('users', 'users.id', '=', 'user_id')
+        ->where("jawabans.user_id", $user->id)
+        ->where("jawabans.id", $id)
+        ->orderBy("jawabans.created_at", 'asc')
+        ->paginate($request->perpage, [
+            'jawabans.id',
+            'jawabans.angket_id',
+            'jawabans.user_id',
+            'jawabans.jawaban'
+        ]);
+  
+        $detailJawaban = Jawaban::leftjoin('angket', 'angket.id', '=', 'angket_id')
+        ->leftjoin('users', 'users.id', '=', 'user_id')
+        ->where("jawabans.user_id", $user->id)  
+        ->where("jawabans.id", $id)
+        ->orderBy("jawabans.created_at", 'asc')
+        ->value("jawaban");
+
+        return response()->json([
+            'status' => 'success',
+            'perpage' => $request->perpage,
+            'message' => 'sukses menampilkan data',
+            'data' => $jawaban,
+            "jawaban" => json_decode($detailJawaban, true)
+        ]);
     }
 
     public function show(Request $request, $id)
@@ -116,7 +161,7 @@ class JawabanController extends Controller
             'perpage' => $request->perpage,
             'message' => 'sukses menampilkan data',
             'data' => $jawaban,
-            "jawaban" => json_decode($detailJawaban)
+            "jawaban" => json_decode($detailJawaban, true)
         ]);
     }
     
