@@ -83,6 +83,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/beri-akses/{id}', [AksesController::class ,'getSiswa']);
     Route::post('/beri-akses-siswa/{id}', [AksesController::class ,'storeSiswaAkses']);
 
+    Route::get("/check-jawaban/{angket_id}", [JawabanController::class, 'checkjawaban']);
     Route::post("/{angket_id}/jawaban", [JawabanController::class, 'store']);
     Route::get("view-jawaban/{id}", [JawabanController::class, 'showjawabanperuser']);
     //delete

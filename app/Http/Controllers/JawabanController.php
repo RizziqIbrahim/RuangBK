@@ -51,6 +51,41 @@ class JawabanController extends Controller
         ]);
     }
 
+    public function checkjawaban(Request $request, $angket_id)
+    {
+        $user = $request->user();
+        $kode =  $akses = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
+        ->where("akses.angket_id", $angket_id)
+        ->orderBy("akses.id", 'desc')
+        ->value("kode");
+        
+        
+        $jumlahsoal = Soal::where("angket_id", $angket_id)->count();
+        
+        $user = $request->user();
+        $getJawaban = Jawaban::where("user_id", $user->id)->where("kode", $kode)->value("jawaban");
+        $arrayJawaban = json_decode($getJawaban, true);
+        $jumlahJawaban = count(collect($arrayJawaban));
+        if($getJawaban == ""){
+            $status = "belum mengerjakan";
+        }elseif($jumlahJawaban < $jumlahsoal){
+            $status = "belum selesai";
+        }else{
+            $status = "sudah mengerjakan";
+        }
+        
+
+        return response()->json([
+            'status' => $status,
+            'perpage' => $request->perpage,
+            'message' => 'sukses menampilkan data',
+            'jumlah_soal' => $jumlahsoal,
+            'jumlah_jawaban' => $jumlahJawaban,
+            'jawaban' => $arrayJawaban,
+        ]);
+    }
+
+
     public function store(Request $request, $angket_id)
     {
         $user = $request->user();
@@ -70,7 +105,7 @@ class JawabanController extends Controller
         $getJawaban = Jawaban::where("user_id", $user->id)->where("kode", $kode)->value("jawaban");
         $arrayJawaban = json_decode($getJawaban, true);
         $jumlahJawaban = count(collect($arrayJawaban));
-        if($getJawaban < $jumlahsoal){
+        if($jumlahJawaban < $jumlahsoal){
             $jawaban = Jawaban::create([
                 'angket_id' => $angket_id,
                 'jawaban' => json_encode($data),
@@ -185,7 +220,7 @@ class JawabanController extends Controller
 
         $angket = Angket::where("id", $angket_id)
         ->orderBy("angket.id", 'desc')
-        ->value("nama_angket");
+        ->value("nama_angket"); 
 
         $detailJawaban = Jawaban::leftjoin('angket', 'angket.id', '=', 'angket_id')
         ->leftjoin('users', 'users.id', '=', 'user_id')
