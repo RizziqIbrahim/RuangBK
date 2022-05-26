@@ -66,7 +66,7 @@ class AksesController extends Controller
             return response()->json([
                 'status' => 'failed',
                 'perpage' => $request->perpage,
-                'message' => 'Belum ada siswa yang diberi akses',
+                'message' => 'Belum ada siswa yang diberi akses pada angket ini',
             ]);
         }else{
             $array = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
