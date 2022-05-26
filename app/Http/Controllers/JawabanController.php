@@ -113,9 +113,9 @@ class JawabanController extends Controller
             $status = "success";
         }else{
             $status = "mohon maaf anda tidak bisa mengerjakan";
+            $jawaban = "";
         }
         
-
         return response()->json([
             'status' => $status,
             'perpage' => $request->perpage,
