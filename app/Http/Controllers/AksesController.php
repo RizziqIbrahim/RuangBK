@@ -62,7 +62,6 @@ class AksesController extends Controller
         ->orderBy("akses.id", 'desc')
         ->where("akses.id", $id)
         ->value("user");
-        $userId = json_decode($array)[0];
         if ($array == "") {
             return response()->json([
                 'status' => 'failed',
