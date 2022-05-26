@@ -65,7 +65,7 @@ class AksesController extends Controller
 
         $guru_id =  Guru::where('user_id', $user->id)->value("id");
         $siswa = Siswa::leftjoin('users', 'users.id', '=', 'user_id')->leftjoin('gurus', 'gurus.id', '=', 'siswas.guru_id')
-        ->where('siswas.guru_id', $user_id)
+        ->where('siswas.guru_id', $user->id)
         ->whereIn('users.id', $userId)
         ->orderBy("siswas.created_at", 'desc')
         ->paginate($request->perpage, [
@@ -110,7 +110,7 @@ class AksesController extends Controller
         if ($array == "") {
             $guru_id =  Guru::where('user_id', $user->id)->value("id");
             $siswa = Siswa::leftjoin('users', 'users.id', '=', 'user_id')->leftjoin('gurus', 'gurus.id', '=', 'siswas.guru_id')
-            ->where('siswas.guru_id', $user_id)
+            ->where('siswas.guru_id', $user->id)
             ->orderBy("siswas.created_at", 'desc')
             ->paginate($request->perpage, [
                 'siswas.id',
