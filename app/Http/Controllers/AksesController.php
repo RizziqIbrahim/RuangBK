@@ -141,7 +141,7 @@ class AksesController extends Controller
             $userId = json_decode($array)[0];
             $guru_id =  Guru::where('user_id', $user->id)->value("id");
             $siswa = Siswa::leftjoin('users', 'users.id', '=', 'user_id')->leftjoin('gurus', 'gurus.id', '=', 'siswas.guru_id')
-            ->where('siswas.guru_id', $guru_id)
+            ->where('siswas.guru_id', $user_id)
             ->whereNotIn('users.id', $userId)
             ->orderBy("siswas.created_at", 'desc')
             ->paginate($request->perpage, [
