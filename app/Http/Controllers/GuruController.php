@@ -27,7 +27,7 @@ class GuruController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-        public function index(Request $request)
+    public function index(Request $request)
     {
         $user = $request->user();
         $request->siswa;

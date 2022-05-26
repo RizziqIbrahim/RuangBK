@@ -63,7 +63,7 @@ class JawabanController extends Controller
         $getJawaban = Jawaban::where("user_id", $user->id)->where("kode", $kode)->value("jawaban");
         $arrayJawaban = json_decode($getJawaban, true);
         $jumlahJawaban = count(collect($arrayJawaban));
-
+        
         if($getJawaban == ""){
             $status = "belum mengerjakan";
         }elseif($jumlahJawaban < $jumlahsoal){
@@ -80,6 +80,7 @@ class JawabanController extends Controller
             'jumlah_soal' => $jumlahsoal,
             'jumlah_jawaban' => $jumlahJawaban,
             'jawaban' => $arrayJawaban,
+            "angket_id" => $angket_id
         ]);
     }
 
