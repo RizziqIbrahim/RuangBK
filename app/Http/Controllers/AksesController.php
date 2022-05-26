@@ -108,6 +108,7 @@ class AksesController extends Controller
         ->value("user");
         $guru_id =  Guru::where('user_id', $user->id)->value("id");
         if ($array == "") {
+            $guru_id =  Guru::where('user_id', $user->id)->value("id");
             $siswa = Siswa::leftjoin('users', 'users.id', '=', 'user_id')->leftjoin('gurus', 'gurus.id', '=', 'siswas.guru_id')
             ->where('siswas.guru_id', $guru_id)
             ->orderBy("siswas.created_at", 'desc')
