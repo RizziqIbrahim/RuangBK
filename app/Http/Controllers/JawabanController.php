@@ -51,21 +51,19 @@ class JawabanController extends Controller
         ]);
     }
 
-    public function checkjawaban(Request $request, $angket_id)
+    public function checkjawaban(Request $request, $kode)
     {
         $user = $request->user();
-        $kode =  $akses = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
-        ->where("akses.angket_id", $angket_id)
-        ->orderBy("akses.id", 'desc')
-        ->value("kode");
-        
-        
+        $angket_id = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
+        ->where("akses.kode", $kode )->value("angket_id");
+
         $jumlahsoal = Soal::where("angket_id", $angket_id)->count();
         
         $user = $request->user();
         $getJawaban = Jawaban::where("user_id", $user->id)->where("kode", $kode)->value("jawaban");
         $arrayJawaban = json_decode($getJawaban, true);
         $jumlahJawaban = count(collect($arrayJawaban));
+
         if($getJawaban == ""){
             $status = "belum mengerjakan";
         }elseif($jumlahJawaban < $jumlahsoal){
@@ -86,14 +84,13 @@ class JawabanController extends Controller
     }
 
 
-    public function store(Request $request, $angket_id)
+    public function store(Request $request, $kode)
     {
         $user = $request->user();
-        $kode =  $akses = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
-        ->where("akses.angket_id", $angket_id)
-        ->orderBy("akses.id", 'desc')
-        ->value("kode");
-        
+        $angket_id = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
+        ->where("akses.kode", $kode )->value("angket_id");
+
+
         $jumlahsoal = Soal::where("angket_id", $angket_id)->count();
         for ($i=0; $i < count($request->nomor_soal); $i++) { 
             $data[$i] = [
@@ -112,25 +109,19 @@ class JawabanController extends Controller
                 'user_id' => $user->id,
                 'kode' =>   $kode
             ]);
+            $status = "success";
         }else{
-            return response()->json([
-                'status' => 'failed',
-                'perpage' => $request->perpage,
-                'message' => 'anda sudah mengerjakan',
-                'data' => $jawaban,
-                "status" => "sudah mengerjakan"
-            ]);
+            $status = "mohon maaf anda tidak bisa mengerjakan";
         }
         
 
         return response()->json([
-            'status' => 'success',
+            'status' => $status,
             'perpage' => $request->perpage,
             'message' => 'sukses menampilkan data',
             'data' => $jawaban,
             'jumlah_soal' => $jumlahsoal,
             'jumlah_jawaban' => $jumlahJawaban,
-            'jawaban' => $arrayJawaban,
         ]);
            
     }
