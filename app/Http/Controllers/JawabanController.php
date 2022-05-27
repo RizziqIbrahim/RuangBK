@@ -40,7 +40,8 @@ class JawabanController extends Controller
             'jawabans.id',
             'jawabans.angket_id',
             'jawabans.user_id',
-            'jawabans.jawaban'
+            'jawabans.jawaban',
+            'jawabans.kode'
         ]);
 
         return response()->json([
