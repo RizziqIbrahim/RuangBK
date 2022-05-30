@@ -18,8 +18,8 @@ class CreateAksesTable extends Migration
             $table->integer('angket_id');
             $table->longText('user');
             $table->integer('time')->nullable();
-            $table->integer('start_at');
-            $table->integer('finish_at');
+            $table->date('start_at');
+            $table->date('finish_at');
             $table->foreignId('open_by');
             $table->string('kode');
             $table->timestamps();
