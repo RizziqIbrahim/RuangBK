@@ -14,7 +14,7 @@ class AddNomorSoalOnSoals extends Migration
     public function up()
     {
         Schema::table('soals', function($table) {
-            $table->integer('nomor_soal');
+            $table->integer('nomor_soal')->default(0);
         });
     }
 

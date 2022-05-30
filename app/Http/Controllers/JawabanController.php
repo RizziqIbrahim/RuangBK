@@ -65,12 +65,25 @@ class JawabanController extends Controller
         $arrayJawaban = json_decode($getJawaban, true);
         $jumlahJawaban = count(collect($arrayJawaban));
         
-        if($getJawaban == ""){
-            $status = "belum mengerjakan";
-        }elseif($jumlahJawaban < $jumlahsoal){
-            $status = "belum selesai";
-        }else{
-            $status = "sudah mengerjakan";
+        $start_at = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
+        ->where("akses.kode", $kode )->value("start_at");
+        if ($start_at <= Carbon::now()->format("Y-m-d")) {
+            if($getJawaban == ""){
+                $status = "belum mengerjakan";
+            }elseif($jumlahJawaban < $jumlahsoal){
+                $status = "belum selesai";
+            }else{
+                $status = "sudah mengerjakan";
+            }
+        }elseif ($start_at > Carbon::now()->format("Y-m-d")) {
+            $status = "belum saatnya mengerjakan";
+        }
+
+        $finish_at = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
+        ->where("akses.kode", $kode )->value("finish_at");
+        
+        if ($finish_at <= Carbon::now()->format("Y-m-d")) {
+            $status = "terlambat";
         }
         
 
@@ -224,4 +237,9 @@ class JawabanController extends Controller
         // return $data;
 		return Excel::download(new JawabanExport($id, $data), 'jawaban-export-' . $nama_user .  "-" .$angket  .'.xlsx');
 	}
+
+    // $start_at = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
+    //     ->where("akses.kode", $kode )->value("start_at");
+
+        
 }
