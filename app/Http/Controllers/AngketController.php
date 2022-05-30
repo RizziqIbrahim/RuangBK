@@ -125,6 +125,7 @@ class AngketController extends Controller
         ->paginate($request->perpage, [
             'soals.angket_id',
             'angket.nama_angket',
+            'soals.nomor_soal',
             'soals.id',
             'soal',
         ]);
