@@ -131,12 +131,20 @@ class SoalController extends Controller
             'soals.created_by',
             'soals.updated_by',
         ]);
+        $angketId = Soal::leftjoin('angket', 'angket.id', '=', 'angket_id')
+        ->where('soals.id', $id)
+        ->orderBy("soals.id", 'asc')
+        ->value("soals.angket_id");
+        $angket = Angket::where('angket.id', $angketId)
+        ->orderBy("angket.id", 'asc')
+        ->value("angket.nama_angket");
         return response()->json([
             'status' => 'success',
             'perpage' => $request->perpage,
             'role' => $request->role,
             'message' => 'sukses menampilkan data',
             'data' => $soals,
+            'angket' => $angket
         ]);
     }
 
