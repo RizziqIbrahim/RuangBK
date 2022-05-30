@@ -122,7 +122,7 @@ class SoalController extends Controller
         $request->angket;
         $soals = Soal::leftjoin('angket', 'angket.id', '=', 'angket_id')
         ->where('soals.id', $id)
-        ->orderBy("soals.id", 'asc')
+        ->orderBy("soals.nomor_soal", 'desc')
         ->paginate($request->perpage, [
             'soals.angket_id',
             'angket.nama_angket',
