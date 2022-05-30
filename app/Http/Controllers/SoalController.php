@@ -17,7 +17,8 @@ use App\Models\{
     User,
     Guru,
     Soal,
-    Jawaban
+    Jawaban,
+    Angket
 };
 
 use Hash;
