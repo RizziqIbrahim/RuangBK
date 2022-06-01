@@ -34,7 +34,7 @@ class AksesController extends Controller
         $request->jenis;
         $user = $request->user();
         $akses = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
-        ->where("open_by", $user->id)
+        ->where("akses.open_by", $user->id)
         ->orderBy("akses.id", 'desc')
         ->paginate($request->perpage, [
             'akses.id',
