@@ -15,14 +15,16 @@ class CreateDetailProfileTable extends Migration
     {
         Schema::create('detail_profile', function (Blueprint $table) {
             $table->id();
-            $table->foreign('user_id');
+            $table->foreignId('user_id');
             $table->string('nama');
+            $table->string('nipd');
             $table->string('jenis_kelamin');
             $table->string('nisn');
             $table->string('tempat_lahir');
             $table->string('tanggal_lahir');
             $table->string('nik');
             $table->string('agama');
+            $table->string('alamat');
             $table->string('rt');
             $table->string('rw');
             $table->string('dusun');
@@ -68,8 +70,6 @@ class CreateDetailProfileTable extends Migration
             $table->string('rekening_atas_nama');
             $table->string('layak_pip');
             $table->string('alasan_layak_pip');
-            $table->foreignId('created_by');
-            $table->foreignId('updated_by');
             $table->timestamps();
         });
     }

@@ -7,16 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class DetailProfile extends Model
 {
-    protected $table = "detailprofile";
+    protected $table = "detail_profile";
     protected $fillable = [
         'user_id',
         'nama',
         'jenis_kelamin',
+        'nipd',
         'nisn',
         'tempat_lahir',
         'tanggal_lahir',
         'nik',
         'agama',
+        'alamat',
         'rt',
         'rw',
         'dusun',

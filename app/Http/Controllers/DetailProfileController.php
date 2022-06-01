@@ -25,6 +25,7 @@ use Hash;
 use Auth;
 use Validator;
 use App\Exports\JawabanExport;
+use App\Imports\DetailProfileImport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class DetailProfileController extends Controller
@@ -40,17 +41,19 @@ class DetailProfileController extends Controller
         $request->page;
         $request->user;
         $detailprofile = DetailProfile::leftjoin('users', 'users.id', '=', 'detail_profile.user_id')
-        ->where('detail_profile.id', $id)
+        ->where('detail_profile.user_id', $id)
         ->orderBy("detail_profile.id", 'desc')
         ->paginate($request->perpage, [
         'detail_profile.user_id',
         'detail_profile.nama',
+        'detail_profile.nipd',
         'detail_profile.jenis_kelamin',
         'detail_profile.nisn',
         'detail_profile.tempat_lahir',
         'detail_profile.tanggal_lahir',
         'detail_profile.nik',
         'detail_profile.agama',
+        'detail_profile.alamat',
         'detail_profile.rt',
         'detail_profile.rw',
         'detail_profile.dusun',
@@ -109,9 +112,19 @@ class DetailProfileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function import(Request $request, $id)
+    {   
+        $detailprofile = Excel::import(new DetailProfileImport($id), $request->file('detailprofile')->store('temp'));
+        if($detailprofile){
+            return response()->json([
+                'message'   => 'Success',
+                // 'roles' => $roles[0],
+            ], 200);
+        }else{
+            return response()->json([
+                'message'   => 'Gagal',
+            ], 200);
+        }
     }
 
     /**

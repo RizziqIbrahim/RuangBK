@@ -5,75 +5,80 @@ namespace App\Imports;
 use App\Models\DetailProfile;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Maatwebsite\Excel\Concerns\WithChunkReading;
-use Maatwebsite\Excel\Concerns\WithBatchInserts;
 
 
-class DetailProfileImport implements ToModel
+class DetailProfileImport implements ToModel, WithHeadingRow
 {
     /**
     * @param array $row
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
+    protected $id;
+    public function __construct($id) 
+    {
+        $this->id = $id;
+    }
     public function model(array $row)
     {
-        $profile = Profile::create([
-            'user_id' => $row[0],
-            'nama' => $row[1],
-            'jenis_kelamin' => $row[2],
-            'NISN' => $row[3],
-            'tempat_lahir' => $row[4],
-            'tanggal_lahir' => $row[5],
-            'NIK' => $row[6],
-            'agama' => $row[7],
-            'RT' => $row[8],
-            'RW' => $row[9],
-            'dusun' => $row[10],
-            'kelurahan' => $row[11],
-            'kecamatan' => $row[12],
-            'kode_pos' => $row[13],
-            'jenis_tinggal' => $row[14],
-            'alat_transportasi' => $row[15],
-            'telepon' => $row[16],
-            'nomer_hp' => $row[17],
-            'email' => $row[18],
-            'SKHUN' => $row[19],
-            'penerima_KPS' => $row[20],
-            'no_KPS' => $row[21],
-            'nama_ayah' => $row[22],
-            'tahun_lahir_ayah' => $row[23],
-            'jenjang_pendidikan_ayah' => $row[24],
-            'pekerjaan_ayah' => $row[25],
-            'penghasilan_ayah' => $row[26],
-            'NIK_ayah' => $row[27],
-            'nama_ibu' => $row[28],
-            'tahun_lahir_ibu' => $row[29],
-            'jenjang_pendidikan_ibu' => $row[30],
-            'pekerjaan_ibu' => $row[31],
-            'penghasilan_ibu' => $row[32],
-            'NIK_ibu' => $row[33],
-            'nama_wali' => $row[34],
-            'tahun_lahir_wali' => $row[35],
-            'jenjang_pendidikan_wali' => $row[36],
-            'pekerjaan_wali' => $row[37],
-            'penghasilan_wali' => $row[38],
-            'NIK_wali' => $row[39],
-            'rombel_saat_ini' => $row[40],
-            'nomer_peserta_ujian_nasional' => $row[41],
-            'nomer_seri_ijazah' => $row[42],
-            'penerima_KIP' => $row[43],
-            'nomer_KIP' => $row[44],
-            'nama_di_KIP' => $row[45],
-            'nomer_KKS' => $row[46],
-            'nomer_registrasi_akta_lahir' => $row[47],
-            'bank' => $row[48],
-            'nomer_rekening_bank' => $row[49],
-            'rekening_atas_PIP' => $row[50],
-            'layak_PIP' => $row[51],
-            'alasan_layak_PIP' => $row[52],
-            ]);
-            
-            return $profile;
+        return new DetailProfile([
+            'user_id' => $this->id,
+            'nama' => $row["nama"],
+            'nipd' => $row["nipd"],
+            'jenis_kelamin' => $row["jk"],
+            'nisn' => $row["nisn"],
+            'tempat_lahir' => $row["tempat_lahir"],
+            'tanggal_lahir' => $row["tanggal_lahir"],
+            'nik' => $row["nik"],
+            'agama' => $row["agama"],
+            'alamat' => $row["alamat"],
+            'rt' => $row["rt"],
+            'rw' => $row["rw"],
+            'dusun' => $row["dusun"],
+            'kelurahan' => $row["kelurahan"],
+            'kecamatan' => $row["kecamatan"],
+            'kode_pos' => $row["kode_pos"],
+            'jenis_tinggal' => $row["jenis_tinggal"],
+            'alat_transportasi' => $row["alat_transportasi"],
+            'telepon' => $row["telepon"],
+            'nomer_hp' => $row["hp"],
+            'email' => $row["email"],
+            'skhun' => $row["skhun"],
+            'penerima_kps' => $row["penerima_kps"],
+            'no_kps' => $row["no_kps"],
+            'nama_ayah' => $row["nama_ayah"],
+            'tahun_lahir_ayah' => $row["tahun_lahir_ayah"],
+            'jenjang_pendidikan_ayah' => $row["jenjang_pendidikan_ayah"],
+            'pekerjaan_ayah' => $row["pekerjaan_ayah"],
+            'penghasilan_ayah' => $row["penghasilan_ayah"],
+            'nik_ayah' => $row["nik_ayah"],
+            'nama_ibu' => $row["nama_ibu"],
+            'tahun_lahir_ibu' => $row["tahun_lahir_ibu"],
+            'jenjang_pendidikan_ibu' => $row["jenjang_pendidikan_ibu"],
+            'pekerjaan_ibu' => $row["pekerjaan_ibu"],
+            'penghasilan_ibu' => $row["penghasilan_ibu"],
+            'nik_ibu' => $row["nik_ibu"],
+            'nama_wali' => $row["nama_wali"],
+            'tahun_lahir_wali' => $row["tahun_lahir_wali"],
+            'jenjang_pendidikan_wali' => $row["jenjang_pendidikan_wali"],
+            'pekerjaan_wali' => $row["pekerjaan_wali"],
+            'penghasilan_wali' => $row["penghasilan_wali"],
+            'nik_wali' => $row["nik_wali"],
+            'rombel_saat_ini' => $row["rombel_saat_ini"],
+            'nomer_peserta_ujian_nasional' => $row["no_peserta"],
+            'nomer_seri_ijazah' => $row["no_seri_ijazah"],
+            'penerima_kip' => $row["penerima_kip"],
+            'nomer_kip' => $row["nomor_kip"],
+            'nama_di_kip' => $row["nama_di_kip"],
+            'nomer_kks' => $row["no_kks"],
+            'nomer_registrasi_akta_lahir' => $row["no_registrasi_akta_lahir"],
+            'bank' => $row["bank"],
+            'nomer_rekening_bank' => $row["nomor_rekening_bank"],
+            'rekening_atas_nama' => $row["rekening_atas_nama"],
+            'layak_pip' => $row["layak_pip"],
+            'alasan_layak_pip' => $row["alasan_layak_pip"],
+        ]);
+
     }
+
 }
