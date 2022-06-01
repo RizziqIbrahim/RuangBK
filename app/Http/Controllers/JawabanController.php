@@ -83,7 +83,7 @@ class JawabanController extends Controller
         $finish_at = Akses::leftjoin('angket', 'angket.id', '=', 'akses.angket_id')
         ->where("akses.kode", $kode )->value("finish_at");
         
-        if ($finish_at <= Carbon::now()->format("Y-m-d")) {
+        if ($finish_at < Carbon::now()->format("Y-m-d")) {
             $status = "terlambat";
         }
         
