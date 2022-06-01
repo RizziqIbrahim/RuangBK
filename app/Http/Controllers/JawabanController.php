@@ -17,7 +17,7 @@ use App\Models\{
     Soal,
     Jawaban,
     Akses,
-    Angket
+    Angket,
 };
 
 use Hash;
