@@ -271,6 +271,14 @@ class AuthController extends Controller
 
                 }
 
+            }else{
+                $siswa = Siswa::where('user_id' , '=', $user->id)->first();
+                if($siswa->npsn == ""){
+                    $npsn = "belum terisi";
+                }else{
+                    $npsn ="terisi";
+
+                }
             }
 
             if($roles[0] == "admin"){
