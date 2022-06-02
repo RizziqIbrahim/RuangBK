@@ -214,7 +214,7 @@ class JawabanController extends Controller
         $request->perpage;
         $siswa = Jawaban::leftjoin('angket', 'angket.id', '=', 'angket_id')
         ->leftjoin('users', 'users.id', '=', 'jawabans.user_id')
-        ->where("jawabans.id", 1)
+        ->where("jawabans.angket_id", $id)
         ->orderBy("jawabans.created_at")
         ->paginate($request->perpage, [
             'jawabans.id',
