@@ -225,7 +225,6 @@ class JawabanController extends Controller
             'perpage' => $request->perpage,
             'message' => 'sukses menampilkan data',
             'data' => $siswa,
-            "jawaban" => json_decode($detailJawaban, true)
         ]);
         
     }
