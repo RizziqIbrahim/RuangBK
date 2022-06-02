@@ -206,6 +206,29 @@ class JawabanController extends Controller
             "jawaban" => json_decode($detailJawaban, true)
         ]);
     }
+
+    public function listSiswa(Request $request, $id)
+    {
+        $siswa = Jawaban::leftjoin('angket', 'angket.id', '=', 'angket_id')
+        ->leftjoin('users', 'users.id', '=', 'jawabans.user_id')
+        ->where("jawabans.angket_id", $id)
+        ->orderBy("jawabans.created_at", 'asc', [
+            'jawabans.id',
+            'jawabans.angket_id',
+            'jawabans.user_id',
+            'jawabans.jawaban',
+            'users.nama_user',
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'perpage' => $request->perpage,
+            'message' => 'sukses menampilkan data',
+            'data' => $siswa,
+            "jawaban" => json_decode($detailJawaban, true)
+        ]);
+        
+    }
     
     public function export($id)
 	{

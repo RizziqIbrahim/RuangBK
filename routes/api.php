@@ -88,6 +88,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get("/check-jawaban/{kode}", [JawabanController::class, 'checkjawaban']);
     Route::post("/{kode}/jawaban", [JawabanController::class, 'store']);
     Route::get("view-jawaban/{id}", [JawabanController::class, 'showjawabanperuser']);
+    Route::get("list-jawaban/{id}", [JawabanController::class, 'listSiswa']);
+
 
     Route::get("detail-profile/{id}", [DetailProfileController::class, 'index']);
     //delete
