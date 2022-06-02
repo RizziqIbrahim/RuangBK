@@ -209,15 +209,19 @@ class JawabanController extends Controller
 
     public function listSiswa(Request $request, $id)
     {
+        $request->keywords;
+        $request->page;
+        $request->perpage;
         $siswa = Jawaban::leftjoin('angket', 'angket.id', '=', 'angket_id')
         ->leftjoin('users', 'users.id', '=', 'jawabans.user_id')
-        ->where("jawabans.angket_id", $id)
-        ->orderBy("jawabans.created_at", 'asc', [
+        ->where("jawabans.id", 1)
+        ->orderBy("jawabans.created_at")
+        ->paginate($request->perpage, [
             'jawabans.id',
             'jawabans.angket_id',
             'jawabans.user_id',
             'jawabans.jawaban',
-            'users.nama_user',
+            'users.nama_user'
         ]);
 
         return response()->json([
