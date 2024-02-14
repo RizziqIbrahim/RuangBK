@@ -98,6 +98,7 @@ class AngketController extends Controller
                 "status" => "success",
                 "message" => 'Berhasil Menyimpan Data',
                 'data'  => $angket,
+
             ]);
         }
     }

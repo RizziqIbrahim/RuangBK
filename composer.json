@@ -15,6 +15,7 @@
         "laravel/sanctum": "^2.14",
         "laravel/tinker": "^2.5",
         "maatwebsite/excel": "^3.1",
+        "phpoffice/phpspreadsheet": "*",
         "spatie/laravel-permission": "^4.2"
     },
     "require-dev": {
